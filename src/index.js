@@ -1,3 +1,11 @@
 import 'bootstrap';
+import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
 
-console.log('test');
+async function init() {
+  const url = `https://api.covid19api.com/summary`;
+  const res = await fetch(url);
+  const globalData = await res.json();
+  globalCasesTotal(globalData);
+}
+
+init();
