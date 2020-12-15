@@ -2,7 +2,7 @@ import 'bootstrap';
 import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
 import casesByCountry from './modules/casesByCountry/casesByCountry';
 
-const properties = {
+const configaration = {
   country: 'all' || 'Belarus',
   type: 'recovered' || 'cases' || 'death',
   duration: 'all' || 'lastDay',
@@ -14,7 +14,7 @@ async function init() {
   const res = await fetch(url);
   const globalData = await res.json();
   globalCasesTotal(globalData);
-  casesByCountry(globalData, properties);
+  casesByCountry(globalData, configaration);
 }
 
 init();
