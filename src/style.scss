@@ -4,6 +4,23 @@ $text: #bdbdbd;
 $border: #363636;
 $section-background: #222;
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $text;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: white;
+}
+
 body {
   background-color: black;
   color: $text;
@@ -35,6 +52,20 @@ body {
     }
     #cases-by-country {
       height: calc(85%);
+      h3 {
+        font-size: 1rem;
+      }
+      ul {
+        height: calc(100% - 120px);
+        overflow-y: scroll;
+        padding-left: 10px;
+        li {
+          list-style: none;
+          span {
+            color: red;
+          }
+        }
+      }
     }
     #map {
       height: calc(100% - 7px);
