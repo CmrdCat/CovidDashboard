@@ -9,3 +9,10 @@ async function init() {
 }
 
 init();
+
+// let properties = {
+//   country: 'all' || 'Belarus',
+//   type: 'recovered' || 'cases' || 'death',
+//   duration: 'all' || 'lastDay',
+//   count: 'absolute' || 'on100',
+// }
