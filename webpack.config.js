@@ -2,6 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const PrettierPlugin = require('prettier-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -26,10 +27,10 @@ module.exports = {
       },
       {
         test: /\.(png|mp3|svg|jpe?g|gif)$/i,
-        loader: 'file-loader',
-        options: {
-          outputPath: 'img/',
-        },
+        loader: 'file-loader'
+        // options: {
+        //   outputPath: 'img/',
+        // },
       },
       {
         test: /\.html$/i,
@@ -38,15 +39,15 @@ module.exports = {
     ],
   },
   plugins: [
-    // new CleanWebpackPlugin(),
+    new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
-        { from: './src/img', to: './src/img' },
-        // { from: './src/audio', to: './src/audio' },
+        { from: './src/img', to: './img' },
+        // { from: './src/audio', to: './audio' },
       ],
     }),
     new HtmlWebpackPlugin({
-      template: 'index.html',
+      template: './src/index.html',
     }),
     new MiniCssExtractPlugin({
       filename: 'style.css',
@@ -56,6 +57,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
+    open: true,
     port: 9000,
   },
 };
