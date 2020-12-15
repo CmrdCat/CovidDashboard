@@ -8,7 +8,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
   mode: 'development',
   devtool: 'source-map',
-  entry: ['./src/index.js', './style.scss'],
+  entry: ['./src/index.js', './src/style.scss'],
   output: {
     publicPath: '',
     filename: 'main.js',
@@ -27,7 +27,7 @@ module.exports = {
       },
       {
         test: /\.(png|mp3|svg|jpe?g|gif)$/i,
-        loader: 'file-loader'
+        loader: 'file-loader',
         // options: {
         //   outputPath: 'img/',
         // },

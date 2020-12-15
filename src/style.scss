@@ -18,6 +18,19 @@ body {
     }
     #global-cases {
       height: calc(15% - 15px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      & div {
+        h3 {
+          font-size: 1.2rem;
+          color: white;
+          text-align: center;
+          span {
+            color: red;
+          }
+        }
+      }
     }
     #cases-by-country {
       height: calc(85%);
