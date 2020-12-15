@@ -7,7 +7,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
   mode: 'development',
   devtool: 'source-map',
-  entry: ['./src/index.js', './src/style.scss'],
+  entry: ['./src/index.js', './style.scss'],
   output: {
     publicPath: '',
     filename: 'main.js',

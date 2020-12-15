@@ -1,0 +1,47 @@
+@import 'node_modules/bootstrap/scss/bootstrap';
+$text: #bdbdbd;
+$border: #363636;
+$section-background: #222;
+
+body {
+  background-color: black;
+  color: $text;
+  main {
+    padding: 5px;
+    height: calc(100vh - 112px);
+    & > div {
+      height: 100%;
+      padding: 0px !important;
+    }
+    #global-cases {
+      height: calc(15% - 15px);
+    }
+    #cases-by-country {
+      height: calc(85% - 15px);
+    }
+    #map {
+      height: calc(100% - 20px);
+    }
+    #custom-data {
+      height: calc(60% - 15px);
+    }
+    #graph {
+      height: calc(40% - 15px);
+    }
+    section {
+      margin: 0.5rem 0;
+      border: 1px solid $border;
+      background-color: $section-background;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  body {
+    main {
+      & > div {
+        display: block !important;
+      }
+    }
+  }
+}
