@@ -68,7 +68,19 @@ body {
       }
     }
     #map {
-      height: calc(100% - 7px);
+      height: calc(90% - 7px);
+    }
+    #date-info {
+      height: calc(10% - 7px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      #date-last-update {
+        text-align: center;
+        font-size: 2rem;
+        line-height: 1;
+      }
     }
     #custom-data {
       height: calc(60% - 15px);
