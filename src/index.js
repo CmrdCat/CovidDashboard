@@ -2,6 +2,7 @@ import 'bootstrap';
 import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
 import casesByCountry from './modules/casesByCountry/casesByCountry';
 import dateInfo from './modules/dateInfo/dateInfo';
+// import fullScreen from './modules/fullScreenButton/fullScreen';
 
 const configaration = {
   country: 'all' || 'Belarus',
@@ -27,6 +28,7 @@ async function init() {
     globalCasesTotal(data);
     casesByCountry(data, configaration);
     dateInfo(data);
+    // fullScreen();
   });
 }
 
