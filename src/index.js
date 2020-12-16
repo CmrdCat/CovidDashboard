@@ -1,6 +1,7 @@
 import 'bootstrap';
 import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
 import casesByCountry from './modules/casesByCountry/casesByCountry';
+import dateInfo from './modules/dateInfo/dateInfo';
 
 const configaration = {
   country: 'all' || 'Belarus',
@@ -15,6 +16,7 @@ async function init() {
   const globalData = await res.json();
   globalCasesTotal(globalData);
   casesByCountry(globalData, configaration);
+  dateInfo(globalData);
 }
 
 init();
