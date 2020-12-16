@@ -1,0 +1,41 @@
+export default class Country {
+  constructor(parent, data) {
+    this.parent = parent;
+
+    this.Country = data.Country;
+    this.CountryCode = data.CountryCode;
+    this.Slug = data.Slug;
+    this.NewConfirmed = data.NewConfirmed;
+    this.TotalConfirmed = data.TotalConfirmed;
+    this.NewDeaths = data.NewDeaths;
+    this.TotalDeaths = data.TotalDeaths;
+    this.NewRecovered = data.NewRecovered;
+    this.TotalRecovered = data.TotalRecovered;
+
+    this.el = this.createEl();
+    this.parent.appendChild(this.el);
+  }
+
+  createEl() {
+    const element = document.createElement('li');
+    element.innerHTML = `
+         <span class="country-name">${this.Country}</span> 
+         <span class="country-data">${this.TotalConfirmed}</span>
+         `;
+    return element;
+  }
+
+  changeData(data) {
+    const arrayOfChildrens = Array.from(this.el.children);
+    const changedElement = arrayOfChildrens.filter((el) => el.classList.contains('country-data'));
+
+    function GetPropertyValue(obj1, dataToRetrieve) {
+      return dataToRetrieve.split('.').reduce(function (o, k) {
+        return o && o[k];
+      }, obj1);
+    }
+
+    const dataInElement = GetPropertyValue(this, data);
+    changedElement[0].textContent = dataInElement;
+  }
+}
