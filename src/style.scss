@@ -55,7 +55,7 @@ body {
           color: white;
           text-align: center;
           span {
-            color: red;
+            color: rgb(255, 0, 0);
           }
         }
       }
@@ -116,6 +116,10 @@ body {
     }
     #graph {
       height: calc(40%);
+      select,
+      option {
+        text-transform: capitalize;
+      }
     }
     section {
       margin: 0.5rem 0;
