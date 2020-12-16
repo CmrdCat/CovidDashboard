@@ -1,16 +1,30 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-undef */
-export default function casesByCountry(globalData) {
+
+import Country from '../createCountry/createCountry';
+
+export default async function casesByCountry(globalData) {
+  const arrayOfCountryes = [];
+
   const container = document.getElementById('cases-by-country');
-  container.innerHTML =
-    '<h3><div class="btn-group"><button class="btn btn-secondary btn-sm dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Количество случаев заболевания</button><div class="dropdown-menu"><a class="dropdown-item" href="#">Смертей</a><a class="dropdown-item" href="#">Выздоровевших</a></div> </div> за весь период в абсолютных величинах</h3>';
+
+  const selectCase = document.createElement('select');
+  for (const key in globalData.Global) {
+    selectCase[selectCase.length] = new Option(key, key);
+  }
+  selectCase.onchange = () => {
+    arrayOfCountryes.forEach((el) => {
+      el.changeData(selectCase.value);
+    });
+  };
+
+  container.append(selectCase);
+
   const list = document.createElement('ul');
   const countries = globalData.Countries;
   for (const country of countries) {
-    const element = document.createElement('li');
-    element.innerHTML = `${country.Country} <span>${country.TotalConfirmed}</span>`;
-    list.append(element);
+    arrayOfCountryes.push(new Country(list, country));
   }
 
   container.append(list);
