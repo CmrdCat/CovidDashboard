@@ -30,7 +30,7 @@ export default class Country {
     const changedElement = arrayOfChildrens.filter((el) => el.classList.contains('country-data'));
 
     function GetPropertyValue(obj1, dataToRetrieve) {
-      return dataToRetrieve.split('.').reduce(function (o, k) {
+      return dataToRetrieve.split('.').reduce((o, k) => {
         return o && o[k];
       }, obj1);
     }
