@@ -10,7 +10,7 @@ const configaration = {
   count: 'absolute' || 'on100',
 };
 
-const getData = async function (url) {
+const getData = async (url) => {
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Ошибка о адресу ${url}, 
