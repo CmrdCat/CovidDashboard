@@ -92,6 +92,20 @@ body {
       margin: 0.5rem 0;
       border: 1px solid $border;
       background-color: $section-background;
+      & .fullScreen {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+      button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 1.5em;
+        width: 1.5em;
+      }
     }
   }
   footer {
