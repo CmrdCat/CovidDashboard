@@ -3,6 +3,7 @@ import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
 import casesByCountry from './modules/casesByCountry/casesByCountry';
 import dateInfo from './modules/dateInfo/dateInfo';
 import createGraph from './modules/graphs/createGraph';
+import getSelectorChange from './modules/graphs/getSelectorChange';
 
 // const configuration = {
 //   country: 'all' || 'Belarus',
@@ -52,6 +53,7 @@ async function init() {
       : `https://api.covid19api.com/dayone/country/${configuration.country}/status/${configuration.type}`
   ).then((data) => {
     createGraph(data, configuration);
+    getSelectorChange(data, configuration);
   });
 }
 

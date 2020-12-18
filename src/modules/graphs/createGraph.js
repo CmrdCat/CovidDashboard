@@ -1,29 +1,19 @@
 import Chart from 'chart.js';
 
 export default async function createGraph(globalData, configuration) {
-  const selectorCases = document.querySelector('#graph-select-cases');
-  selectorCases.addEventListener(
-    'change',
-    () => {
-      // eslint-disable-next-line no-param-reassign
-      configuration.type = selectorCases.value;
-      createGraph(globalData, configuration);
-    },
-    { once: true }
-  );
   const selectorDuration = document.querySelector('#graph-select-duration');
-  selectorDuration.addEventListener(
-    'change',
-    () => {
-      // eslint-disable-next-line no-param-reassign
-      configuration.duration = selectorDuration.value;
-      createGraph(globalData, configuration);
-    },
-    { once: true }
-  );
+  const selectorCases = document.querySelector('#graph-select-cases');
+  selectorCases.value = configuration.type;
+  selectorDuration.value = configuration.duration;
+  if (document.querySelector('.chart-container'))
+    document.querySelector('.chart-container').remove();
+  const container = document.createElement('div');
+  container.classList.add('chart-container');
+  container.innerHTML = '<canvas id="chart"></canvas>';
+  document.querySelector('#graph').append(container);
   const confirmed = [];
   const date = [];
-  const ctx = document.getElementById('myChart');
+  const ctx = document.getElementById('chart');
   let color = 'rgb(255, 238, 0)';
   switch (configuration.type) {
     case 'cases':
@@ -41,7 +31,6 @@ export default async function createGraph(globalData, configuration) {
   }
   const data = configuration.country === 'all' ? globalData.data : globalData;
   let lastValue = 0;
-
   data.forEach((element, index) => {
     if (
       configuration.country === 'all' &&
