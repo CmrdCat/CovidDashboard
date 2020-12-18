@@ -4,6 +4,7 @@ import casesByCountry from './modules/casesByCountry/casesByCountry';
 import dateInfo from './modules/dateInfo/dateInfo';
 import createGraph from './modules/graphs/createGraph';
 
+import findCountry from './modules/createCountryProperty/createCountryProperty';
 // const configuration = {
 //   country: 'all' || 'Belarus',
 //   type: 'recovered' || 'confirmed' || 'deaths',
@@ -56,3 +57,4 @@ async function init() {
 }
 
 init();
+findCountry();
