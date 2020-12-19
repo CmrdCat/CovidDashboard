@@ -3,8 +3,8 @@ import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
 import casesByCountry from './modules/casesByCountry/casesByCountry';
 import dateInfo from './modules/dateInfo/dateInfo';
 import createGraph from './modules/graphs/createGraph';
+import getSelectorChange from './modules/graphs/getSelectorChange';
 import fullScreen from './modules/fullScreenButton/fullScreen';
-
 
 // const configuration = {
 //   country: 'all' || 'Belarus',
@@ -16,7 +16,7 @@ import fullScreen from './modules/fullScreenButton/fullScreen';
 const configuration = {
   country: 'all',
   type: 'recovered',
-  duration: 'lastDay',
+  duration: 'all',
   count: 'absolute',
 };
 
@@ -52,9 +52,10 @@ async function init() {
   getDataForGraphs(
     configuration.country === 'all'
       ? `https://corona-api.com/timeline`
-      : `https://api.covid19api.com/dayone/country/${configuration.country}/status/${configuration.type}`
+      : `https://api.covid19api.com/dayone/country/${configuration.country}`
   ).then((data) => {
     createGraph(data, configuration);
+    getSelectorChange(data, configuration);
   });
 }
 
