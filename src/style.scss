@@ -121,6 +121,9 @@ body {
         font-weight: 400;
         line-height: 1.5;
         color: white;
+        span {
+          color: red;
+        }
       }
       .selection-wrapper {
         display: flex;
@@ -150,6 +153,13 @@ body {
       select,
       option {
         text-transform: capitalize;
+      }
+      select option {
+        margin: 40px;
+        background: rgb(34 34 34);
+        color: #fff;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+        transition: 0.5s;
       }
     }
     section {
@@ -188,6 +198,19 @@ body {
 @media (max-width: 1200px) {
   body {
     main {
+      #graph {
+        .chart-container {
+          height: calc(100% - 210px);
+        }
+      }
+      .selection-wrapper {
+        flex-wrap: wrap;
+        .form-control {
+          margin-top: 7px;
+          padding: 0;
+          font-size: 0.8rem;
+        }
+      }
       height: unset;
       & > div {
         display: flex !important;
@@ -221,6 +244,12 @@ body {
   body {
     main {
       height: unset;
+      #graph {
+        .chart-container {
+          height: 300px;
+          padding-bottom: 1rem;
+        }
+      }
       & > div {
         flex-wrap: wrap;
         section {

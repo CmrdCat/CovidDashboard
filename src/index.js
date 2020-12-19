@@ -15,7 +15,7 @@ import getSelectorChange from './modules/graphs/getSelectorChange';
 const configuration = {
   country: 'all',
   type: 'recovered',
-  duration: 'lastDay',
+  duration: 'all',
   count: 'absolute',
 };
 
@@ -50,7 +50,7 @@ async function init() {
   getDataForGraphs(
     configuration.country === 'all'
       ? `https://corona-api.com/timeline`
-      : `https://api.covid19api.com/dayone/country/${configuration.country}/status/${configuration.type}`
+      : `https://api.covid19api.com/dayone/country/${configuration.country}`
   ).then((data) => {
     createGraph(data, configuration);
     getSelectorChange(data, configuration);
