@@ -1,8 +1,10 @@
 @import '~normalize.css';
 @import 'node_modules/bootstrap/scss/bootstrap';
+
 $text: #bdbdbd;
 $border: #363636;
 $section-background: #222;
+$mainHeigth: calc(100vh - 112px);
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -39,10 +41,12 @@ body {
   }
   main {
     padding: 5px;
-    height: calc(100vh - 112px);
+    height: $mainHeigth;
     & > div {
+      position: relative;
       height: 100%;
       padding: 0px !important;
+      border: 2px solid gray;
     }
     #global-cases {
       height: calc(15% - 15px);
@@ -125,10 +129,54 @@ body {
       margin: 0.5rem 0;
       border: 1px solid $border;
       background-color: $section-background;
+      &.fullScreen {
+        position: fixed !important;
+        bottom: 56px;
+        left: 0 !important;
+        height: $mainHeigth !important;
+        z-index: 100;
+        margin: 0;
+        border: none;
+        font-size: 2rem !important;
+        button {
+          font-size: 1.5rem;
+        }
+        #img {
+          fill: antiquewhite;
+        }
+        h3 {
+          font-size: 5rem !important;
+        }
+        h2 {
+          font-size: 3rem !important;
+        }
+        span {
+          font-size: 3rem !important;
+        }
+      }
+      button {
+        position: absolute;
+        top: 0.2rem;
+        right: 0.2rem;
+        height: 1.5rem;
+        width: 1.5rem;
+        background: transparent;
+        border: none !important;
+        font-size: 0;
+      }
+      #img {
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1.5rem;
+        height: 1.5rem;
+        fill: #bdbdbd;
+      }
     }
   }
   footer {
-    height: 56px;
     .wrapper {
       height: 100%;
       display: flex;
@@ -159,9 +207,8 @@ body {
     main {
       height: unset;
       & > div {
-        display: flex !important;
+        display: flex;
         section {
-          flex: unset !important;
           box-sizing: border-box;
           height: 100% !important;
           margin: 0px;
