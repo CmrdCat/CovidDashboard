@@ -82,7 +82,6 @@ export default async function createGraph(globalData, configuration) {
     deaths.shift();
     deaths.reverse();
   }
-  console.log(confirmed);
 
   const dataSets = [
     {

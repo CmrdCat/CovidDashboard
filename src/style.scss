@@ -46,7 +46,6 @@ body {
       position: relative;
       height: 100%;
       padding: 0px !important;
-      border: 2px solid gray;
     }
     #global-cases {
       height: calc(15% - 15px);
@@ -218,6 +217,7 @@ body {
     }
   }
   footer {
+    height: 56px;
     .wrapper {
       height: 100%;
       display: flex;
@@ -246,7 +246,23 @@ body {
 @media (max-width: 1200px) {
   body {
     main {
+      .central-column {
+        display: flex;
+        flex-direction: column;
+        #map {
+          max-height: 597px;
+        }
+        #date-info {
+          max-height: 186px;
+          margin-top: 0.5rem;
+        }
+      }
+      #cases-by-country {
+        flex: unset;
+      }
       #graph {
+        width: calc(33.3333333333% - 0.5rem);
+        flex: unset;
         .chart-container {
           height: calc(100% - 210px);
         }
@@ -292,10 +308,14 @@ body {
     main {
       height: unset;
       #graph {
+        width: 100%;
         .chart-container {
           height: 300px;
           padding-bottom: 1rem;
         }
+      }
+      #cases-by-country {
+        max-height: 425px;
       }
       & > div {
         flex-wrap: wrap;
