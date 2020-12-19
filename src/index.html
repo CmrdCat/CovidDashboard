@@ -59,7 +59,18 @@
       <section class="col-12 col-sm-8 col-xl-12" id="custom-data">
         <h2>Случаи, смерти, выздоровевшие</h2>
       </section>
-      <section class="col-12 col-sm-4 col-xl-12" id="graph"><h2>Графики</h2></section>
+      <section class="col-12 col-sm-4 col-xl-12" id="graph">
+        <select class="form-control form-control-sm" id="graph-select-cases">
+          <option>confirmed</option>
+          <option>deaths</option>
+          <option>recovered</option>
+        </select>
+        <select class="form-control form-control-sm" id="graph-select-duration">
+          <option>all</option>
+          <option>lastDay</option>
+        </select>
+        <canvas id="myChart"></canvas>
+      </section>
     </div>
   </main>
   <footer>

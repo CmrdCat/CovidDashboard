@@ -19,8 +19,9 @@ export default class Country {
   createEl() {
     const element = document.createElement('li');
     element.innerHTML = `
-         <span class="country-name">${this.Country}</span> 
-         <span class="country-data">${this.TotalConfirmed}</span>
+        <img src="https://www.countryflags.io/${this.CountryCode.toLowerCase()}/shiny/32.png">
+        <div class="country-data">${this.TotalConfirmed}</div>
+         <div class="country-name">${this.Country}</div> 
          `;
     return element;
   }
@@ -30,7 +31,7 @@ export default class Country {
     const changedElement = arrayOfChildrens.filter((el) => el.classList.contains('country-data'));
 
     function GetPropertyValue(obj1, dataToRetrieve) {
-      return dataToRetrieve.split('.').reduce(function (o, k) {
+      return dataToRetrieve.split('.').reduce((o, k) => {
         return o && o[k];
       }, obj1);
     }
