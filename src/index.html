@@ -60,15 +60,22 @@
         <h2>Случаи, смерти, выздоровевшие</h2>
       </section>
       <section class="col-12 col-sm-4 col-xl-12" id="graph">
-        <select class="form-control form-control-sm" id="graph-select-cases">
-          <option>confirmed</option>
-          <option>deaths</option>
-          <option>recovered</option>
-        </select>
-        <select class="form-control form-control-sm" id="graph-select-duration">
-          <option>all</option>
-          <option>lastDay</option>
-        </select>
+        <div class="chart-title ml-2 mt-2"></div>
+        <div class="selection-wrapper pt-1 pb-2">
+          <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-cases">
+            <option>confirmed</option>
+            <option>deaths</option>
+            <option>recovered</option>
+          </select>
+          <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-duration">
+            <option>all</option>
+            <option>lastDay</option>
+          </select>
+          <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-count">
+            <option>absolute</option>
+            <option>on100</option>
+          </select>
+        </div>
       </section>
     </div>
   </main>

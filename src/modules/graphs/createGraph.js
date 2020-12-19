@@ -9,7 +9,9 @@ export default async function createGraph(globalData, configuration) {
     document.querySelector('.chart-container').remove();
   const container = document.createElement('div');
   container.classList.add('chart-container');
-  container.innerHTML = '<canvas id="chart"></canvas>';
+  const territory = configuration.country === 'all' ? 'In world' : `In ${configuration.country}`;
+  document.querySelector('.chart-title').innerText = territory;
+  container.innerHTML = `<div class="chart-container-wrapper" style="position: relative;"> <canvas id="chart"></canvas> </div>`;
   document.querySelector('#graph').append(container);
   const confirmed = [];
   const date = [];
@@ -80,14 +82,17 @@ export default async function createGraph(globalData, configuration) {
       ],
     },
     options: {
+      maintainAspectRatio: false,
       legend: {
         display: false,
       },
       scales: {
         yAxes: [
           {
+            display: true,
             ticks: {
               beginAtZero: true,
+              min: 0,
             },
           },
         ],
