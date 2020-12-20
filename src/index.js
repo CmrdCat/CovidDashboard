@@ -7,6 +7,7 @@ import getSelectorChange from './modules/graphs/getSelectorChange';
 import fullScreen from './modules/fullScreenButton/fullScreen';
 import createMap from './modules/map/createMap';
 
+import findCountry from './modules/createCountryProperty/createCountryProperty';
 // const configuration = {
 //   country: 'all' || 'Belarus',
 //   type: 'recovered' || 'confirmed' || 'deaths',
@@ -72,6 +73,7 @@ async function init() {
     globalCasesTotal(data);
     casesByCountry(data, configuration);
     dateInfo(data);
+    console.log(data);
   });
 
   getDataForGraphs(
@@ -89,3 +91,4 @@ async function init() {
 }
 
 init();
+findCountry();
