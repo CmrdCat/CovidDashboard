@@ -211,3 +211,58 @@ body {
     }
   }
 }
+#custom-data {
+  display: flex;
+  .hideElement {
+    display: none !important;
+  }
+  .greenElement {
+    display: block;
+    color: green;
+    border-color: green;
+  }
+  .redElement {
+    display: block;
+    color: red;
+    border-color: red;
+  }
+  .globalDataContainer {
+    padding: 5px 0;
+    height: calc(100%);
+    display: flex;
+    flex-direction: column;
+    width: calc(53%);
+  }
+  .deadListWrapper,
+  .recoveredListWrapper,
+  .localDataContainer {
+    padding: 5px 0;
+    height: calc(80%);
+    display: flex;
+    flex-direction: column;
+    ul {
+      height: 100%;
+      overflow-y: scroll;
+      padding-left: 0px;
+      li {
+        border-bottom: 1px solid darkgray;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        list-style: none;
+        padding: 0 3px;
+        .country-name {
+          overflow-wrap: break-word;
+          margin: 0 5px;
+          max-width: 100px;
+          color: #ffffffd0;
+          font-weight: 700;
+        }
+        .country-data {
+          font-weight: 700;
+          color: #ffffffd0;
+        }
+      }
+    }
+  }
+}

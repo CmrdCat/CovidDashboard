@@ -45,6 +45,7 @@ async function init() {
     globalCasesTotal(data);
     casesByCountry(data, configuration);
     dateInfo(data);
+    console.log(data);
   });
 
   getDataForGraphs(
