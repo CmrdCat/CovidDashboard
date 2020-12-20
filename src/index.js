@@ -64,17 +64,28 @@ async function getDataForMap2() {
 }
 
 async function init() {
-  getDataForMap2();
-  fullScreen();
+  const covidSummary = `https://api.covid19api.com/summary`;
+  // const res = await fetch(url);
+  // const globalData = await res.json();
+  getData(covidSummary).then((data) => {
+    const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
+    getData(populationData).then((population) => {
+      globalCasesTotal(data);
+      casesByCountry(data, population);
+      dateInfo(data);
+      getDataForMap2();
+      fullScreen();
+    });
+  
   // eslint-disable-next-line no-unused-vars
 
-  const url = `https://api.covid19api.com/summary`;
-  getData(url).then((data) => {
-    globalCasesTotal(data);
-    casesByCountry(data, configuration);
-    dateInfo(data);
-    console.log(data);
-  });
+// const url = `https://api.covid19api.com/summary`;
+//  getData(url).then((data) => {
+//    globalCasesTotal(data);
+//    casesByCountry(data, configuration);
+//    dateInfo(data);
+//    console.log(data);
+//  });
 
   getDataForGraphs(
     configuration.country === 'all'
