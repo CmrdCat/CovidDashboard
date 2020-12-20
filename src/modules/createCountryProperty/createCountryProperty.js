@@ -1,7 +1,8 @@
 const findCountry = () => {
   let countryName = 'Belarus';
-
+  const countryWrapperListiner = document.querySelector('#cases-by-country');
   const allData = [];
+
   function showsm(date) {
     const nesElement = {
       name: '',
@@ -47,6 +48,24 @@ const findCountry = () => {
           nesElement.TotalConfirmed = item.TotalConfirmed;
           nesElement.TotalDeaths = item.TotalDeaths;
           nesElement.TotalRecovered = item.TotalRecovered;
+          nesElement.NewConfirmedNaStoK = Math.round(
+            100000 / (nesElement.population / item.NewConfirmed)
+          );
+          nesElement.NewdeathsNaStoK = Math.round(
+            100000 / (nesElement.population / item.NewDeaths)
+          );
+          nesElement.NewRecovNaStoK = Math.round(
+            100000 / (nesElement.population / item.NewRecovered)
+          );
+          nesElement.totalConfirmedNaStoK = Math.round(
+            100000 / (nesElement.population / item.TotalConfirmed)
+          );
+          nesElement.totalDeathNaStoK = Math.round(
+            100000 / (nesElement.population / item.TotalDeaths)
+          );
+          nesElement.totalRecovNaStoK = Math.round(
+            100000 / (nesElement.population / item.TotalRecovered)
+          );
         }
 
         const liForRecovered = document.createElement('li');
@@ -119,6 +138,11 @@ const findCountry = () => {
     showsm(allData);
   }
   getdate();
+  const show = (event) => {
+    countryName = event.path[1].lastElementChild.innerHTML;
+    getdate();
+  };
+  countryWrapperListiner.addEventListener('click', show, true);
 };
 
 export default findCountry;
