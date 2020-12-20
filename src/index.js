@@ -76,30 +76,23 @@ async function init() {
       getDataForMap2();
       fullScreen();
     });
-  
-  // eslint-disable-next-line no-unused-vars
 
-// const url = `https://api.covid19api.com/summary`;
-//  getData(url).then((data) => {
-//    globalCasesTotal(data);
-//    casesByCountry(data, configuration);
-//    dateInfo(data);
-//    console.log(data);
-//  });
+    // eslint-disable-next-line no-unused-vars
 
-  getDataForGraphs(
-    configuration.country === 'all'
-      ? `https://corona-api.com/timeline`
-      : `https://api.covid19api.com/dayone/country/${configuration.country}`
-  ).then((data) => {
-    createGraph(data, configuration);
-    getSelectorChange(data, configuration);
+    getDataForGraphs(
+      configuration.country === 'all'
+        ? `https://corona-api.com/timeline`
+        : `https://api.covid19api.com/dayone/country/${configuration.country}`
+    ).then((data1) => {
+      createGraph(data1, configuration);
+      getSelectorChange(data1, configuration);
+    });
+
+    getDataForMap('https://corona.lmao.ninja/v2/countries').then((data2) => {
+      createMap(data2, configuration);
+    });
   });
-
-  getDataForMap('https://corona.lmao.ninja/v2/countries').then((data) => {
-    createMap(data, configuration);
-  });
+  findCountry();
 }
 
 init();
-findCountry();
