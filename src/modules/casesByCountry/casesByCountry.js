@@ -4,7 +4,7 @@
 
 import Country from '../createCountry/createCountry';
 
-export default async function casesByCountry(globalData) {
+export default async function casesByCountry(globalData, population) {
   const arrayOfCountryes = [];
   let flag = false;
 
@@ -39,7 +39,46 @@ export default async function casesByCountry(globalData) {
   const list = document.createElement('ul');
   const countries = globalData.Countries;
   for (const country of countries) {
-    arrayOfCountryes.push(new Country(list, country, flag));
+    const countryReg = country.Country.replace(/[^A-Za-z]/g, '');
+    const populationForCountry = population.find((el) => {
+      const populationNameReg = el.name.replace(/[^A-Za-z]/g, '');
+      if (el.name === 'Cabo Verde') {
+        if (country.Country === 'Cape Verde') {
+          return true;
+        }
+      }
+      if (el.name === 'Korea (Republic of)') {
+        if (country.Country === 'Korea (South)') {
+          return true;
+        }
+      }
+      if (el.name === "Lao People's Democratic Republic") {
+        if (country.Country === 'Lao PDR') {
+          return true;
+        }
+      }
+      if (el.name === 'Macedonia (the former Yugoslav Republic of)') {
+        if (country.Country === 'Macedonia, Republic of') {
+          return true;
+        }
+      }
+      if (el.name === 'Palestine, State of') {
+        if (country.Country === 'Palestinian Territory') {
+          return true;
+        }
+      }
+      if (el.name === 'Saint Vincent and the Grenadines') {
+        if (country.Country === 'Saint Vincent and Grenadines') {
+          return true;
+        }
+      }
+      if (countryReg.includes(populationNameReg) || populationNameReg.includes(countryReg)) {
+        return true;
+      }
+      return false;
+    });
+    country.Population = populationForCountry.population;
+    arrayOfCountryes.push(new Country(list, country));
   }
 
   container.append(navBlock);

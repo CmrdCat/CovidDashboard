@@ -37,13 +37,16 @@ async function getDataForGraphs(url) {
 }
 
 async function init() {
-  const url = `https://api.covid19api.com/summary`;
+  const covidSummary = `https://api.covid19api.com/summary`;
   // const res = await fetch(url);
   // const globalData = await res.json();
-  getData(url).then((data) => {
-    globalCasesTotal(data);
-    casesByCountry(data, configuration);
-    dateInfo(data);
+  getData(covidSummary).then((data) => {
+    const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
+    getData(populationData).then((population) => {
+      globalCasesTotal(data);
+      casesByCountry(data, population);
+      dateInfo(data);
+    });
   });
 
   getDataForGraphs(

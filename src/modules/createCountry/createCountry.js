@@ -11,6 +11,7 @@ export default class Country {
     this.TotalDeaths = data.TotalDeaths;
     this.NewRecovered = data.NewRecovered;
     this.TotalRecovered = data.TotalRecovered;
+    this.Population = data.Population;
 
     this.currentData = this.TotalConfirmed;
 
@@ -39,11 +40,17 @@ export default class Country {
     }
 
     const dataInElement = GetPropertyValue(this, data);
-    this.currentData = dataInElement;
+
     if (flag) {
-      changedElement[0].textContent = dataInElement * -1;
+      changedElement[0].textContent = this.getDataFor100000(dataInElement).toFixed(2);
+      this.currentData = this.getDataFor100000(dataInElement);
     } else {
       changedElement[0].textContent = dataInElement;
+      this.currentData = dataInElement;
     }
+  }
+
+  getDataFor100000(data) {
+    return (data * 100000) / this.Population;
   }
 }
