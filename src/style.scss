@@ -57,6 +57,8 @@ body {
           font-size: 1.2rem;
           color: white;
           text-align: center;
+          margin-bottom: 0rem;
+          padding: 1rem 0px;
           span {
             color: rgb(255, 0, 0);
           }
@@ -110,7 +112,7 @@ body {
       align-items: center;
       #date-last-update {
         text-align: center;
-        font-size: 2rem;
+        font-size: 1.5rem;
         line-height: 1;
       }
     }
@@ -179,37 +181,38 @@ body {
         border: none;
         font-size: 2rem !important;
         button {
-          font-size: 1.5rem;
+          top: 0.5rem;
+          right: 0.5rem;
+          #img {
+            left: unset;
+          }
         }
-        #img {
-          fill: antiquewhite;
-        }
-        h3 {
-          font-size: 5rem !important;
-        }
-        h2 {
-          font-size: 3rem !important;
-        }
-        span {
-          font-size: 3rem !important;
-        }
+
+        // h3 {
+        //   font-size: 5rem !important;
+        // }
+        // h2 {
+        //   font-size: 3rem !important;
+        // }
+        // span {
+        //   font-size: 3rem !important;
+        // }
       }
       button {
         position: absolute;
-        top: 0.2rem;
-        right: 0.2rem;
         height: 1.5rem;
         width: 1.5rem;
         background: transparent;
         border: none !important;
         font-size: 0;
+        top: 0;
+        right: 0rem;
+        padding: 0px;
       }
       #img {
+        z-index: 100;
         padding: 0;
         margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
         width: 1.5rem;
         height: 1.5rem;
         fill: #bdbdbd;
@@ -245,15 +248,28 @@ body {
 
 @media (max-width: 1200px) {
   body {
+    header {
+      position: sticky;
+      top: 0px;
+      z-index: 100;
+    }
     main {
+      section.fullScreen {
+        margin: 0px !important;
+        height: calc(100vh - 56px) !important;
+        max-height: unset !important;
+        top: 56px;
+        width: 100vw !important;
+        max-width: unset;
+      }
       .central-column {
         display: flex;
         flex-direction: column;
         #map {
-          max-height: 597px;
+          max-height: 683px;
         }
         #date-info {
-          max-height: 186px;
+          max-height: 100px;
           margin-top: 0.5rem;
         }
       }
@@ -316,6 +332,14 @@ body {
       }
       #cases-by-country {
         max-height: 425px;
+      }
+      #date-info {
+        h2 {
+          padding-top: 1rem;
+        }
+        span {
+          padding-bottom: 1rem;
+        }
       }
       & > div {
         flex-wrap: wrap;
