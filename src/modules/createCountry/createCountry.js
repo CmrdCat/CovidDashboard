@@ -12,6 +12,8 @@ export default class Country {
     this.NewRecovered = data.NewRecovered;
     this.TotalRecovered = data.TotalRecovered;
 
+    this.currentData = this.TotalConfirmed;
+
     this.el = this.createEl();
     this.parent.appendChild(this.el);
   }
@@ -21,12 +23,12 @@ export default class Country {
     element.innerHTML = `
         <img src="https://www.countryflags.io/${this.CountryCode.toLowerCase()}/shiny/32.png">
         <div class="country-data">${this.TotalConfirmed}</div>
-         <div class="country-name">${this.Country}</div> 
-         `;
+        <div class="country-name">${this.Country}</div>
+        `;
     return element;
   }
 
-  changeData(data) {
+  changeData(flag, data = this.currentData) {
     const arrayOfChildrens = Array.from(this.el.children);
     const changedElement = arrayOfChildrens.filter((el) => el.classList.contains('country-data'));
 
@@ -37,6 +39,11 @@ export default class Country {
     }
 
     const dataInElement = GetPropertyValue(this, data);
-    changedElement[0].textContent = dataInElement;
+    this.currentData = dataInElement;
+    if (flag) {
+      changedElement[0].textContent = dataInElement * -1;
+    } else {
+      changedElement[0].textContent = dataInElement;
+    }
   }
 }
