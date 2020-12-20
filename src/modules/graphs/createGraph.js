@@ -123,7 +123,7 @@ export default async function createGraph(globalData, configuration) {
         display: false,
       },
       tooltips: {
-        mode: 'nearest',
+        mode: 'x',
         intersect: false,
         displayColors: false,
         callbacks: {
