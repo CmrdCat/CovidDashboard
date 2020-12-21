@@ -1,7 +1,9 @@
 /* eslint-disable new-cap */
 import L from 'leaflet';
+import places from './coordinates.json';
 
-export default function createMap(data, configuration) {
+export default async function createMap(data, configuration) {
+  console.log(data.Countries);
   const mapOptions = {
     center: [30, 0],
     zoom: 3,
@@ -14,13 +16,13 @@ export default function createMap(data, configuration) {
   const openstreetmap = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   const layer = new L.TileLayer(url);
   map.addLayer(layer);
-
   // eslint-disable-next-line no-unused-vars
   const geoJson = {
     type: 'FeatureCollection',
-    features: data.map((country = {}) => {
-      const { countryInfo = {} } = country;
-      const { lat, long: lng } = countryInfo;
+    features: data.Countries.map((country = {}, index) => {
+      // const { countryInfo = {} } = country;
+      // const { lat, long: lng } = countryInfo;
+      console.log(country.Country);
       return {
         type: 'Feature',
         properties: {
@@ -28,51 +30,49 @@ export default function createMap(data, configuration) {
         },
         geometry: {
           type: 'Point',
-          coordinates: [lng, lat],
+          coordinates:
+            index < 70 ? [places[index].split(', ')[2], places[index].split(', ')[1]] : [0, 0],
         },
       };
     }),
   };
-  console.log(data);
   // eslint-disable-next-line no-unused-vars
-  const midleValue =
-    data.reduce(
-      (sum, element) =>
-        sum + +element[configuration.type === 'confirmed' ? 'cases' : configuration.type],
-      0
-    ) / data.length;
+  const midleValue = 5;
+  // data.reduce((sum, element) => {
+  //   return sum + +element[configuration.type === 'confirmed' ? 'cases' : configuration.type];
+  // }, 0) / data.length;
 
   const geoJsonLayers = new L.GeoJSON(geoJson, {
     pointToLayer: (feature = {}, latlng) => {
       const { properties = {} } = feature;
-      let updatedFormatted;
+      // let updatedFormatted;
       let mainString;
 
-      const { country, updated, cases, deaths, recovered } = properties;
+      const { Country, TotalCases, TotalDeaths } = properties;
 
-      mainString = `${properties[configuration.type === 'confirmed' ? cases : configuration.type]}`;
+      mainString = `${properties[TotalCases]}`;
 
-      if (cases > 1000) {
+      if (TotalCases > 1000) {
         mainString = `${mainString.slice(0, -3)}k+`;
       }
 
-      if (updated) {
-        updatedFormatted = new Date(updated).toLocaleString();
-      }
+      // if (updated) {
+      //   updatedFormatted = new Date(updated).toLocaleString();
+      // }
 
-      const size = properties[configuration.type === 'confirmed' ? cases : configuration.type];
+      const size = properties[configuration.type === 'confirmed' ? TotalCases : configuration.type];
 
       const html = `
         <span class="icon-marker" style="width: ${(size / midleValue) * 5}em; height: ${
         (size / midleValue) * 5
       }em;">
           <span class="icon-marker-tooltip">
-            <h2>${country}</h2>
+            <h2>${Country}</h2>
             <ul>
-              <li><strong>Confirmed:</strong> ${cases}</li>
-              <li><strong>Deaths:</strong> ${deaths}</li>
-              <li><strong>Recovered:</strong> ${recovered}</li>
-              <li><strong>Last Update:</strong> ${updatedFormatted}</li>
+              <li><strong>Confirmed:</strong> ${TotalCases}</li>
+              <li><strong>Deaths:</strong> ${TotalDeaths}</li>
+              <li><strong>!!!!!!!!!!!Recovered:</strong> ${TotalCases}</li>
+              <li><strong>!!!!!Last Update:</strong> ${TotalCases}</li>
             </ul>
           </span>
           ${mainString}
