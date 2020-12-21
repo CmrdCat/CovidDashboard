@@ -7,6 +7,7 @@ import getSelectorChange from './modules/graphs/getSelectorChange';
 import fullScreen from './modules/fullScreenButton/fullScreen';
 import createMap from './modules/map/createMap';
 
+import findCountry from './modules/createCountryProperty/createCountryProperty';
 // const configuration = {
 //   country: 'all' || 'Belarus',
 //   type: 'recovered' || 'confirmed' || 'deaths',
@@ -63,29 +64,35 @@ async function getDataForMap2() {
 }
 
 async function init() {
-  getDataForMap2();
-  fullScreen();
-  // eslint-disable-next-line no-unused-vars
+  const covidSummary = `https://api.covid19api.com/summary`;
+  // const res = await fetch(url);
+  // const globalData = await res.json();
+  getData(covidSummary).then((data) => {
+    const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
+    getData(populationData).then((population) => {
+      globalCasesTotal(data);
+      casesByCountry(data, population);
+      dateInfo(data);
+      getDataForMap2();
+      fullScreen();
+    });
 
-  const url = `https://api.covid19api.com/summary`;
-  getData(url).then((data) => {
-    globalCasesTotal(data);
-    casesByCountry(data, configuration);
-    dateInfo(data);
-  });
+    // eslint-disable-next-line no-unused-vars
 
-  getDataForGraphs(
-    configuration.country === 'all'
-      ? `https://corona-api.com/timeline`
-      : `https://api.covid19api.com/dayone/country/${configuration.country}`
-  ).then((data) => {
-    createGraph(data, configuration);
-    getSelectorChange(data, configuration);
-  });
+    getDataForGraphs(
+      configuration.country === 'all'
+        ? `https://corona-api.com/timeline`
+        : `https://api.covid19api.com/dayone/country/${configuration.country}`
+    ).then((data1) => {
+      createGraph(data1, configuration);
+      getSelectorChange(data1, configuration);
+    });
 
-  getDataForMap('https://corona.lmao.ninja/v2/countries').then((data) => {
-    createMap(data, configuration);
+    getDataForMap('https://corona.lmao.ninja/v2/countries').then((data2) => {
+      createMap(data2, configuration);
+    });
   });
+  findCountry();
 }
 
 init();
