@@ -2,9 +2,12 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable no-undef */
 
+// eslint-disable-next-line import/no-cycle
+import init from '../../index';
 import Country from '../createCountry/createCountry';
 
-export default async function casesByCountry(globalData, population) {
+export default async function casesByCountry(globalData, population, configuration) {
+  document.getElementById('cases-by-country').innerHTML = '';
   const arrayOfCountryes = [];
   let flag = false;
 
@@ -28,7 +31,10 @@ export default async function casesByCountry(globalData, population) {
   const selectData = document.createElement('input');
   selectData.setAttribute('type', 'checkbox');
   selectData.classList.add('select');
+  // eslint-disable-next-line no-unused-expressions
+
   selectData.onchange = () => {
+    init();
     flag = selectData.checked;
     arrayOfCountryes.forEach((el) => {
       el.changeData(flag, selectCase.value);
@@ -36,6 +42,8 @@ export default async function casesByCountry(globalData, population) {
   };
   navBlock.append(selectData);
 
+  // eslint-disable-next-line no-unused-expressions
+  configuration.count === 'on100' ? (selectData.checked = true) : (selectData.checked = false);
   const list = document.createElement('ul');
   const countries = globalData.Countries;
   for (const country of countries) {

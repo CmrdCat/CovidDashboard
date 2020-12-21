@@ -3,6 +3,8 @@ import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
 import casesByCountry from './modules/casesByCountry/casesByCountry';
 import dateInfo from './modules/dateInfo/dateInfo';
 import createGraph from './modules/graphs/createGraph';
+
+// eslint-disable-next-line import/no-cycle
 import getSelectorChange from './modules/graphs/getSelectorChange';
 import fullScreen from './modules/fullScreenButton/fullScreen';
 import createMap from './modules/map/createMap';
@@ -60,10 +62,9 @@ async function getDataForMap2() {
     .then((response) => response.text())
     .then((result) => JSON.parse(result))
     .catch((error) => console.log('error', error));
-  console.log(request.Countries);
 }
 
-async function init() {
+export default async function init() {
   const covidSummary = `https://api.covid19api.com/summary`;
   // const res = await fetch(url);
   // const globalData = await res.json();
@@ -71,7 +72,7 @@ async function init() {
     const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
     getData(populationData).then((population) => {
       globalCasesTotal(data);
-      casesByCountry(data, population);
+      casesByCountry(data, population, configuration);
       dateInfo(data);
       getDataForMap2();
       fullScreen();
