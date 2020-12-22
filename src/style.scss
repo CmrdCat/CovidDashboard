@@ -2,40 +2,68 @@
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'leaflet/dist/leaflet.css';
 
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .icon-marker {
   display: flex;
   position: relative;
   justify-content: center;
   align-items: center;
   color: white;
-  max-width: 5em;
-  max-height: 5em;
-  min-width: 2em;
-  min-height: 2em;
-  font-size: 0.7em;
+  max-width: 4rem;
+  max-height: 4rem;
+  min-width: 1rem;
+  min-height: 1rem;
+  font-size: 14px;
   font-weight: bold;
-  background-color: rgba(255, 0, 0, 0.39);
   border-radius: 100%;
-  box-shadow: 0 2px 5px rgba(black, 0.9);
-
+  text-shadow: 0 0px 9px black;
+  &.confirmed {
+    background-color: rgba(126, 119, 26, 0.466);
+    .icon-marker-tooltip,
+    .icon-marker-tooltip:before {
+      background-color: rgb(129, 123, 35);
+    }
+  }
+  &.recovered {
+    background-color: rgb(21, 156, 21, 0.466);
+    .icon-marker-tooltip,
+    .icon-marker-tooltip:before {
+      background-color: rgb(21, 156, 21);
+    }
+  }
+  &.deaths {
+    background-color: rgb(255, 0, 0, 0.466);
+    .icon-marker-tooltip,
+    .icon-marker-tooltip:before {
+      background-color: rgb(255, 0, 0);
+    }
+  }
   &:hover {
     .icon-marker-tooltip {
       display: block;
+      animation: opacity 0.5s;
     }
   }
 }
 
 .icon-marker-tooltip {
+  animation: opacity 0.5s;
+  transition: 0.5s;
   display: none;
   position: absolute;
   bottom: 100%;
   width: 16em;
-  font-size: 1.4em;
+  font-size: 1.4rem;
   padding: 1em;
-  background-color: blue;
-  border-radius: 0.4em;
   margin-bottom: 1em;
-  box-shadow: 0 3px 5px rgba(black, 0.9);
 
   &:before {
     display: block;
