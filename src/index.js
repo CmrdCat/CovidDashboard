@@ -82,6 +82,7 @@ async function init() {
         ? `https://corona-api.com/timeline`
         : `https://api.covid19api.com/dayone/country/${configuration.country}`
     ).then((data1) => {
+      inputFindCountry();
       createGraph(data1, configuration);
       getSelectorChange(data1, configuration);
     });
