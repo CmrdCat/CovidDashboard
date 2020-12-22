@@ -4,13 +4,14 @@ import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
 import casesByCountry from './modules/casesByCountry/casesByCountry';
 import dateInfo from './modules/dateInfo/dateInfo';
 import createGraph from './modules/graphs/createGraph';
-
 // eslint-disable-next-line import/no-cycle
 import getSelectorChange from './modules/graphs/getSelectorChange';
 import fullScreen from './modules/fullScreenButton/fullScreen';
 import createMap from './modules/map/createMap';
 import inputFindCountry from './modules/findCountry/inputFindCountry';
 import findCountry from './modules/createCountryProperty/createCountryProperty';
+// eslint-disable-next-line
+import btnCooseCountry from './modules/btnCooseCountry/btnCooseCountry';
 // const configuration = {
 //   country: 'all' || 'Belarus',
 //   type: 'recovered' || 'confirmed' || 'deaths',
@@ -33,17 +34,7 @@ async function getData(url) {
   }
   return response.json();
 }
-
 async function getDataForGraphs(url) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Ошибка о адресу ${url}, 
-		статус ошибки ${response.status}!`);
-  }
-  return response.json();
-}
-
-async function getDataForMap(url) {
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Ошибка о адресу ${url}, 
@@ -64,11 +55,11 @@ async function getDataForMap2() {
     .then((result) => JSON.parse(result))
     .catch((error) => console.log('error', error));
 }
+fullScreen();
+btnCooseCountry(configuration);
 
 export default async function init() {
   const covidSummary = `https://api.covid19api.com/summary`;
-  // const res = await fetch(url);
-  // const globalData = await res.json();
   getData(covidSummary).then((data) => {
     if (data.Message) {
       // eslint-disable-next-line
@@ -80,6 +71,8 @@ export default async function init() {
         casesByCountry(data, population, configuration);
         dateInfo(data);
         getDataForMap2();
+        inputFindCountry();
+        createMap(data, configuration, population);
       });
     }
     // eslint-disable-next-line no-unused-vars
@@ -88,17 +81,11 @@ export default async function init() {
         ? `https://corona-api.com/timeline`
         : `https://api.covid19api.com/dayone/country/${configuration.country}`
     ).then((data1) => {
-      inputFindCountry();
       createGraph(data1, configuration);
       getSelectorChange(data1, configuration);
     });
-
-    getDataForMap('https://corona.lmao.ninja/v2/countries').then((data2) => {
-      createMap(data2, configuration);
-    });
   });
   findCountry();
-  fullScreen();
 }
 
 init();

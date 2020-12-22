@@ -1,7 +1,15 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-unused-vars */
 /* eslint-disable new-cap */
 import L from 'leaflet';
+import places from './coordinates.json';
 
-export default function createMap(data, configuration) {
+export default async function createMap(data, configuration, population) {
+  const popul = {};
+  for (const item of population) {
+    popul[item.name] = item.population;
+  }
+
   const mapOptions = {
     center: [30, 0],
     zoom: 3,
@@ -14,13 +22,12 @@ export default function createMap(data, configuration) {
   const openstreetmap = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   const layer = new L.TileLayer(url);
   map.addLayer(layer);
-
   // eslint-disable-next-line no-unused-vars
   const geoJson = {
     type: 'FeatureCollection',
-    features: data.map((country = {}) => {
-      const { countryInfo = {} } = country;
-      const { lat, long: lng } = countryInfo;
+    features: data.Countries.map((country = {}, index) => {
+      // const { countryInfo = {} } = country;
+      // const { lat, long: lng } = countryInfo;
       return {
         type: 'Feature',
         properties: {
@@ -28,50 +35,64 @@ export default function createMap(data, configuration) {
         },
         geometry: {
           type: 'Point',
-          coordinates: [lng, lat],
+          coordinates: places[index]
+            ? [
+                places[index].split(', ')[places[index].split(', ').length - 1],
+                places[index].split(', ')[places[index].split(', ').length - 2],
+              ]
+            : [0, 0],
         },
       };
     }),
   };
+  let type;
+  if (configuration.type === 'confirmed') {
+    type = 'Confirmed';
+  } else if (configuration.type === 'recovered') {
+    type = 'Recovered';
+  } else {
+    type = 'Deaths';
+  }
   // eslint-disable-next-line no-unused-vars
   const midleValue =
-    data.reduce(
-      (sum, element) =>
-        sum + +element[configuration.type === 'confirmed' ? 'cases' : configuration.type],
-      0
-    ) / data.length;
+    data.Countries.reduce((sum, element) => {
+      return sum + +element[configuration.duration === 'all' ? `Total${type}` : `New${type}`];
+    }, 0) / data.Countries.length;
 
   const geoJsonLayers = new L.GeoJSON(geoJson, {
     pointToLayer: (feature = {}, latlng) => {
       const { properties = {} } = feature;
-      let updatedFormatted;
+      // let updatedFormatted;
       let mainString;
+      let to100 = 1;
+      const { Country } = properties;
+      if (configuration.count === 'on100') to100 = popul[Country] / 100000;
+      mainString = `${(
+        properties[configuration.duration === 'all' ? `Total${type}` : `New${type}`] / to100
+      ).toFixed(2)}`;
 
-      const { country, updated, cases, deaths, recovered } = properties;
-
-      mainString = `${properties[configuration.type === 'confirmed' ? cases : configuration.type]}`;
-
-      if (cases > 1000) {
+      if (properties[configuration.duration === 'all' ? `Total${type}` : `New${type}`] > 1000) {
         mainString = `${mainString.slice(0, -3)}k+`;
       }
 
-      if (updated) {
-        updatedFormatted = new Date(updated).toLocaleString();
-      }
+      // if (updated) {
+      //   updatedFormatted = new Date(updated).toLocaleString();
+      // }
 
-      const size = properties[configuration.type === 'confirmed' ? cases : configuration.type];
+      const size = properties[`Total${type}`];
 
       const html = `
         <span class="icon-marker" style="width: ${(size / midleValue) * 5}em; height: ${
         (size / midleValue) * 5
       }em;">
           <span class="icon-marker-tooltip">
-            <h2>${country}</h2>
+            <h2>${configuration.count === 'on100' ? `${Country}, on 100th.` : Country}</h2>
             <ul>
-              <li><strong>Confirmed:</strong> ${cases}</li>
-              <li><strong>Deaths:</strong> ${deaths}</li>
-              <li><strong>Recovered:</strong> ${recovered}</li>
-              <li><strong>Last Update:</strong> ${updatedFormatted}</li>
+              <li><strong>${
+                configuration.duration === 'all' ? `Total ${type}` : `New ${type}`
+              }: </strong>${(
+        properties[configuration.duration === 'all' ? `Total${type}` : `New${type}`] / to100
+      ).toFixed(2)}</li>
             </ul>
           </span>
           ${mainString}
