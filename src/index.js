@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-undef */
 import 'bootstrap';
 import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
 import casesByCountry from './modules/casesByCountry/casesByCountry';
@@ -11,9 +8,8 @@ import createGraph from './modules/graphs/createGraph';
 import getSelectorChange from './modules/graphs/getSelectorChange';
 import fullScreen from './modules/fullScreenButton/fullScreen';
 import createMap from './modules/map/createMap';
-import findCountry from './modules/createCountryProperty/createCountryProperty';
-import inputFindCountry from './modules/findCountry/inputFindCountry';
 
+import findCountry from './modules/createCountryProperty/createCountryProperty';
 // const configuration = {
 //   country: 'all' || 'Belarus',
 //   type: 'recovered' || 'confirmed' || 'deaths',
@@ -23,9 +19,9 @@ import inputFindCountry from './modules/findCountry/inputFindCountry';
 
 const configuration = {
   country: 'all',
-  type: 'confirmed',
+  type: 'recovered',
   duration: 'all',
-  count: 'on100',
+  count: 'absolute',
 };
 
 async function getData(url) {
@@ -69,51 +65,35 @@ async function getDataForMap2() {
 }
 
 export default async function init() {
-
-async function init() {
-
   const covidSummary = `https://api.covid19api.com/summary`;
   // const res = await fetch(url);
   // const globalData = await res.json();
   getData(covidSummary).then((data) => {
-    // console.log(data);
-    // const countriesArr = data.Countries.map((item) => item.Country);
-    // const arr = [];
-    // const looool = countriesArr.map((item, index) => {
-    //   // eslint-disable-next-line no-alert
-    //   const temp1 = '';
-    //   if (index < 240) {
-    //     // eslint-disable-next-line no-alert
-    //     alert(item);
-    //     const temp = getData(`https://api.covid19api.com/live/country/${item}`).then((coord) => {
-    //       arr[index] = `${item}, ${coord[0].Lat}, ${coord[0].Lon}`;
-    //     });
-    //     // eslint-disable-next-line no-param-reassign
-    //     // eslint-disable-next-line no-return-assign
-    //     // eslint-disable-next-line no-return-assign
-    //     return temp;
-    //   }
-    //   return item;
-    // });
-    // console.log(arr);
     const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
     getData(populationData).then((population) => {
       globalCasesTotal(data);
       casesByCountry(data, population, configuration);
       dateInfo(data);
+      getDataForMap2();
       fullScreen();
-      createMap(data, configuration, population);
     });
+
+    // eslint-disable-next-line no-unused-vars
+
     getDataForGraphs(
       configuration.country === 'all'
         ? `https://corona-api.com/timeline`
         : `https://api.covid19api.com/dayone/country/${configuration.country}`
     ).then((data1) => {
-      inputFindCountry();
       createGraph(data1, configuration);
       getSelectorChange(data1, configuration);
+    });
+
+    getDataForMap('https://corona.lmao.ninja/v2/countries').then((data2) => {
+      createMap(data2, configuration);
     });
   });
   findCountry();
 }
+
 init();
