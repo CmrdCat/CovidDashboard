@@ -101,6 +101,7 @@ async function init() {
       casesByCountry(data, population);
       dateInfo(data);
       fullScreen();
+      createMap(data, configuration, population);
     });
     // eslint-disable-next-line no-unused-vars
     getDataForGraphs(
