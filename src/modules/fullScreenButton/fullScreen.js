@@ -15,6 +15,7 @@ export default async function fullScreen() {
       document.getElementById('sweep').addEventListener('click', () => {
         if (!element.classList.value.includes('fullScreen')) {
           element.classList.add('fullScreen');
+          document.querySelector('body').classList.add('overflow-hidden');
           img.src = '../../img/arrows-angle-contract.svg';
           document.querySelectorAll('section').forEach((key) => {
             if (!key.classList.value.includes('fullScreen')) {
@@ -29,6 +30,7 @@ export default async function fullScreen() {
               obj.hidden = false;
             }
           });
+          document.querySelector('body').classList.remove('overflow-hidden');
           element.classList.remove('fullScreen');
         }
       });
