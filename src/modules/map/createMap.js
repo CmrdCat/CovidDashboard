@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable new-cap */
 import L from 'leaflet';
 import places from './coordinates.json';
@@ -22,7 +23,6 @@ export default async function createMap(data, configuration) {
     features: data.Countries.map((country = {}, index) => {
       // const { countryInfo = {} } = country;
       // const { lat, long: lng } = countryInfo;
-      console.log(country.Country);
       return {
         type: 'Feature',
         properties: {
@@ -36,11 +36,19 @@ export default async function createMap(data, configuration) {
       };
     }),
   };
+  let type;
+  if (configuration.type === 'confirmed') {
+    type = 'Confirmed';
+  } else if (configuration.type === 'recovered') {
+    type = 'Recovered';
+  } else {
+    type = 'Deaths';
+  }
   // eslint-disable-next-line no-unused-vars
-  const midleValue = 5;
-  // data.reduce((sum, element) => {
-  //   return sum + +element[configuration.type === 'confirmed' ? 'cases' : configuration.type];
-  // }, 0) / data.length;
+  const midleValue =
+    data.Countries.reduce((sum, element) => {
+      return sum + +element[`Total${type}`];
+    }, 0) / data.Countries.length;
 
   const geoJsonLayers = new L.GeoJSON(geoJson, {
     pointToLayer: (feature = {}, latlng) => {
@@ -48,11 +56,20 @@ export default async function createMap(data, configuration) {
       // let updatedFormatted;
       let mainString;
 
-      const { Country, TotalCases, TotalDeaths } = properties;
+      const {
+        Country,
+        TotalDeaths,
+        TotalConfirmed,
+        NewConfirmed,
+        TotalRecovered,
+        NewDeaths,
+        NewRecovered,
+      } = properties;
+      mainString = `${
+        properties[configuration.duration === 'all' ? `Total${type}` : `New${type}`]
+      }`;
 
-      mainString = `${properties[TotalCases]}`;
-
-      if (TotalCases > 1000) {
+      if (properties[configuration.duration === 'all' ? `Total${type}` : `New${type}`] > 1000) {
         mainString = `${mainString.slice(0, -3)}k+`;
       }
 
@@ -60,7 +77,7 @@ export default async function createMap(data, configuration) {
       //   updatedFormatted = new Date(updated).toLocaleString();
       // }
 
-      const size = properties[configuration.type === 'confirmed' ? TotalCases : configuration.type];
+      const size = properties[`Total${type}`];
 
       const html = `
         <span class="icon-marker" style="width: ${(size / midleValue) * 5}em; height: ${
@@ -69,10 +86,11 @@ export default async function createMap(data, configuration) {
           <span class="icon-marker-tooltip">
             <h2>${Country}</h2>
             <ul>
-              <li><strong>Confirmed:</strong> ${TotalCases}</li>
-              <li><strong>Deaths:</strong> ${TotalDeaths}</li>
-              <li><strong>!!!!!!!!!!!Recovered:</strong> ${TotalCases}</li>
-              <li><strong>!!!!!Last Update:</strong> ${TotalCases}</li>
+              <li><strong>${
+                configuration.duration === 'all' ? `Total ${type}` : `New ${type}`
+              }: </strong>${
+        properties[configuration.duration === 'all' ? `Total${type}` : `New${type}`]
+      }</li>
             </ul>
           </span>
           ${mainString}

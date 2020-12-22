@@ -21,7 +21,7 @@ import findCountry from './modules/createCountryProperty/createCountryProperty';
 const configuration = {
   country: 'all',
   type: 'recovered',
-  duration: 'all',
+  duration: 'lastDay',
   count: 'absolute',
 };
 
@@ -41,53 +41,6 @@ async function getDataForGraphs(url) {
 		статус ошибки ${response.status}!`);
   }
   return response.json();
-}
-
-async function getDataForMap(url) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Ошибка о адресу ${url}, 
-		статус ошибки ${response.status}!`);
-  }
-  return response.json();
-}
-
-// eslint-disable-next-line no-unused-vars
-async function getDataForMap2(url) {
-  // eslint-disable-next-line no-unused-vars
-  const response = await fetch(url, {
-    headers: {
-      'X-Access-Token': '5cf9dfd5-3449-485e-b5ae-70a60e997864',
-    },
-  });
-  if (!response.ok) {
-    throw new Error(`Ошибка о адресу ${url}, 
-		статус ошибки ${response.status}!`);
-  }
-  return response.json();
-  // .then((result) => {
-  //   // createMap(result, configuration);
-  //   // const countries = JSON.parse(result);
-  //   // console.log(countries);
-  //   // const countriesArr = countries.Countries.map((item) => item.Country);
-  //   // console.log(countriesArr);
-  //   // const arr = [];
-  //   // const looool = countriesArr.map((item, index) => {
-  //   //   // eslint-disable-next-line no-alert
-  //   //   const temp1 = '';
-  //   //   if (index < 280) {
-  //   //     alert(item);
-  //   //     const temp = getData(`https://api.covid19api.com/live/country/${item}`).then((data) => {
-  //   //       arr[index] = `${item}, ${data[0].Lat}, ${data[0].Lon}`;
-  //   //     });
-  //   //     // eslint-disable-next-line no-param-reassign
-  //   //     // eslint-disable-next-line no-return-assign
-  //   //     // eslint-disable-next-line no-return-assign
-  //   //     return temp;
-  //   //   }
-  //   //   return item;
-  //   // });
-  // });
 }
 
 async function init() {
@@ -112,12 +65,6 @@ async function init() {
       createGraph(data1, configuration);
       getSelectorChange(data1, configuration);
     });
-    getDataForMap('https://corona.lmao.ninja/v2/countries').then((data2) => {
-      // createMap(data2, configuration);
-    });
-  });
-  getDataForMap2(`https://api.covid19api.com/premium/summary`).then((data) => {
-    createMap(data, configuration);
   });
   findCountry();
 }
