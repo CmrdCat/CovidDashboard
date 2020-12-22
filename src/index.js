@@ -75,6 +75,7 @@ async function init() {
       dateInfo(data);
       getDataForMap2();
       fullScreen();
+      createMap(data, configuration, population);
     });
 
     // eslint-disable-next-line no-unused-vars
@@ -86,10 +87,6 @@ async function init() {
     ).then((data1) => {
       createGraph(data1, configuration);
       getSelectorChange(data1, configuration);
-    });
-
-    getDataForMap('https://corona.lmao.ninja/v2/countries').then((data2) => {
-      createMap(data2, configuration);
     });
   });
   findCountry();
