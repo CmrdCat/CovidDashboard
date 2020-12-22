@@ -9,8 +9,9 @@ import createGraph from './modules/graphs/createGraph';
 import getSelectorChange from './modules/graphs/getSelectorChange';
 import fullScreen from './modules/fullScreenButton/fullScreen';
 import createMap from './modules/map/createMap';
-
 import findCountry from './modules/createCountryProperty/createCountryProperty';
+import inputFindCountry from './modules/findCountry/inputFindCountry';
+
 // const configuration = {
 //   country: 'all' || 'Belarus',
 //   type: 'recovered' || 'confirmed' || 'deaths',
@@ -118,8 +119,8 @@ async function init() {
   });
   getDataForMap2(`https://api.covid19api.com/premium/summary`).then((data) => {
     createMap(data, configuration);
+  inputFindCountry();
   });
   findCountry();
 }
-
 init();
