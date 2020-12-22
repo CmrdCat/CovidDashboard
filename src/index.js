@@ -21,9 +21,9 @@ import inputFindCountry from './modules/findCountry/inputFindCountry';
 
 const configuration = {
   country: 'all',
-  type: 'recovered',
+  type: 'confirmed',
   duration: 'all',
-  count: 'absolute',
+  count: 'on100',
 };
 
 async function getData(url) {

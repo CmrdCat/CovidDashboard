@@ -1,9 +1,15 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-vars */
 /* eslint-disable new-cap */
 import L from 'leaflet';
 import places from './coordinates.json';
 
-export default async function createMap(data, configuration) {
+export default async function createMap(data, configuration, population) {
+  const popul = {};
+  for (const item of population) {
+    popul[item.name] = item.population;
+  }
+
   const mapOptions = {
     center: [30, 0],
     zoom: 3,
@@ -58,19 +64,12 @@ export default async function createMap(data, configuration) {
       const { properties = {} } = feature;
       // let updatedFormatted;
       let mainString;
-
-      const {
-        Country,
-        TotalDeaths,
-        TotalConfirmed,
-        NewConfirmed,
-        TotalRecovered,
-        NewDeaths,
-        NewRecovered,
-      } = properties;
-      mainString = `${
-        properties[configuration.duration === 'all' ? `Total${type}` : `New${type}`]
-      }`;
+      let to100 = 1;
+      const { Country } = properties;
+      if (configuration.count === 'on100') to100 = popul[Country] / 100000;
+      mainString = `${(
+        properties[configuration.duration === 'all' ? `Total${type}` : `New${type}`] / to100
+      ).toFixed(2)}`;
 
       if (properties[configuration.duration === 'all' ? `Total${type}` : `New${type}`] > 1000) {
         mainString = `${mainString.slice(0, -3)}k+`;
@@ -87,13 +86,13 @@ export default async function createMap(data, configuration) {
         (size / midleValue) * 5
       }em;">
           <span class="icon-marker-tooltip">
-            <h2>${Country}</h2>
+            <h2>${configuration.count === 'on100' ? `${Country}, on 100th.` : Country}</h2>
             <ul>
               <li><strong>${
                 configuration.duration === 'all' ? `Total ${type}` : `New ${type}`
-              }: </strong>${
-        properties[configuration.duration === 'all' ? `Total${type}` : `New${type}`]
-      }</li>
+              }: </strong>${(
+        properties[configuration.duration === 'all' ? `Total${type}` : `New${type}`] / to100
+      ).toFixed(2)}</li>
             </ul>
           </span>
           ${mainString}
