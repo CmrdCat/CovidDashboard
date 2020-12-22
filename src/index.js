@@ -22,7 +22,7 @@ import inputFindCountry from './modules/findCountry/inputFindCountry';
 const configuration = {
   country: 'all',
   type: 'recovered',
-  duration: 'lastDay',
+  duration: 'all',
   count: 'absolute',
 };
 
@@ -49,6 +49,26 @@ async function init() {
   // const res = await fetch(url);
   // const globalData = await res.json();
   getData(covidSummary).then((data) => {
+    // console.log(data);
+    // const countriesArr = data.Countries.map((item) => item.Country);
+    // const arr = [];
+    // const looool = countriesArr.map((item, index) => {
+    //   // eslint-disable-next-line no-alert
+    //   const temp1 = '';
+    //   if (index < 240) {
+    //     // eslint-disable-next-line no-alert
+    //     alert(item);
+    //     const temp = getData(`https://api.covid19api.com/live/country/${item}`).then((coord) => {
+    //       arr[index] = `${item}, ${coord[0].Lat}, ${coord[0].Lon}`;
+    //     });
+    //     // eslint-disable-next-line no-param-reassign
+    //     // eslint-disable-next-line no-return-assign
+    //     // eslint-disable-next-line no-return-assign
+    //     return temp;
+    //   }
+    //   return item;
+    // });
+    // console.log(arr);
     const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
     getData(populationData).then((population) => {
       globalCasesTotal(data);
@@ -57,7 +77,6 @@ async function init() {
       fullScreen();
       createMap(data, configuration, population);
     });
-    // eslint-disable-next-line no-unused-vars
     getDataForGraphs(
       configuration.country === 'all'
         ? `https://corona-api.com/timeline`

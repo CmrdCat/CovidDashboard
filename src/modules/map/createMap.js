@@ -4,7 +4,6 @@ import L from 'leaflet';
 import places from './coordinates.json';
 
 export default async function createMap(data, configuration) {
-  console.log(data.Countries);
   const mapOptions = {
     center: [30, 0],
     zoom: 3,
@@ -30,8 +29,12 @@ export default async function createMap(data, configuration) {
         },
         geometry: {
           type: 'Point',
-          coordinates:
-            index < 70 ? [places[index].split(', ')[2], places[index].split(', ')[1]] : [0, 0],
+          coordinates: places[index]
+            ? [
+                places[index].split(', ')[places[index].split(', ').length - 1],
+                places[index].split(', ')[places[index].split(', ').length - 2],
+              ]
+            : [0, 0],
         },
       };
     }),
