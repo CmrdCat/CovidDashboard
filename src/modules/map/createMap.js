@@ -56,7 +56,7 @@ export default async function createMap(data, configuration, population) {
   // eslint-disable-next-line no-unused-vars
   const midleValue =
     data.Countries.reduce((sum, element) => {
-      return sum + +element[`Total${type}`];
+      return sum + +element[configuration.duration === 'all' ? `Total${type}` : `New${type}`];
     }, 0) / data.Countries.length;
 
   const geoJsonLayers = new L.GeoJSON(geoJson, {
