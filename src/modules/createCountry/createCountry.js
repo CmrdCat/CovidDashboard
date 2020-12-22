@@ -51,27 +51,6 @@ export default class Country {
     return element;
   }
 
-  // changeData(flag, data = this.currentData) {
-  //   const arrayOfChildrens = Array.from(this.el.children);
-  //   const changedElement = arrayOfChildrens.filter((el) => el.classList.contains('country-data'));
-
-  //   function GetPropertyValue(obj1, dataToRetrieve) {
-  //     return dataToRetrieve.split('.').reduce((o, k) => {
-  //       return o && o[k];
-  //     }, obj1);
-  //   }
-
-  //   const dataInElement = GetPropertyValue(this, data);
-
-  //   if (flag === 'on100') {
-  //     changedElement[0].textContent = this.getDataFor100000(dataInElement).toFixed(2);
-  //     this.currentData = this.getDataFor100000(dataInElement);
-  //   } else {
-  //     changedElement[0].textContent = dataInElement;
-  //     this.currentData = dataInElement;
-  //   }
-  // }
-
   getDataFor100000(data) {
     return (data * 100000) / this.Population;
   }

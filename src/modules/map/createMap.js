@@ -33,7 +33,6 @@ export default function createMap(data, configuration) {
       };
     }),
   };
-  console.log(data);
   // eslint-disable-next-line no-unused-vars
   const midleValue =
     data.reduce(
