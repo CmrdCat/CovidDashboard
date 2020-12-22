@@ -1,5 +1,6 @@
 import 'bootstrap';
 import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
+// eslint-disable-next-line import/no-cycle
 import casesByCountry from './modules/casesByCountry/casesByCountry';
 import dateInfo from './modules/dateInfo/dateInfo';
 import createGraph from './modules/graphs/createGraph';
@@ -19,7 +20,7 @@ import findCountry from './modules/createCountryProperty/createCountryProperty';
 
 const configuration = {
   country: 'all',
-  type: 'recovered',
+  type: 'confirmed',
   duration: 'all',
   count: 'absolute',
 };
@@ -69,15 +70,19 @@ export default async function init() {
   // const res = await fetch(url);
   // const globalData = await res.json();
   getData(covidSummary).then((data) => {
-    const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
-    getData(populationData).then((population) => {
-      globalCasesTotal(data);
-      casesByCountry(data, population, configuration);
-      dateInfo(data);
-      getDataForMap2();
-      fullScreen();
-    });
-
+    if (data.Message) {
+      // eslint-disable-next-line
+      alert(data.Message);
+    } else {
+      const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
+      getData(populationData).then((population) => {
+        globalCasesTotal(data);
+        casesByCountry(data, population, configuration);
+        dateInfo(data);
+        getDataForMap2();
+        fullScreen();
+      });
+    }
     // eslint-disable-next-line no-unused-vars
 
     getDataForGraphs(
