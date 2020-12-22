@@ -1,16 +1,16 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-param-reassign */
-// eslint-disable-next-line import/no-cycle
 import init from '../../index';
 
-export default function getSelectorChange(globalData, configuration) {
-  const selectorCases = document.querySelector('#graph-select-cases');
+export default function getMapListeners(configuration) {
+  const selectorCases = document.querySelector('#map-select-cases');
   selectorCases.value = configuration.type;
   selectorCases.addEventListener('change', () => {
     // eslint-disable-next-line no-param-reassign
     configuration.type = selectorCases.value;
     init();
   });
-  const selectorDuration = document.querySelector('#graph-select-duration');
+  const selectorDuration = document.querySelector('#map-select-duration');
   selectorDuration.value = configuration.count === 'all' ? 'Summary' : 'Сhanges per day';
   selectorDuration.addEventListener('change', () => {
     // eslint-disable-next-line no-param-reassign
@@ -27,7 +27,7 @@ export default function getSelectorChange(globalData, configuration) {
     }
     init();
   });
-  const selectorCount = document.querySelector('#graph-select-count');
+  const selectorCount = document.querySelector('#map-select-count');
   selectorCount.value =
     configuration.count === 'absolute' ? 'Absolute' : 'Per 100 thousand population';
   selectorCount.addEventListener('change', () => {

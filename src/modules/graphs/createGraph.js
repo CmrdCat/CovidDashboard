@@ -1,6 +1,32 @@
 import Chart from 'chart.js';
 
 export default async function createGraph(globalData, configuration) {
+  document.querySelector('#graph').innerHTML = `
+  <div class="chart-title ml-2 mt-2"></div>
+  <div class="selection-wrapper pt-1 pb-2">
+    <div class="selector-wrapper">
+      <h3>Choose cases:</h3>
+      <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-cases">
+        <option>confirmed</option>
+        <option>deaths</option>
+        <option>recovered</option>
+      </select>
+    </div>
+    <div class="selector-wrapper">
+      <h3>Select reporting period:</h3>
+      <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-duration">
+        <option>Summary</option>
+        <option>Сhanges per day</option>
+      </select>
+    </div>
+    <div class="selector-wrapper">
+      <h3>Choose calculation method:</h3>
+      <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-count">
+        <option>Absolute</option>
+        <option>Per 100 thousand population</option>
+      </select>
+    </div>
+  </div>`;
   const selectorDuration = document.querySelector('#graph-select-duration');
   const selectorCases = document.querySelector('#graph-select-cases');
   selectorCases.value = configuration.type;
