@@ -83,12 +83,12 @@ export default async function init() {
       });
     }
     // eslint-disable-next-line no-unused-vars
-
     getDataForGraphs(
       configuration.country === 'all'
         ? `https://corona-api.com/timeline`
         : `https://api.covid19api.com/dayone/country/${configuration.country}`
     ).then((data1) => {
+      inputFindCountry();
       createGraph(data1, configuration);
       getSelectorChange(data1, configuration);
     });
@@ -98,7 +98,6 @@ export default async function init() {
     });
   });
   findCountry();
-  inputFindCountry();
   fullScreen();
 }
 
