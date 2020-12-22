@@ -159,6 +159,7 @@ body {
           align-items: center;
           list-style: none;
           padding: 0 3px;
+          cursor: pointer;
           .country-name {
             overflow-wrap: break-word;
             margin: 0 5px;
@@ -172,6 +173,9 @@ body {
             width: 60px;
             color: red;
             margin-left: 5px;
+          }
+          &#active {
+            background-color: rgba(2, 2, 122, 0.473);
           }
         }
       }
@@ -258,7 +262,7 @@ body {
         z-index: 100;
         margin: 0;
         border: none;
-        font-size: 2rem !important;
+        font-size: 1.5rem !important;
         button {
           top: 0.5rem;
           right: 0.5rem;
@@ -267,6 +271,16 @@ body {
             left: unset;
           }
         }
+
+        // h3 {
+        //   font-size: 5rem !important;
+        // }
+        // h2 {
+        //   font-size: 3rem !important;
+        // }
+        // span {
+        //   font-size: 3rem !important;
+        // }
       }
       button {
         position: absolute;

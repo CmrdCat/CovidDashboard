@@ -7,6 +7,7 @@ export default async function inputFindCountry() {
   for (let i = 0; i <= entres.length - 1; i += 1) {
     const option = document.createElement('option');
     option.value = entres[i].innerHTML;
+    console.log(entres[i].innerHTML);
     datalist.append(option);
   }
 }
