@@ -49,8 +49,10 @@
       <section class="col-12 col-sm-8 col-xl-12" id="cases-by-country"></section>
     </div>
     <div class="col-xl-6 col-12 central-column p-1">
-      <section class="col-12 col-sm-10 col-xl-12" id="map"><h2>Кхм-кхм</h2></section>
-      <section class="col-12 col-sm-2 col-xl-12" id="date-info">
+      <section class="col-12 col-sm-12 col-xl-12" id="map">
+        <div id="map-layer"></div>
+      </section>
+      <section class="col-12 col-sm-12 col-xl-12" id="date-info">
         <h2 id="date-header">Обновлено последний раз в (ДД/ММ/ГГГГ)</h2>
         <span id="date-last-update">10/10/10</span>
       </section>
@@ -60,16 +62,22 @@
         <h2>Случаи, смерти, выздоровевшие</h2>
       </section>
       <section class="col-12 col-sm-4 col-xl-12" id="graph">
-        <select class="form-control form-control-sm" id="graph-select-cases">
-          <option>confirmed</option>
-          <option>deaths</option>
-          <option>recovered</option>
-        </select>
-        <select class="form-control form-control-sm" id="graph-select-duration">
-          <option>all</option>
-          <option>lastDay</option>
-        </select>
-        <canvas id="myChart"></canvas>
+        <div class="chart-title ml-2 mt-2"></div>
+        <div class="selection-wrapper pt-1 pb-2">
+          <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-cases">
+            <option>confirmed</option>
+            <option>deaths</option>
+            <option>recovered</option>
+          </select>
+          <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-duration">
+            <option>all</option>
+            <option>lastDay</option>
+          </select>
+          <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-count">
+            <option>absolute</option>
+            <option>on100</option>
+          </select>
+        </div>
       </section>
     </div>
   </main>
