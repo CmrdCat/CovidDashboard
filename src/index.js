@@ -5,7 +5,7 @@ import dateInfo from './modules/dateInfo/dateInfo';
 import createGraph from './modules/graphs/createGraph';
 import getSelectorChange from './modules/graphs/getSelectorChange';
 import fullScreen from './modules/fullScreenButton/fullScreen';
-import findCountry from './modules/findCountry/findCountry';
+import inputFindCountry from './modules/findCountry/inputFindCountry';
 // const configuration = {
 //   country: 'all' || 'Belarus',
 //   type: 'recovered' || 'confirmed' || 'deaths',
@@ -48,7 +48,7 @@ async function init() {
     dateInfo(data);
   });
   fullScreen();
-  findCountry();
+  inputFindCountry();
 
   getDataForGraphs(
     configuration.country === 'all'
