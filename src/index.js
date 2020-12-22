@@ -19,7 +19,7 @@ import btnCooseCountry from './modules/btnCooseCountry/btnCooseCountry';
 // };
 
 const configuration = {
-  country: 'all',
+  country: 'Belarus',
   type: 'confirmed',
   duration: 'all',
   count: 'absolute',
