@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import 'bootstrap';
 import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
 // eslint-disable-next-line import/no-cycle

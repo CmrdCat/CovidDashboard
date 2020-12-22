@@ -3,9 +3,37 @@
 /* eslint-disable new-cap */
 import L from 'leaflet';
 import places from './coordinates.json';
+// eslint-disable-next-line import/no-cycle
+import getMapListeners from './getMapListeners';
 
 export default async function createMap(data, configuration, population) {
-  document.querySelector('#map').innerHTML = '<div id="map-layer"></div>';
+  document.querySelector('#map').innerHTML = `
+  <div class="map-selectors">
+  <div class="selector-wrapper">
+    <h3>Choose cases:</h3>
+    <select class="form-control form-control-sm ml-2 mr-2" id="map-select-cases">
+      <option>confirmed</option>
+      <option>deaths</option>
+      <option>recovered</option>
+    </select>
+  </div>
+  <div class="selector-wrapper">
+    <h3>Select reporting period:</h3>
+    <select class="form-control form-control-sm ml-2 mr-2" id="map-select-duration">
+      <option>Summary</option>
+      <option>Сhanges per day</option>
+    </select>
+  </div>
+  <div class="selector-wrapper">
+    <h3>Choose calculation method:</h3>
+    <select class="form-control form-control-sm ml-2 mr-2" id="map-select-count">
+      <option>Absolute</option>
+      <option>Per 100 thousand population</option>
+    </select>
+  </div>
+</div>
+<div id="map-layer"></div>`;
+  getMapListeners(configuration);
   const popul = {};
   for (const item of population) {
     popul[item.name] = item.population;
@@ -21,7 +49,6 @@ export default async function createMap(data, configuration, population) {
         ])
       : (countryCoordinates[array[0]] = [array[array.length - 2], array[array.length - 1]]);
   }
-  console.log(countryCoordinates);
 
   let mapOptions = {};
   mapOptions =
@@ -160,9 +187,9 @@ export default async function createMap(data, configuration, population) {
       const size = properties[configuration.duration === 'all' ? `Total${type}` : `New${type}`];
       mainString = '';
       const html = `
-        <span class="icon-marker ${type.toLowerCase()}" style="width: ${
-        (size / midleValue) * 3
-      }rem; height: ${(size / midleValue) * 3}rem;">
+        <span class="icon-marker ${type.toLowerCase()} ${
+        configuration.country === Country ? 'active' : ''
+      }" style="width: ${(size / midleValue) * 3}rem; height: ${(size / midleValue) * 3}rem;">
           <span class="icon-marker-tooltip">
             <h2>${configuration.count === 'on100' ? `${Country}, on 100th.` : Country}</h2>
             <ul>
