@@ -10,6 +10,7 @@ import fullScreen from './modules/fullScreenButton/fullScreen';
 import createMap from './modules/map/createMap';
 import inputFindCountry from './modules/findCountry/inputFindCountry';
 import findCountry from './modules/createCountryProperty/createCountryProperty';
+// eslint-disable-next-line
 import btnCooseCountry from './modules/btnCooseCountry/btnCooseCountry';
 // const configuration = {
 //   country: 'all' || 'Belarus',
@@ -43,7 +44,8 @@ async function getDataForGraphs(url) {
 }
 
 fullScreen();
-btnCooseCountry();
+btnCooseCountry(configuration);
+
 export default async function init() {
   const covidSummary = `https://api.covid19api.com/summary`;
   getData(covidSummary).then((data) => {
