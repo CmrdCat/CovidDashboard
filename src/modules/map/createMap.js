@@ -3,7 +3,7 @@ import L from 'leaflet';
 import places from './coordinates.json';
 
 export default async function createMap(data, configuration) {
-  console.log(data.Countries);
+  // console.log(data.Countries);
   const mapOptions = {
     center: [30, 0],
     zoom: 3,
@@ -22,7 +22,7 @@ export default async function createMap(data, configuration) {
     features: data.Countries.map((country = {}, index) => {
       // const { countryInfo = {} } = country;
       // const { lat, long: lng } = countryInfo;
-      console.log(country.Country);
+      // console.log(country.Country);
       return {
         type: 'Feature',
         properties: {

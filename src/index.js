@@ -119,7 +119,7 @@ async function init() {
   });
   getDataForMap2(`https://api.covid19api.com/premium/summary`).then((data) => {
     createMap(data, configuration);
-  inputFindCountry();
+    inputFindCountry();
   });
   findCountry();
 }
