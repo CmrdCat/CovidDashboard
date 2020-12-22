@@ -1,5 +1,6 @@
 export default async function globalCasesTotal(globalData) {
   const container = document.getElementById('global-cases');
+  container.innerText = '';
   const message = document.createElement('div');
   const totalConfirmed = globalData.Global.TotalConfirmed;
   const totalConfirmedWithSpaces = `${totalConfirmed}`
