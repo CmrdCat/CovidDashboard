@@ -23,7 +23,7 @@ const configuration = {
   country: 'all',
   type: 'confirmed',
   duration: 'all',
-  count: 'absolute',
+  count: 'on100',
 };
 
 async function getData(url) {
@@ -43,18 +43,6 @@ async function getDataForGraphs(url) {
   return response.json();
 }
 
-// eslint-disable-next-line no-unused-vars
-async function getDataForMap2() {
-  // eslint-disable-next-line no-unused-vars
-  const request = await fetch(`https://api.covid19api.com/premium/summary`, {
-    headers: {
-      'X-Access-Token': '5cf9dfd5-3449-485e-b5ae-70a60e997864',
-    },
-  })
-    .then((response) => response.text())
-    .then((result) => JSON.parse(result))
-    .catch((error) => console.log('error', error));
-}
 fullScreen();
 btnCooseCountry(configuration);
 
@@ -70,7 +58,6 @@ export default async function init() {
         globalCasesTotal(data);
         casesByCountry(data, population, configuration);
         dateInfo(data);
-        getDataForMap2();
         inputFindCountry();
         createMap(data, configuration, population);
       });
