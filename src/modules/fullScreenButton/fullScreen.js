@@ -1,3 +1,7 @@
+/* eslint-disable import/no-cycle */
+/* eslint-disable no-unused-vars */
+import init from '../../index';
+
 export default async function fullScreen() {
   document.querySelectorAll('section').forEach((element) => {
     element.addEventListener('mouseenter', () => {
@@ -13,6 +17,7 @@ export default async function fullScreen() {
       element.append(button);
       button.append(img);
       document.getElementById('sweep').addEventListener('click', () => {
+        if (element.id === 'map') init();
         if (!element.classList.value.includes('fullScreen')) {
           element.classList.add('fullScreen');
           document.querySelector('body').classList.add('overflow-hidden');
