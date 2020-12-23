@@ -281,6 +281,9 @@ body {
           border-radius: 0.25rem;
           transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
+        input {
+          width: 100%;
+        }
         @media (max-width: 1445px) and (min-width: 1023px) {
           flex-direction: column;
         }
@@ -567,8 +570,12 @@ body {
       background: $section-background;
       align-items: center;
       padding: 5px 12px;
+      .href {
+        display: flex;
+      }
       a {
         text-decoration: none;
+        margin: 0 15px;
       }
       h2 {
         font-size: 16px;
