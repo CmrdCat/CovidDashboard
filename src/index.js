@@ -50,30 +50,35 @@ fullScreen();
 btnCooseCountry(configuration);
 
 export default async function init() {
+  console.log('инит');
   const covidSummary = `https://api.covid19api.com/summary`;
-  getData(covidSummary).then((data) => {
-    if (data.Message) {
+  getData(covidSummary)
+    .catch(() => {
       $('#myModal').modal('show');
-    } else {
-      const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
-      getData(populationData).then((population) => {
-        globalCasesTotal(data);
-        casesByCountry(data, population, configuration);
-        dateInfo(data);
-        inputFindCountry();
-        createMap(data, configuration, population);
-        getDataForGraphs(
-          configuration.country === 'all'
-            ? `https://corona-api.com/timeline`
-            : `https://api.covid19api.com/dayone/country/${configuration.country}`
-        ).then((data1) => {
-          createGraph(data1, configuration, population);
-          getSelectorChange(data1, configuration, population);
+    })
+    .then((data) => {
+      if (data.Message) {
+        $('#myModal').modal('show');
+      } else {
+        const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
+        getData(populationData).then((population) => {
+          globalCasesTotal(data);
+          casesByCountry(data, population, configuration);
+          dateInfo(data);
+          inputFindCountry();
+          createMap(data, configuration, population);
+          getDataForGraphs(
+            configuration.country === 'all'
+              ? `https://corona-api.com/timeline`
+              : `https://api.covid19api.com/dayone/country/${configuration.country}`
+          ).then((data1) => {
+            createGraph(data1, configuration, population);
+            getSelectorChange(data1, configuration, population);
+          });
         });
-      });
-    }
-    // eslint-disable-next-line no-unused-vars
-  });
+      }
+      // eslint-disable-next-line no-unused-vars
+    });
   findCountry();
 }
 
