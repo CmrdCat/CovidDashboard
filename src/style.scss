@@ -267,7 +267,7 @@ body {
           border-radius: 0.25rem;
           transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
-        @media (max-width: 1260px) and (min-width: 1200px) {
+        @media (max-width: 1445px) and (min-width: 1200px) {
           flex-direction: column;
         }
       }
@@ -312,7 +312,7 @@ body {
           align-items: center;
           padding: 0 10px;
           text-align: center;
-          width: 100px;
+          width: 130px;
           height: 100%;
           color: white;
           text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.7);
