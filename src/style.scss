@@ -250,7 +250,8 @@ body {
       }
       .selectDataWrapper,
       .selectCaseWrapper,
-      .sortSelectWrapper {
+      .sortSelectWrapper,
+      .searchInputWrapper {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -258,7 +259,8 @@ body {
         p {
           margin: 5px 10px 5px 0px;
         }
-        select {
+        select,
+        input {
           display: block;
           font-size: 1rem;
           font-weight: 400;
