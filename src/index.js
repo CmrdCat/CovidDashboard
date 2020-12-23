@@ -78,7 +78,7 @@ export default async function init() {
       }
       // eslint-disable-next-line no-unused-vars
     });
-  findCountry();
+  findCountry(configuration);
 }
 
 init();
