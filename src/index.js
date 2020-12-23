@@ -13,6 +13,7 @@ import inputFindCountry from './modules/findCountry/inputFindCountry';
 import findCountry from './modules/createCountryProperty/createCountryProperty';
 // eslint-disable-next-line
 import btnCooseCountry from './modules/btnCooseCountry/btnCooseCountry';
+import Keyboard from './modules/keyboard/keyboard';
 // const configuration = {
 //   country: 'all' || 'Belarus',
 //   type: 'recovered' || 'confirmed' || 'deaths',
@@ -61,6 +62,7 @@ export default async function init() {
         dateInfo(data);
         inputFindCountry();
         createMap(data, configuration, population);
+
         getDataForGraphs(
           configuration.country === 'all'
             ? `https://corona-api.com/timeline`
@@ -77,3 +79,4 @@ export default async function init() {
 }
 
 init();
+Keyboard.initKeyboard();
