@@ -50,7 +50,6 @@ fullScreen();
 btnCooseCountry(configuration);
 
 export default async function init() {
-  console.log('инит');
   const covidSummary = `https://api.covid19api.com/summary`;
   getData(covidSummary)
     .catch(() => {
