@@ -1,5 +1,4 @@
 export default async function inputFindCountry() {
-
   if (document.getElementById('input').getAttribute('list') == null) {
     document.querySelector('input').setAttribute('list', 'allCountru');
     const datalist = document.createElement('datalist');
@@ -13,4 +12,24 @@ export default async function inputFindCountry() {
       datalist.append(option);
     }
   }
+  document.getElementById('input').oninput = function name() {
+    const val = this.value.trim();
+    const items = document.getElementsByClassName('country-name');
+    const liItem = document.getElementsByTagName('li');
+    if (val !== '') {
+      for (let i = 0; i <= items.length - 1; i += 1) {
+        if (items[i].innerText.search(val) === -1) {
+          liItem[i].hidden = true;
+          items[i].innerHTML = items[i].innerText;
+        } else {
+          liItem[i].hidden = false;
+        }
+      }
+    } else {
+      for (let i = 0; i <= items.length - 1; i += 1) {
+        liItem[i].hidden = false;
+        items[i].innerHTML = items[i].innerText;
+      }
+    }
+  };
 }
