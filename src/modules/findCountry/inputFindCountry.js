@@ -1,5 +1,4 @@
 export default async function inputFindCountry() {
-
   if (document.getElementById('input').getAttribute('list') == null) {
     document.querySelector('input').setAttribute('list', 'allCountru');
     const datalist = document.createElement('datalist');
