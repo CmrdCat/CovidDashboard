@@ -1,5 +1,5 @@
-const findCountry = () => {
-  let countryName = 'Belarus';
+const findCountry = (configuration) => {
+  let countryName = configuration.country;
   const countryWrapperListiner = document.querySelector('#cases-by-country');
   const allData = [];
 
