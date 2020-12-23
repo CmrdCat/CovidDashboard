@@ -38,8 +38,8 @@ export default async function fullScreen() {
     element.addEventListener('mouseleave', () => {
       const button = document.getElementById('sweep');
       const img = document.getElementById('img');
-      button.removeChild(img);
-      element.removeChild(button);
+      if (img) button.removeChild(img);
+      if (button) element.removeChild(button);
     });
   });
 }
