@@ -259,7 +259,8 @@ body {
       }
       .selectDataWrapper,
       .selectCaseWrapper,
-      .sortSelectWrapper {
+      .sortSelectWrapper,
+      .searchInputWrapper {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -267,7 +268,8 @@ body {
         p {
           margin: 5px 10px 5px 0px;
         }
-        select {
+        select,
+        input {
           display: block;
           font-size: 1rem;
           font-weight: 400;
@@ -779,7 +781,7 @@ body {
   .recoveredListWrapper,
   .localDataContainer {
     padding: 5px 0;
-    height: calc(80%);
+    height: calc(100%);
     display: flex;
     flex-direction: column;
     ul {
@@ -805,6 +807,12 @@ body {
           color: #ffffffd0;
         }
       }
+    }
+    .showButton,
+    .hideButton {
+      width: 100%;
+      height: 100%;
+      position: relative;
     }
   }
 }
