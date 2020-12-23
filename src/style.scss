@@ -152,6 +152,11 @@ select:focus {
 body {
   background-color: black;
   color: $text;
+  datalist {
+    box-sizing: inherit;
+    width: 100px !important;
+    height: 100px !important;
+  }
   nav {
     .collapse {
       justify-content: flex-end;

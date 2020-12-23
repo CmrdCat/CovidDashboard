@@ -11,18 +11,5 @@ export default async function inputFindCountry() {
       option.value = entres[i].innerHTML;
       datalist.append(option);
     }
-  } else {
-    const datalist = document.getElementById('allCountry');
-    const last = datalist.lastChild;
-    while (last) {
-      datalist.removeChild(last);
-    }
-    const entres = document.getElementsByClassName('country-name');
-    for (let i = 0; i <= entres.length - 1; i += 1) {
-      const option = document.createElement('option');
-      option.classList.add('findOption');
-      option.value = entres[i].innerHTML;
-      datalist.append(option);
-    }
   }
 }
