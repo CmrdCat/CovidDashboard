@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta charset="utf-8" />
   <link rel="shortcut icon" href="#" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 
 <body>
@@ -23,22 +24,14 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Empty link <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Empty link</a>
-          </li>
-        </ul>
         <form class="form-inline my-2 my-lg-0">
           <input
-            class="form-control mr-sm-2"
-            type="search"
+            class="form-control mr-sm-2 use-keyboard-input"
             placeholder="Country"
             aria-label="Country"
+            id="input"
           />
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Choose country</button>
+          <button id="choose" class="btn btn-outline-success my-2 my-sm-0">Choose country</button>
         </form>
       </div>
     </nav>
@@ -50,6 +43,30 @@
     </div>
     <div class="col-xl-6 col-12 central-column p-1">
       <section class="col-12 col-sm-12 col-xl-12" id="map">
+        <div class="map-selectors">
+          <div class="selector-wrapper">
+            <h3>Choose cases:</h3>
+            <select class="form-control form-control-sm ml-2 mr-2" id="map-select-cases">
+              <option>confirmed</option>
+              <option>deaths</option>
+              <option>recovered</option>
+            </select>
+          </div>
+          <div class="selector-wrapper">
+            <h3>Select reporting period:</h3>
+            <select class="form-control form-control-sm ml-2 mr-2" id="map-select-duration">
+              <option>Summary</option>
+              <option>Сhanges per day</option>
+            </select>
+          </div>
+          <div class="selector-wrapper">
+            <h3>Choose calculation method:</h3>
+            <select class="form-control form-control-sm ml-2 mr-2" id="map-select-count">
+              <option>Absolute</option>
+              <option>Per 100 thousand population</option>
+            </select>
+          </div>
+        </div>
         <div id="map-layer"></div>
       </section>
       <section class="col-12 col-sm-12 col-xl-12" id="date-info">
@@ -64,30 +81,39 @@
       <section class="col-12 col-sm-4 col-xl-12" id="graph">
         <div class="chart-title ml-2 mt-2"></div>
         <div class="selection-wrapper pt-1 pb-2">
-          <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-cases">
-            <option>confirmed</option>
-            <option>deaths</option>
-            <option>recovered</option>
-          </select>
-          <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-duration">
-            <option>all</option>
-            <option>lastDay</option>
-          </select>
-          <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-count">
-            <option>absolute</option>
-            <option>on100</option>
-          </select>
+          <div class="selector-wrapper">
+            <h3>Choose cases:</h3>
+            <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-cases">
+              <option>confirmed</option>
+              <option>deaths</option>
+              <option>recovered</option>
+            </select>
+          </div>
+          <div class="selector-wrapper">
+            <h3>Select reporting period:</h3>
+            <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-duration">
+              <option>Summary</option>
+              <option>Сhanges per day</option>
+            </select>
+          </div>
+          <div class="selector-wrapper">
+            <h3>Choose calculation method:</h3>
+            <select class="form-control form-control-sm ml-2 mr-2" id="graph-select-count">
+              <option>Absolute</option>
+              <option>Per 100 thousand population</option>
+            </select>
+          </div>
         </div>
       </section>
     </div>
   </main>
   <footer>
     <div class="wrapper">
-      <a href="https://github.com/"><h2>Ссылка на гитхаб</h2></a>
+      <a href="https://github.com/">
+        <h2>Ссылка на гитхаб</h2>
+      </a>
       <p>2020</p>
       <a href="https://rs.school/js/"><img src="./img/rss.svg" alt="" /></a>
     </div>
   </footer>
-  <link rel="stylesheet" href="/path/to/leaflet.css" />
-  <script src="/path/to/leaflet.js"></script>
 </body>
