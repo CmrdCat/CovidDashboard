@@ -1,6 +1,7 @@
+/* eslint-disable no-restricted-syntax */
 import Chart from 'chart.js';
 
-export default async function createGraph(globalData, configuration) {
+export default async function createGraph(globalData, configuration, population) {
   document.querySelector('#graph').innerHTML = `
   <div class="chart-title ml-2 mt-2"></div>
   <div class="selection-wrapper pt-1 pb-2">
@@ -27,6 +28,10 @@ export default async function createGraph(globalData, configuration) {
       </select>
     </div>
   </div>`;
+  const popul = {};
+  for (const item of population) {
+    popul[item.name] = item.population;
+  }
   const selectorDuration = document.querySelector('#graph-select-duration');
   const selectorCases = document.querySelector('#graph-select-cases');
   selectorCases.value = configuration.type;
@@ -49,7 +54,6 @@ export default async function createGraph(globalData, configuration) {
   const ctx = document.getElementById('chart');
   const color = ['rgb(255, 238, 0)', 'rgb(21, 156, 21)', 'rgb(255, 0, 0)'];
   const data = configuration.country === 'all' ? globalData.data : globalData;
-  let lastValue = 0;
   data.forEach((element, index) => {
     if (
       configuration.country === 'all' &&
@@ -65,29 +69,25 @@ export default async function createGraph(globalData, configuration) {
       );
       date.push(element.date);
     } else if (configuration.country !== 'all') {
-      lastValue = confirmed.length === 0 ? 0 : data[index - 1].Cases;
-      confirmed.push(
-        // eslint-disable-next-line no-nested-ternary
-        configuration.duration === 'lastDay'
-          ? confirmed.length === 0
-            ? element.Confirmed
-            : +element.Confirmed - lastValue
-          : element.Confirmed
-      );
-      deaths.push(
-        // eslint-disable-next-line no-nested-ternary
-        configuration.duration === 'lastDay'
-          ? deaths.length === 0
-            ? element.Deaths
-            : +element.Deaths - lastValue
-          : element.Deaths
-      );
+      let confirmedValue = 0;
+      if (configuration.duration === 'lastDay') {
+        if (index !== 0) {
+          confirmedValue = +element.Confirmed - +data[index - 1].Confirmed;
+        } else confirmedValue = element.Confirmed;
+      } else confirmedValue = element.Confirmed;
+      confirmed.push(confirmedValue);
+      let deathsValue = 0;
+      if (configuration.duration === 'lastDay') {
+        deathsValue =
+          deaths.length === 0 ? element.Deaths : +element.Deaths - +data[index - 1].Deaths;
+      } else deathsValue = element.Deaths;
+      deaths.push(deathsValue);
       recovered.push(
         // eslint-disable-next-line no-nested-ternary
         configuration.duration === 'lastDay'
           ? recovered.length === 0
             ? element.Recovered
-            : +element.Recovered - lastValue
+            : +element.Recovered - +data[index - 1].Recovered
           : element.Recovered
       );
 
