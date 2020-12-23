@@ -11,16 +11,15 @@ export default function getMapListeners(configuration) {
     init();
   });
   const selectorDuration = document.querySelector('#map-select-duration');
-  selectorDuration.value = configuration.count === 'all' ? 'Summary' : 'Сhanges per day';
+  selectorDuration.value = configuration.duration === 'all' ? 'Summary' : 'Сhanges per day';
   selectorDuration.addEventListener('change', () => {
     // eslint-disable-next-line no-param-reassign
-    configuration.duration = selectorDuration.value;
     switch (selectorDuration.value) {
       case 'Summary':
-        configuration.count = 'all';
+        configuration.duration = 'all';
         break;
       case 'Сhanges per day':
-        configuration.count = 'lastDay';
+        configuration.duration = 'lastDay';
         break;
       default:
         break;

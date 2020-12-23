@@ -61,17 +61,17 @@ export default async function init() {
         dateInfo(data);
         inputFindCountry();
         createMap(data, configuration, population);
+        getDataForGraphs(
+          configuration.country === 'all'
+            ? `https://corona-api.com/timeline`
+            : `https://api.covid19api.com/dayone/country/${configuration.country}`
+        ).then((data1) => {
+          createGraph(data1, configuration, population);
+          getSelectorChange(data1, configuration, population);
+        });
       });
     }
     // eslint-disable-next-line no-unused-vars
-    getDataForGraphs(
-      configuration.country === 'all'
-        ? `https://corona-api.com/timeline`
-        : `https://api.covid19api.com/dayone/country/${configuration.country}`
-    ).then((data1) => {
-      createGraph(data1, configuration);
-      getSelectorChange(data1, configuration);
-    });
   });
   findCountry();
 }
