@@ -94,13 +94,9 @@
       <a href="https://rs.school/js/"><img src="./img/rss.svg" alt="" /></a>
     </div>
   </footer>
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
-    Запустить статический фон модального окна
-  </button>
   <div
     class="modal fade"
-    id="staticBackdrop"
+    id="myModal"
     data-backdrop="static"
     data-keyboard="false"
     tabindex="-1"
@@ -116,10 +112,15 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">...</div>
+        <div class="modal-body">Please, try again later...</div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            onClick="window.location.href=window.location.href"
+          >
+            Refresh the page
+          </button>
         </div>
       </div>
     </div>

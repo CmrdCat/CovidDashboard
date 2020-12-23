@@ -1,6 +1,6 @@
-/* eslint-disable no-undef */
 /* eslint-disable import/no-cycle */
 import 'bootstrap';
+import $ from 'jquery';
 import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
 // eslint-disable-next-line import/no-cycle
 import casesByCountry from './modules/casesByCountry/casesByCountry';
@@ -21,7 +21,6 @@ import Keyboard from './modules/keyboard/keyboard';
 //   duration: 'all' || 'lastDay',
 //   count: 'absolute' || 'on100',
 // };
-import 'bootstrap/js/dist/modal';
 
 const configuration = {
   country: 'all',
@@ -54,9 +53,7 @@ export default async function init() {
   const covidSummary = `https://api.covid19api.com/summary`;
   getData(covidSummary).then((data) => {
     if (data.Message) {
-      // eslint-disable-next-line
-      alert(data.Message);
-      // $('#myModal').modal(options);
+      $('#myModal').modal('show');
     } else {
       const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
       getData(populationData).then((population) => {
