@@ -2,7 +2,7 @@
 import init from '../../index';
 
 export default async function btnCooseCountry(configuration) {
-  init();
+  // init();
   const entres = document.getElementsByClassName('country-name');
   const arr = [];
   const btn = document.getElementById('choose');
