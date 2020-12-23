@@ -164,6 +164,7 @@ export default async function casesByCountry(globalData, population, configurati
   searchInputText.textContent = 'Search Country:';
   const searchInput = document.createElement('input');
   searchInput.classList.add('search');
+  searchInput.id = 'input';
   searchInput.classList.add('use-keyboard-input');
 
   searchInputWrapper.appendChild(searchInputText);
