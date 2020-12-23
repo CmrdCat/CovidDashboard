@@ -54,7 +54,6 @@ export default async function createGraph(globalData, configuration, population)
   const ctx = document.getElementById('chart');
   const color = ['rgb(255, 238, 0)', 'rgb(21, 156, 21)', 'rgb(255, 0, 0)'];
   const data = configuration.country === 'all' ? globalData.data : globalData;
-  console.log(data);
   data.forEach((element, index) => {
     let to100 = 1;
     let name;
