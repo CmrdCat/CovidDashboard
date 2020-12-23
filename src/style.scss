@@ -161,6 +161,11 @@ select:focus {
 body {
   background-color: black;
   color: $text;
+  datalist {
+    box-sizing: inherit;
+    width: 100px !important;
+    height: 100px !important;
+  }
   nav {
     .collapse {
       justify-content: flex-end;
@@ -238,6 +243,7 @@ body {
       }
       .navigation-in-cases {
         border-bottom: 1px solid darkgray;
+        padding-bottom: 5px;
       }
       .selectDataWrapper,
       .selectCaseWrapper,
@@ -261,13 +267,15 @@ body {
           border-radius: 0.25rem;
           transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
+        @media (max-width: 1445px) and (min-width: 1200px) {
+          flex-direction: column;
+        }
       }
       .selectDataWrapper {
         .checkbox {
           display: inline-block;
           position: relative;
           text-align: left;
-          width: 150px;
           height: 30px;
           background-color: #222;
           -webkit-box-shadow: inset 0 1px 2px black, 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -304,6 +312,7 @@ body {
           align-items: center;
           padding: 0 10px;
           text-align: center;
+          width: 130px;
           height: 100%;
           color: white;
           text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.7);
@@ -320,7 +329,6 @@ body {
         }
 
         .checkbox input:checked + label {
-          margin-left: 40px;
           color: white;
         }
 
