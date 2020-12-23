@@ -372,7 +372,40 @@ body {
       }
       #map-layer {
         width: 100%;
-        height: calc(90% - 62px);
+        height: calc(87% - 94px);
+      }
+      .legend-container {
+        height: calc(13% - 5px);
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        .colors {
+          width: 20%;
+          padding-right: 20px;
+          .color-variant {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 0.8rem;
+            span {
+              margin-right: 5px;
+            }
+          }
+        }
+        .sizes {
+          width: 75%;
+          display: flex;
+          justify-content: space-around;
+          .size-variant {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1rem;
+            span {
+              margin-right: 5px;
+            }
+          }
+        }
       }
     }
     #date-info {
@@ -539,7 +572,10 @@ body {
         display: flex;
         flex-direction: column;
         #map {
-          max-height: 683px;
+          max-height: 871px;
+          #map-layer {
+            height: calc(70% - 94px);
+          }
         }
         #date-info {
           max-height: 100px;
@@ -553,7 +589,7 @@ body {
         width: calc(33.3333333333% - 0.5rem);
         flex: unset;
         .chart-container {
-          height: calc(100% - 210px);
+          height: calc(100% - 250px);
         }
       }
       .selection-wrapper {
