@@ -380,7 +380,41 @@ body {
       }
       #map-layer {
         width: 100%;
-        height: calc(90% - 62px);
+        height: calc(87% - 94px);
+      }
+      .legend-container {
+        height: calc(13% - 5px);
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        .colors {
+          width: 20%;
+          min-width: 135px;
+          padding-right: 20px;
+          .color-variant {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 0.8rem;
+            span {
+              margin-right: 5px;
+            }
+          }
+        }
+        .sizes {
+          width: 75%;
+          display: flex;
+          justify-content: space-around;
+          .size-variant {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1rem;
+            span {
+              margin-right: 5px;
+            }
+          }
+        }
       }
     }
     #date-info {
@@ -527,12 +561,11 @@ body {
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1199px) {
   body {
     header {
-      position: sticky;
       top: 0px;
-      z-index: 100;
+      z-index: 10000;
     }
     main {
       section.fullScreen {
@@ -547,7 +580,10 @@ body {
         display: flex;
         flex-direction: column;
         #map {
-          max-height: 683px;
+          max-height: 666px;
+          #map-layer {
+            height: calc(86% - 94px);
+          }
         }
         #date-info {
           max-height: 100px;
@@ -561,7 +597,8 @@ body {
         width: calc(33.3333333333% - 0.5rem);
         flex: unset;
         .chart-container {
-          height: calc(100% - 210px);
+          margin-top: 0.5rem;
+          height: calc(100% - 290px);
         }
       }
       .selection-wrapper {
@@ -586,7 +623,6 @@ body {
         #map {
           margin-right: 0;
           .map-selectors {
-            flex-wrap: wrap;
             .form-control {
               margin-top: 7px;
               padding: 0;
@@ -612,6 +648,33 @@ body {
   body {
     main {
       height: unset;
+      #map {
+        height: 620px !important;
+        #map-layer {
+          height: calc(76% - 94px) !important;
+        }
+        .legend-container {
+          flex-wrap: wrap;
+          padding: 5px 0px;
+          .colors {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            .color-variant {
+              padding-right: 5px;
+            }
+          }
+          .sizes {
+            padding-top: 7px;
+            flex-wrap: wrap;
+            width: 100%;
+            .size-variant {
+              padding-right: 5px;
+            }
+          }
+        }
+      }
       #graph {
         width: 100%;
         .chart-container {
@@ -647,6 +710,23 @@ body {
       }
       & > div:nth-of-type(3) {
         height: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 440px) {
+  body {
+    main {
+      #map {
+        max-height: unset !important;
+        height: 760px !important;
+        #map-layer {
+          height: calc(57% - 94px) !important;
+        }
+        .map-selectors {
+          flex-wrap: wrap;
+        }
       }
     }
   }

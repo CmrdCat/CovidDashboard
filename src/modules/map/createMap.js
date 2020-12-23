@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-vars */
 /* eslint-disable new-cap */
@@ -63,7 +64,7 @@ export default async function createMap(data, configuration, population) {
         };
 
   const map = new L.map('map-layer', mapOptions);
-  map.options.minZoom = 2;
+  map.options.minZoom = 3;
   map.options.maxZoom = 14;
   const accessToken =
     'pk.eyJ1IjoiZG1pdHJpeWhvbXphIiwiYSI6ImNraXgwdTltYTF0Z2UyeHNjemI5am0ydXMifQ.bXwZCvH4rqRs124UCmmcdw';
@@ -256,7 +257,7 @@ export default async function createMap(data, configuration, population) {
       const html = `
         <span class="icon-marker ${type.toLowerCase()} ${
         configuration.country === Country ? 'active' : ''
-      }" style="width: ${(size / midleValue) * 1}rem; height: ${(size / midleValue) * 1}rem;">
+      }" style="width: ${(size / midleValue) * 2}rem; height: ${(size / midleValue) * 2}rem;">
           <span class="icon-marker-tooltip">
             <h2>${Country}</h2>
             <ul>
@@ -281,4 +282,36 @@ export default async function createMap(data, configuration, population) {
     },
   });
   geoJsonLayers.addTo(map);
+  function floorZeros(value) {
+    let count = 0;
+    while (value > 100) {
+      count += 1;
+      value /= 10;
+    }
+    value = value.toFixed(0);
+    value *= 10 ** count;
+    return value;
+  }
+  const legendValueHigh = floorZeros(midleValue * 2);
+  const legendValueMiddle = floorZeros(midleValue);
+  const legendValueLow = floorZeros(midleValue / 2);
+  const legendContainer = document.createElement('div');
+  legendContainer.classList.add('legend-container');
+  legendContainer.innerHTML = `<div class="colors">
+  <div class="color-variant"><span class="icon-marker confirmed" style="width: 1rem; height: 1rem;"></span>Confirmed cases</div>
+  <div class="color-variant"><span class="icon-marker recovered" style="width: 1rem; height: 1rem;"></span>Recovered cases</div>
+  <div class="color-variant"><span class="icon-marker deaths" style="width: 1rem; height: 1rem;"></span>Deaths cases</div>
+  </div>
+  <div class="sizes">
+  <div class="size-variant">
+  <span class="icon-marker ${type.toLowerCase()}" style="width: 4rem; height: 4rem;"></span> >${legendValueHigh} cases
+  </div>
+  <div class="size-variant">
+  <span class="icon-marker ${type.toLowerCase()}" style="width: 2rem; height: 2rem;"></span> ${legendValueMiddle} cases
+  </div>
+  <div class="size-variant">
+  <span class="icon-marker ${type.toLowerCase()}" style="width: 1rem; height: 1rem;"></span> <${legendValueLow} cases
+  </div>
+  </div>`;
+  document.querySelector('#map').append(legendContainer);
 }

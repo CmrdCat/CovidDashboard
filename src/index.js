@@ -14,7 +14,6 @@ import findCountry from './modules/createCountryProperty/createCountryProperty';
 // eslint-disable-next-line
 import btnCooseCountry from './modules/btnCooseCountry/btnCooseCountry';
 import Keyboard from './modules/keyboard/keyboard';
-import chooseWorld from './modules/chooseWorld/chooseWorld';
 // const configuration = {
 //   country: 'all' || 'Belarus',
 //   type: 'recovered' || 'confirmed' || 'deaths',
@@ -76,7 +75,6 @@ export default async function init() {
     // eslint-disable-next-line no-unused-vars
   });
   findCountry();
-  chooseWorld(configuration);
 }
 
 init();
