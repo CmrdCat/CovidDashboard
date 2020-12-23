@@ -1,10 +1,10 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-undef */
+/* eslint-disable import/no-cycle */
+/* eslint-disable no-param-reassign */
 
-// eslint-disable-next-line import/no-cycle
 import init from '../../index';
-// eslint-disable-next-line import/no-cycle
 import Country from '../createCountry/createCountry';
 
 export default async function casesByCountry(globalData, population, configuration) {
@@ -37,28 +37,22 @@ export default async function casesByCountry(globalData, population, configurati
   selectCase.onchange = () => {
     switch (true) {
       case selectCase.value.includes('Recovered'):
-        // eslint-disable-next-line
         configuration.type = 'recovered';
         break;
       case selectCase.value.includes('Confirmed'):
-        // eslint-disable-next-line
         configuration.type = 'confirmed';
         break;
       case selectCase.value.includes('Death'):
-        // eslint-disable-next-line
         configuration.type = 'deaths';
         break;
       default:
         break;
     }
     if (selectCase.value.includes('Total')) {
-      // eslint-disable-next-line
       configuration.duration = 'all';
     } else {
-      // eslint-disable-next-line
       configuration.duration = 'LastDay';
     }
-    // eslint-disable-next-line
     init();
   };
   selectCaseWrapper.append(selectCaseText);
@@ -79,16 +73,13 @@ export default async function casesByCountry(globalData, population, configurati
   if (configuration.count === 'on100') {
     selectData.checked = true;
   }
-  // eslint-disable-next-line no-unused-expressions
 
   selectData.onclick = () => {
     if (flag === 'absolute') {
       flag = 'on100';
-      // eslint-disable-next-line
       configuration.count = 'on100';
     } else {
       flag = 'absolute';
-      // eslint-disable-next-line
       configuration.count = 'absolute';
     }
     init();
@@ -167,7 +158,17 @@ export default async function casesByCountry(globalData, population, configurati
 
   navBlock.append(sortSelectWrapper);
 
-  // eslint-disable-next-line no-unused-expressions
+  const searchInputWrapper = document.createElement('div');
+  searchInputWrapper.classList.add('searchInputWrapper');
+  const searchInputText = document.createElement('p');
+  searchInputText.textContent = 'Search Country:';
+  const searchInput = document.createElement('input');
+  searchInput.classList.add('search');
+  searchInput.classList.add('use-keyboard-input');
+
+  searchInputWrapper.appendChild(searchInputText);
+  searchInputWrapper.appendChild(searchInput);
+  navBlock.append(searchInputWrapper);
 
   const countries = globalData.Countries;
   for (const country of countries) {
@@ -233,7 +234,6 @@ export default async function casesByCountry(globalData, population, configurati
       listItem.el.setAttribute('id', 'active');
     }
     listItem.el.onclick = () => {
-      // eslint-disable-next-line
       configuration.country = countryName;
       init();
     };
