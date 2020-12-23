@@ -381,6 +381,7 @@ body {
         align-items: center;
         .colors {
           width: 20%;
+          min-width: 135px;
           padding-right: 20px;
           .color-variant {
             display: flex;
@@ -552,12 +553,11 @@ body {
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1199px) {
   body {
     header {
-      position: sticky;
       top: 0px;
-      z-index: 100;
+      z-index: 10000;
     }
     main {
       section.fullScreen {
@@ -572,9 +572,9 @@ body {
         display: flex;
         flex-direction: column;
         #map {
-          max-height: 871px;
+          max-height: 666px;
           #map-layer {
-            height: calc(70% - 94px);
+            height: calc(86% - 94px);
           }
         }
         #date-info {
@@ -589,7 +589,8 @@ body {
         width: calc(33.3333333333% - 0.5rem);
         flex: unset;
         .chart-container {
-          height: calc(100% - 250px);
+          margin-top: 0.5rem;
+          height: calc(100% - 290px);
         }
       }
       .selection-wrapper {
@@ -614,7 +615,6 @@ body {
         #map {
           margin-right: 0;
           .map-selectors {
-            flex-wrap: wrap;
             .form-control {
               margin-top: 7px;
               padding: 0;
@@ -640,6 +640,33 @@ body {
   body {
     main {
       height: unset;
+      #map {
+        height: 620px !important;
+        #map-layer {
+          height: calc(76% - 94px) !important;
+        }
+        .legend-container {
+          flex-wrap: wrap;
+          padding: 5px 0px;
+          .colors {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            .color-variant {
+              padding-right: 5px;
+            }
+          }
+          .sizes {
+            padding-top: 7px;
+            flex-wrap: wrap;
+            width: 100%;
+            .size-variant {
+              padding-right: 5px;
+            }
+          }
+        }
+      }
       #graph {
         width: 100%;
         .chart-container {
@@ -675,6 +702,23 @@ body {
       }
       & > div:nth-of-type(3) {
         height: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 440px) {
+  body {
+    main {
+      #map {
+        max-height: unset !important;
+        height: 760px !important;
+        #map-layer {
+          height: calc(57% - 94px) !important;
+        }
+        .map-selectors {
+          flex-wrap: wrap;
+        }
       }
     }
   }

@@ -64,7 +64,7 @@ export default async function createMap(data, configuration, population) {
         };
 
   const map = new L.map('map-layer', mapOptions);
-  map.options.minZoom = 2;
+  map.options.minZoom = 3;
   map.options.maxZoom = 14;
   const accessToken =
     'pk.eyJ1IjoiZG1pdHJpeWhvbXphIiwiYSI6ImNraXgwdTltYTF0Z2UyeHNjemI5am0ydXMifQ.bXwZCvH4rqRs124UCmmcdw';
