@@ -1,3 +1,12 @@
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1024px,
+  xxl: 1900px,
+);
+
 @import '~normalize.css';
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'leaflet/dist/leaflet.css';
@@ -270,7 +279,7 @@ body {
           border-radius: 0.25rem;
           transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
-        @media (max-width: 1445px) and (min-width: 1200px) {
+        @media (max-width: 1445px) and (min-width: 1023px) {
           flex-direction: column;
         }
       }
@@ -356,6 +365,9 @@ body {
       .map-selectors {
         padding: 12px 0px;
         display: flex;
+        @media (max-width: 1210px) and (min-width: 1023px) {
+          padding: 0px 0px 5px 0px;
+        }
         .selector-wrapper {
           width: 100%;
           display: flex;
@@ -390,10 +402,17 @@ body {
         padding: 10px;
         display: flex;
         align-items: center;
+        @media (max-width: 1210px) and (min-width: 1023px) {
+          padding: 10px 0px 0px;
+        }
         .colors {
           width: 20%;
           min-width: 135px;
           padding-right: 20px;
+          @media (max-width: 1210px) and (min-width: 1023px) {
+            min-width: 120px;
+            padding-right: 5px;
+          }
           .color-variant {
             display: flex;
             align-items: center;
@@ -564,7 +583,7 @@ body {
   }
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1023px) {
   body {
     header {
       top: 0px;
