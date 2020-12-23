@@ -271,7 +271,6 @@ body {
         select,
         input {
           display: block;
-          width: 100%;
           font-size: 1rem;
           font-weight: 400;
           line-height: 1.5;
@@ -281,6 +280,9 @@ body {
           border: 1px solid #5d5d5d;
           border-radius: 0.25rem;
           transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        input {
+          width: 100%;
         }
         @media (max-width: 1445px) and (min-width: 1023px) {
           flex-direction: column;
@@ -519,6 +521,7 @@ body {
         z-index: 100;
         margin: 0;
         border: none;
+        font-size: 1.5rem !important;
         button {
           top: 0.5rem;
           right: 0.5rem;
@@ -526,18 +529,16 @@ body {
             left: unset;
           }
         }
-        #date-header {
-          font-size: 3rem !important ;
-        }
-        #date-last-update {
-          font-size: 3rem !important ;
-        }
-        #global {
-          font-size: 5rem !important ;
-        }
-        #globalSpan {
-          font-size: 5rem !important ;
-        }
+
+        // h3 {
+        //   font-size: 5rem !important;
+        // }
+        // h2 {
+        //   font-size: 3rem !important;
+        // }
+        // span {
+        //   font-size: 3rem !important;
+        // }
       }
       button {
         position: absolute;
@@ -569,27 +570,18 @@ body {
       background: $section-background;
       align-items: center;
       padding: 5px 12px;
-
-      div {
-        width: 40%;
+      .href {
         display: flex;
-        justify-content: space-between;
-
-        a {
-          text-decoration: none;
-        }
-        h2 {
-          font-size: 1rem;
-          color: $text;
-          &:hover {
-            text-shadow: 1px 1px 2px black, 0 0 1em red;
-            color: rgb(19, 245, 94);
-          }
-        }
+      }
+      a {
+        text-decoration: none;
+        margin: 0 15px;
+      }
+      h2 {
+        font-size: 16px;
+        color: $text;
       }
       p {
-        position: absolute;
-        left: 50%;
         color: $text;
         margin-bottom: 0px;
       }
