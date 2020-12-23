@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-vars */
@@ -6,6 +7,7 @@ import L from 'leaflet';
 import places from './coordinates.json';
 // eslint-disable-next-line import/no-cycle
 import getMapListeners from './getMapListeners';
+import init from '../../index';
 
 export default async function createMap(data, configuration, population) {
   document.querySelector('#map').innerHTML = `
@@ -271,7 +273,6 @@ export default async function createMap(data, configuration, population) {
           ${mainString}
         </span>
       `;
-
       return L.marker(latlng, {
         icon: L.divIcon({
           className: 'icon',
@@ -292,6 +293,13 @@ export default async function createMap(data, configuration, population) {
     value *= 10 ** count;
     return value;
   }
+  const markers = document.querySelectorAll('.icon-marker');
+  markers.forEach((element) =>
+    element.addEventListener('click', () => {
+      configuration.country = element.querySelector('h2').innerText;
+      init();
+    })
+  );
   const legendValueHigh = floorZeros(midleValue * 2);
   const legendValueMiddle = floorZeros(midleValue);
   const legendValueLow = floorZeros(midleValue / 2);

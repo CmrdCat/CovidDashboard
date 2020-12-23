@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable import/no-cycle */
 import 'bootstrap';
 import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
@@ -20,6 +21,7 @@ import Keyboard from './modules/keyboard/keyboard';
 //   duration: 'all' || 'lastDay',
 //   count: 'absolute' || 'on100',
 // };
+import 'bootstrap/js/dist/modal';
 
 const configuration = {
   country: 'all',
@@ -54,6 +56,7 @@ export default async function init() {
     if (data.Message) {
       // eslint-disable-next-line
       alert(data.Message);
+      // $('#myModal').modal(options);
     } else {
       const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
       getData(populationData).then((population) => {
