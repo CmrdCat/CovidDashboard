@@ -26,18 +26,21 @@ const findCountry = () => {
 
     wrapper.innerHTML = `<div class="globalDataContainer">
     <div>
+
        <h2 class="redElement">Global Deaths : ${date[0].Global.TotalDeaths}</h2>
        <h2 class="greenElement hideElement">Global Recovered : ${date[0].Global.TotalRecovered}</h2>
     </div>
-    <div><button class="btn greenElement showButton">Global Deaths/Global Recovered</button></div>
     <div class="deadListWrapper">
+
        <ul id="deadList"></ul>
     </div>
     <div class="recoveredListWrapper hideElement">
+  
+
        <ul id="recoveredList"></ul>
     </div>
    </div>
-   <div class="globalDataContainer localDataContainer"><ul id="localList"></u></div>`;
+   <div class="globalDataContainer localDataContainer">  <div><button class="btn greenElement showButton">Global Deaths/Global Recovered</button></div><ul id="localList"></u></div>`;
 
     if (nesElement.TotalDeaths === '') {
       date[0].Countries.forEach((item) => {
