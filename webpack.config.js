@@ -67,6 +67,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: './src/img', to: './img' },
+        { from: './src/keyboard-sounds', to: './keyboard-sounds' },
         // { from: './src/audio', to: './audio' },
       ],
     }),
