@@ -73,7 +73,7 @@ select option {
   display: none;
   position: absolute;
   bottom: 100%;
-  width: 16em;
+  width: 17em;
   font-size: 1rem;
   padding: 1em;
   margin-bottom: 1em;
@@ -114,6 +114,15 @@ select option {
     list-style: none;
     padding: 0;
     margin: 0.6em 0 0;
+  }
+}
+
+#choose-world {
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    color: white;
+    transition: 0.3s;
   }
 }
 
