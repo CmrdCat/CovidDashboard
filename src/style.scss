@@ -618,7 +618,7 @@ body {
         flex: unset;
       }
       #graph {
-        width: calc(33.3333333333% - 0.5rem);
+        // width: calc(33.3333333333% - 0.5rem);
         flex: unset;
         .chart-container {
           margin-top: 0.5rem;
@@ -755,64 +755,43 @@ body {
     }
   }
 }
+
 #custom-data {
   display: flex;
-  .hideElement {
-    display: none !important;
+  flex-direction: column;
+  padding: 5px 12px;
+  font-weight: 600;
+  .country {
+    color: white;
+    span {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: red;
+    }
   }
-  .greenElement {
-    display: block;
-    color: green;
-    border-color: green;
-  }
-  .redElement {
-    display: block;
-    color: red;
-    border-color: red;
-  }
-  .globalDataContainer {
-    padding: 5px 0;
-    height: calc(100%);
+  .values {
     display: flex;
     flex-direction: column;
-    width: calc(53%);
-  }
-  .deadListWrapper,
-  .recoveredListWrapper,
-  .localDataContainer {
-    padding: 5px 0;
-    height: calc(100%);
-    display: flex;
-    flex-direction: column;
-    ul {
-      height: 100%;
-      overflow-y: scroll;
-      padding-left: 0px;
-      li {
-        border-bottom: 1px solid darkgray;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        list-style: none;
-        padding: 0 3px;
-        .country-name {
-          overflow-wrap: break-word;
-          margin: 0 5px;
-          max-width: 100px;
-          color: #ffffffd0;
-          font-weight: 700;
-        }
-        .country-data {
-          font-weight: 700;
-          color: #ffffffd0;
-        }
+    flex-wrap: wrap;
+
+    & > div > div {
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid $border;
+      padding: 3px 7px;
+      font-size: 0.8rem;
+      span {
+        font-weight: 600;
       }
     }
-    .showButton,
-    .hideButton {
-      width: 100%;
-      height: 100%;
-      position: relative;
+    .green {
+      color: rgb(21, 156, 21);
+    }
+    .yellow {
+      color: rgb(255, 238, 0);
+    }
+    .red {
+      color: rgb(255, 0, 0);
     }
   }
 }
