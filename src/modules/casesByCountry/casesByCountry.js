@@ -69,6 +69,9 @@ export default async function casesByCountry(globalData, population, configurati
   selectDataWrapper.classList.add('selectDataWrapper');
   const selectDataText = document.createElement('p');
   selectDataText.textContent = 'Calculation Method:';
+  const checkboxSpan = document.createElement('span');
+  checkboxSpan.classList.add('checkbox');
+  checkboxSpan.innerHTML = '<label data-on="Population" data-off="Absolute"></label>';
   const selectData = document.createElement('input');
   selectData.setAttribute('type', 'checkbox');
   selectData.classList.add('select');
@@ -91,7 +94,8 @@ export default async function casesByCountry(globalData, population, configurati
     init();
   };
   selectDataWrapper.append(selectDataText);
-  selectDataWrapper.append(selectData);
+  checkboxSpan.insertAdjacentElement('afterbegin', selectData);
+  selectDataWrapper.append(checkboxSpan);
 
   navBlock.append(selectDataWrapper);
 
