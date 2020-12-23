@@ -7,7 +7,7 @@ export default async function inputFindCountry() {
     const entres = document.getElementsByClassName('country-name');
     for (let i = 0; i <= entres.length - 1; i += 1) {
       const option = document.createElement('option');
-      option.classList.add('findOption');
+      // option.classList.add('findOption');
       option.value = entres[i].innerHTML;
       datalist.append(option);
     }
@@ -18,7 +18,7 @@ export default async function inputFindCountry() {
     const liItem = document.getElementsByTagName('li');
     if (val !== '') {
       for (let i = 0; i <= items.length - 1; i += 1) {
-        if (items[i].innerText.search(val) === -1) {
+        if (items[i].innerText.toLowerCase().search(val.toLowerCase()) === -1) {
           liItem[i].hidden = true;
           items[i].innerHTML = items[i].innerText;
         } else {

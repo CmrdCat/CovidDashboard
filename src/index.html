@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 
 <head>
-  <title>COVID dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta charset="utf-8" />
-  <link rel="shortcut icon" href="#" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">COVID-19 Dashboard</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarTogglerDemo01"
+      aria-controls="navbarTogglerDemo01"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" id="input" placeholder="Country" aria-label="Country" />
+        <button class="btn btn-outline-success my-2 my-sm-0" id="choose">Choose country</button>
+      </form>
+    </div>
+  </nav>
 </head>
 
 <body>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">COVID-19 Dashboard</a>
-    </nav>
-  </header>
   <main class="d-flex flex-wrap left-column">
     <div class="col-xl-2 col-12 p-1">
       <section class="col-12 col-sm-4 col-xl-12" id="global-cases"></section>
