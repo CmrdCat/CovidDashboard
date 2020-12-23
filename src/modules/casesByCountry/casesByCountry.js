@@ -234,7 +234,11 @@ export default async function casesByCountry(globalData, population, configurati
       listItem.el.setAttribute('id', 'active');
     }
     listItem.el.onclick = () => {
-      configuration.country = countryName;
+      if (listItem.el.id === 'active') {
+        configuration.country = 'all';
+      } else {
+        configuration.country = countryName;
+      }
       init();
     };
     arrayOfCountryes.push(listItem);
