@@ -578,7 +578,7 @@ footer {
     padding: 5px 12px;
 
     div {
-      width: 30%;
+      width: 40%;
       display: flex;
       justify-content: space-between;
 
@@ -688,7 +688,17 @@ footer {
     }
   }
 }
-
+@media (max-width: 768px) {
+  footer {
+    .wrapper {
+      div {
+        h2 {
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+}
 @media (max-width: 575px) {
   body {
     main {
@@ -755,6 +765,15 @@ footer {
       }
       & > div:nth-of-type(3) {
         height: 100%;
+      }
+    }
+  }
+  footer {
+    .wrapper {
+      div {
+        h2 {
+          font-size: 0.5rem;
+        }
       }
     }
   }
