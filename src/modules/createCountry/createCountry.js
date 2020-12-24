@@ -1,5 +1,7 @@
+// eslint-disable-next-line import/no-cycle
+
 export default class Country {
-  constructor(parent, data) {
+  constructor(parent, data, flag, property) {
     this.parent = parent;
 
     this.Country = data.Country;
@@ -15,39 +17,38 @@ export default class Country {
 
     this.currentData = this.TotalConfirmed;
 
-    this.el = this.createEl();
+    this.el = this.createEl(flag, property);
     this.parent.appendChild(this.el);
   }
 
-  createEl() {
+  createEl(flag, property) {
     const element = document.createElement('li');
-    element.innerHTML = `
-        <img src="https://www.countryflags.io/${this.CountryCode.toLowerCase()}/shiny/32.png">
-        <div class="country-data">${this.TotalConfirmed}</div>
-        <div class="country-name">${this.Country}</div>
-        `;
-    return element;
-  }
-
-  changeData(flag, data = this.currentData) {
-    const arrayOfChildrens = Array.from(this.el.children);
-    const changedElement = arrayOfChildrens.filter((el) => el.classList.contains('country-data'));
 
     function GetPropertyValue(obj1, dataToRetrieve) {
       return dataToRetrieve.split('.').reduce((o, k) => {
         return o && o[k];
       }, obj1);
     }
+    const dataInElement = GetPropertyValue(this, property);
 
-    const dataInElement = GetPropertyValue(this, data);
-
-    if (flag) {
-      changedElement[0].textContent = this.getDataFor100000(dataInElement).toFixed(2);
+    let data = 0;
+    if (flag === 'on100') {
+      data = this.getDataFor100000(dataInElement).toFixed(2);
       this.currentData = this.getDataFor100000(dataInElement);
     } else {
-      changedElement[0].textContent = dataInElement;
+      data = dataInElement;
       this.currentData = dataInElement;
     }
+    element.innerHTML = `
+        <img src="https://www.countryflags.io/${this.CountryCode.toLowerCase()}/shiny/32.png">
+        <div class="country-data">${data}</div>
+        <div class="country-name">${this.Country}</div>
+        `;
+    element.onclick = () => {
+      this.el.scrollIntoView();
+      return this.Country;
+    };
+    return element;
   }
 
   getDataFor100000(data) {

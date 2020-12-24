@@ -1,42 +1,176 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-undef */
+/* eslint-disable import/no-cycle */
+/* eslint-disable no-param-reassign */
 
+import init from '../../index';
 import Country from '../createCountry/createCountry';
 
-export default async function casesByCountry(globalData, population) {
+export default async function casesByCountry(globalData, population, configuration) {
+  document.getElementById('cases-by-country').innerHTML = '';
   const arrayOfCountryes = [];
-  let flag = false;
+  let flag = configuration.count;
 
   const container = document.getElementById('cases-by-country');
 
   const navBlock = document.createElement('div');
   navBlock.classList.add('navigation-in-cases');
-
+  const selectCaseWrapper = document.createElement('div');
+  selectCaseWrapper.classList.add('selectCaseWrapper');
+  const selectCaseText = document.createElement('p');
+  selectCaseText.textContent = 'Show Data:';
   const selectCase = document.createElement('select');
   for (const key in globalData.Global) {
-    selectCase[selectCase.length] = new Option(key, key);
+    if (typeof key !== 'object') {
+      const property = key;
+      const duration = configuration.duration === 'all' ? 'total' : 'new';
+      selectCase[selectCase.length] = new Option(key, key);
+      if (
+        property.toLowerCase().includes(configuration.type) &&
+        property.toLowerCase().includes(duration)
+      ) {
+        selectCase[selectCase.length - 1].selected = true;
+      }
+    }
   }
-  selectCase[1].selected = true;
   selectCase.onchange = () => {
-    arrayOfCountryes.forEach((el) => {
-      el.changeData(flag, selectCase.value);
-    });
+    switch (true) {
+      case selectCase.value.includes('Recovered'):
+        configuration.type = 'recovered';
+        break;
+      case selectCase.value.includes('Confirmed'):
+        configuration.type = 'confirmed';
+        break;
+      case selectCase.value.includes('Death'):
+        configuration.type = 'deaths';
+        break;
+      default:
+        break;
+    }
+    if (selectCase.value.includes('Total')) {
+      configuration.duration = 'all';
+    } else {
+      configuration.duration = 'LastDay';
+    }
+    init();
   };
-  navBlock.append(selectCase);
+  selectCaseWrapper.append(selectCaseText);
+  selectCaseWrapper.append(selectCase);
+  navBlock.append(selectCaseWrapper);
 
+  const selectDataWrapper = document.createElement('div');
+  selectDataWrapper.classList.add('selectDataWrapper');
+  const selectDataText = document.createElement('p');
+  selectDataText.textContent = 'Calculation Method:';
+  const checkboxSpan = document.createElement('span');
+  checkboxSpan.classList.add('checkbox');
+  checkboxSpan.innerHTML = '<label data-on="Population" data-off="Absolute"></label>';
   const selectData = document.createElement('input');
   selectData.setAttribute('type', 'checkbox');
   selectData.classList.add('select');
-  selectData.onchange = () => {
-    flag = selectData.checked;
-    arrayOfCountryes.forEach((el) => {
-      el.changeData(flag, selectCase.value);
-    });
+
+  if (configuration.count === 'on100') {
+    selectData.checked = true;
+  }
+
+  selectData.onclick = () => {
+    if (flag === 'absolute') {
+      flag = 'on100';
+      configuration.count = 'on100';
+    } else {
+      flag = 'absolute';
+      configuration.count = 'absolute';
+    }
+    init();
   };
-  navBlock.append(selectData);
+  selectDataWrapper.append(selectDataText);
+  checkboxSpan.insertAdjacentElement('afterbegin', selectData);
+  selectDataWrapper.append(checkboxSpan);
+
+  navBlock.append(selectDataWrapper);
 
   const list = document.createElement('ul');
+
+  const sortSelectWrapper = document.createElement('div');
+  sortSelectWrapper.classList.add('sortSelectWrapper');
+  const sortSelectText = document.createElement('p');
+  sortSelectText.textContent = 'Sort By:';
+  const sortSelect = document.createElement('select');
+  sortSelect[sortSelect.length] = new Option('A-Z', 'A-Z');
+  sortSelect[sortSelect.length] = new Option('Z-A', 'Z-A');
+  sortSelect[sortSelect.length] = new Option('0-9', '0-9');
+  sortSelect[sortSelect.length] = new Option('9-0', '9-0');
+
+  function selectCurrentCountry() {
+    if (configuration.country !== 'all') {
+      document.getElementById('active').scrollIntoView();
+    }
+  }
+  function updateCasesOfCountryes() {
+    list.textContent = '';
+    arrayOfCountryes.forEach((el) => {
+      list.appendChild(el.el);
+    });
+    selectCurrentCountry();
+  }
+
+  sortSelect.onchange = () => {
+    switch (true) {
+      case sortSelect.value === 'A-Z':
+        arrayOfCountryes.sort((a, b) => {
+          if (a.Country < b.Country) {
+            return -1;
+          }
+          if (a.Country > b.Country) {
+            return 1;
+          }
+          return 0;
+        });
+        updateCasesOfCountryes();
+        break;
+      case sortSelect.value === 'Z-A':
+        arrayOfCountryes.sort((a, b) => {
+          if (b.Country < a.Country) {
+            return -1;
+          }
+          if (b.Country > a.Country) {
+            return 1;
+          }
+          return 0;
+        });
+        updateCasesOfCountryes();
+        break;
+      case sortSelect.value === '0-9':
+        arrayOfCountryes.sort((a, b) => a.currentData - b.currentData);
+        updateCasesOfCountryes();
+        break;
+      case sortSelect.value === '9-0':
+        arrayOfCountryes.sort((a, b) => b.currentData - a.currentData);
+        updateCasesOfCountryes();
+        break;
+      default:
+        break;
+    }
+  };
+  sortSelectWrapper.append(sortSelectText);
+  sortSelectWrapper.append(sortSelect);
+
+  navBlock.append(sortSelectWrapper);
+
+  const searchInputWrapper = document.createElement('div');
+  searchInputWrapper.classList.add('searchInputWrapper');
+  const searchInputText = document.createElement('p');
+  searchInputText.textContent = 'Search Country:';
+  const searchInput = document.createElement('input');
+  searchInput.classList.add('search');
+  searchInput.id = 'input';
+  searchInput.classList.add('use-keyboard-input');
+
+  searchInputWrapper.appendChild(searchInputText);
+  searchInputWrapper.appendChild(searchInput);
+  navBlock.append(searchInputWrapper);
+
   const countries = globalData.Countries;
   for (const country of countries) {
     const countryReg = country.Country.replace(/[^A-Za-z]/g, '');
@@ -46,6 +180,19 @@ export default async function casesByCountry(globalData, population) {
         if (country.Country === 'Cape Verde') {
           return true;
         }
+      }
+      if (country.Country === 'Dominican Republic') {
+        if (el.name === 'Dominican Republic') {
+          return true;
+        }
+      }
+      if (country.Country === 'Dominica') {
+        if (el.name === 'Dominica') {
+          return true;
+        }
+      }
+      if (el.name === 'British Indian Ocean Territory') {
+        return false;
       }
       if (el.name === 'Korea (Republic of)') {
         if (country.Country === 'Korea (South)') {
@@ -73,14 +220,37 @@ export default async function casesByCountry(globalData, population) {
         }
       }
       if (countryReg.includes(populationNameReg) || populationNameReg.includes(countryReg)) {
+        if (el.name === 'Dominica' || el.name === 'Dominican Republic') {
+          return false;
+        }
         return true;
       }
       return false;
     });
     country.Population = populationForCountry.population;
-    arrayOfCountryes.push(new Country(list, country));
+    const listItem = new Country(list, country, flag, selectCase.value);
+    const countryName = listItem.Country;
+
+    if (configuration.country === listItem.Country) {
+      listItem.el.setAttribute('id', 'active');
+    }
+    listItem.el.onclick = () => {
+      if (listItem.el.id === 'active') {
+        configuration.country = 'all';
+      } else {
+        configuration.country = countryName;
+      }
+      init();
+    };
+    arrayOfCountryes.push(listItem);
   }
 
   container.append(navBlock);
   container.append(list);
+
+  sortSelect[3].selected = true;
+  arrayOfCountryes.sort((a, b) => b.currentData - a.currentData);
+  updateCasesOfCountryes();
+
+  selectCurrentCountry();
 }
