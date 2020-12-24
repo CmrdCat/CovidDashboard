@@ -463,6 +463,12 @@ body {
     #custom-data {
       height: calc(60% - 15px);
     }
+    .list-span-1 {
+      color: red;
+    }
+    .globalDataContainer {
+      font-size: 1.5rem;
+    }
     #graph {
       height: calc(40%);
       .chart-title {
@@ -778,41 +784,41 @@ footer {
 }
 
 #custom-data {
-  display: flex;
-  flex-direction: column;
-  padding: 5px 12px;
-  font-weight: 600;
-  .country {
-    color: white;
-    span {
-      font-size: 1.2rem;
-      font-weight: 600;
+
+  .selection-wrapper {
+    display: flex;
+    .list-span-1 {
       color: red;
     }
-  }
-  .values {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-
-    & > div > div {
+    .selector-wrapper {
+      width: 100%;
+      padding: 0.375rem 0.75rem;
       display: flex;
-      justify-content: space-between;
-      border: 1px solid $border;
-      padding: 3px 7px;
-      font-size: 0.8rem;
-      span {
-        font-weight: 600;
+      flex-direction: column;
+      justify-content: flex-end;
+      h3 {
+        font-size: 0.8rem;
+      }
+      select {
+        margin: 0px !important;
       }
     }
-    .green {
-      color: rgb(21, 156, 21);
-    }
-    .yellow {
-      color: rgb(255, 238, 0);
-    }
-    .red {
-      color: rgb(255, 0, 0);
+    .form-control {
+      display: block;
+      width: 100%;
+      height: calc(1.5em + 0.75rem + 2px);
+      padding: 0.1rem 0.15rem;
+      font-size: 0.8rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #ffffff;
+      background-color: #fff0;
+      background-clip: padding-box;
+      border: 1px solid #5d5d5d;
+      border-radius: 0.25rem;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+
     }
   }
 }
