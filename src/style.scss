@@ -1,3 +1,12 @@
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1024px,
+  xxl: 1900px,
+);
+
 @import '~normalize.css';
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'leaflet/dist/leaflet.css';
@@ -11,6 +20,9 @@
   }
 }
 
+.modal-dialog {
+  color: #303030;
+}
 select,
 option {
   text-transform: capitalize;
@@ -73,7 +85,7 @@ select option {
   display: none;
   position: absolute;
   bottom: 100%;
-  width: 16em;
+  width: 17em;
   font-size: 1rem;
   padding: 1em;
   margin-bottom: 1em;
@@ -114,6 +126,15 @@ select option {
     list-style: none;
     padding: 0;
     margin: 0.6em 0 0;
+  }
+}
+
+#choose-world {
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    color: white;
+    transition: 0.3s;
   }
 }
 
@@ -234,10 +255,12 @@ body {
       }
       .navigation-in-cases {
         border-bottom: 1px solid darkgray;
+        padding-bottom: 5px;
       }
       .selectDataWrapper,
       .selectCaseWrapper,
-      .sortSelectWrapper {
+      .sortSelectWrapper,
+      .searchInputWrapper {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -245,7 +268,8 @@ body {
         p {
           margin: 5px 10px 5px 0px;
         }
-        select {
+        select,
+        input {
           display: block;
           font-size: 1rem;
           font-weight: 400;
@@ -257,13 +281,15 @@ body {
           border-radius: 0.25rem;
           transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
+        @media (max-width: 1445px) and (min-width: 1023px) {
+          flex-direction: column;
+        }
       }
       .selectDataWrapper {
         .checkbox {
           display: inline-block;
           position: relative;
           text-align: left;
-          width: 150px;
           height: 30px;
           background-color: #222;
           -webkit-box-shadow: inset 0 1px 2px black, 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -300,6 +326,7 @@ body {
           align-items: center;
           padding: 0 10px;
           text-align: center;
+          width: 130px;
           height: 100%;
           color: white;
           text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.7);
@@ -316,7 +343,6 @@ body {
         }
 
         .checkbox input:checked + label {
-          margin-left: 40px;
           color: white;
         }
 
@@ -341,6 +367,9 @@ body {
       .map-selectors {
         padding: 12px 0px;
         display: flex;
+        @media (max-width: 1210px) and (min-width: 1023px) {
+          padding: 0px 0px 5px 0px;
+        }
         .selector-wrapper {
           width: 100%;
           display: flex;
@@ -368,7 +397,48 @@ body {
       }
       #map-layer {
         width: 100%;
-        height: calc(90% - 62px);
+        height: calc(87% - 94px);
+      }
+      .legend-container {
+        height: calc(13% - 5px);
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        @media (max-width: 1210px) and (min-width: 1023px) {
+          padding: 10px 0px 0px;
+        }
+        .colors {
+          width: 20%;
+          min-width: 135px;
+          padding-right: 20px;
+          @media (max-width: 1210px) and (min-width: 1023px) {
+            min-width: 120px;
+            padding-right: 5px;
+          }
+          .color-variant {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 0.8rem;
+            span {
+              margin-right: 5px;
+            }
+          }
+        }
+        .sizes {
+          width: 75%;
+          display: flex;
+          justify-content: space-around;
+          .size-variant {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1rem;
+            span {
+              margin-right: 5px;
+            }
+          }
+        }
       }
     }
     #date-info {
@@ -448,7 +518,6 @@ body {
         z-index: 100;
         margin: 0;
         border: none;
-        font-size: 1.5rem !important;
         button {
           top: 0.5rem;
           right: 0.5rem;
@@ -456,16 +525,18 @@ body {
             left: unset;
           }
         }
-
-        // h3 {
-        //   font-size: 5rem !important;
-        // }
-        // h2 {
-        //   font-size: 3rem !important;
-        // }
-        // span {
-        //   font-size: 3rem !important;
-        // }
+        #date-header {
+          font-size: 3rem !important ;
+        }
+        #date-last-update {
+          font-size: 3rem !important ;
+        }
+        #global {
+          font-size: 5rem !important ;
+        }
+        #globalSpan {
+          font-size: 5rem !important ;
+        }
       }
       button {
         position: absolute;
@@ -497,14 +568,27 @@ body {
       background: $section-background;
       align-items: center;
       padding: 5px 12px;
-      a {
-        text-decoration: none;
-      }
-      h2 {
-        font-size: 16px;
-        color: $text;
+
+      div {
+        width: 30%;
+        display: flex;
+        justify-content: space-between;
+
+        a {
+          text-decoration: none;
+        }
+        h2 {
+          font-size: 1rem;
+          color: $text;
+          &:hover {
+            text-shadow: 1px 1px 2px black, 0 0 1em red;
+            color: rgb(19, 245, 94);
+          }
+        }
       }
       p {
+        position: absolute;
+        left: 50%;
         color: $text;
         margin-bottom: 0px;
       }
@@ -515,12 +599,11 @@ body {
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1023px) {
   body {
     header {
-      position: sticky;
       top: 0px;
-      z-index: 100;
+      z-index: 10000;
     }
     main {
       section.fullScreen {
@@ -535,7 +618,10 @@ body {
         display: flex;
         flex-direction: column;
         #map {
-          max-height: 683px;
+          max-height: 666px;
+          #map-layer {
+            height: calc(86% - 94px);
+          }
         }
         #date-info {
           max-height: 100px;
@@ -549,7 +635,8 @@ body {
         width: calc(33.3333333333% - 0.5rem);
         flex: unset;
         .chart-container {
-          height: calc(100% - 210px);
+          margin-top: 0.5rem;
+          height: calc(100% - 290px);
         }
       }
       .selection-wrapper {
@@ -574,7 +661,6 @@ body {
         #map {
           margin-right: 0;
           .map-selectors {
-            flex-wrap: wrap;
             .form-control {
               margin-top: 7px;
               padding: 0;
@@ -600,6 +686,33 @@ body {
   body {
     main {
       height: unset;
+      #map {
+        height: 620px !important;
+        #map-layer {
+          height: calc(76% - 94px) !important;
+        }
+        .legend-container {
+          flex-wrap: wrap;
+          padding: 5px 0px;
+          .colors {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            .color-variant {
+              padding-right: 5px;
+            }
+          }
+          .sizes {
+            padding-top: 7px;
+            flex-wrap: wrap;
+            width: 100%;
+            .size-variant {
+              padding-right: 5px;
+            }
+          }
+        }
+      }
       #graph {
         width: 100%;
         .chart-container {
@@ -639,6 +752,23 @@ body {
     }
   }
 }
+
+@media (max-width: 440px) {
+  body {
+    main {
+      #map {
+        max-height: unset !important;
+        height: 760px !important;
+        #map-layer {
+          height: calc(57% - 94px) !important;
+        }
+        .map-selectors {
+          flex-wrap: wrap;
+        }
+      }
+    }
+  }
+}
 #custom-data {
   display: flex;
   .hideElement {
@@ -665,7 +795,7 @@ body {
   .recoveredListWrapper,
   .localDataContainer {
     padding: 5px 0;
-    height: calc(80%);
+    height: calc(100%);
     display: flex;
     flex-direction: column;
     ul {
@@ -691,6 +821,12 @@ body {
           color: #ffffffd0;
         }
       }
+    }
+    .showButton,
+    .hideButton {
+      width: 100%;
+      height: 100%;
+      position: relative;
     }
   }
 }

@@ -1,5 +1,5 @@
-const findCountry = () => {
-  let countryName = 'Belarus';
+const findCountry = (configuration) => {
+  let countryName = configuration.country;
   const countryWrapperListiner = document.querySelector('#cases-by-country');
   const allData = [];
 
@@ -26,18 +26,21 @@ const findCountry = () => {
 
     wrapper.innerHTML = `<div class="globalDataContainer">
     <div>
+
        <h2 class="redElement">Global Deaths : ${date[0].Global.TotalDeaths}</h2>
        <h2 class="greenElement hideElement">Global Recovered : ${date[0].Global.TotalRecovered}</h2>
     </div>
-    <div><button class="btn greenElement showButton">Global Deaths/Global Recovered</button></div>
     <div class="deadListWrapper">
+
        <ul id="deadList"></ul>
     </div>
     <div class="recoveredListWrapper hideElement">
+  
+
        <ul id="recoveredList"></ul>
     </div>
    </div>
-   <div class="globalDataContainer localDataContainer"><ul id="localList"></u></div>`;
+   <div class="globalDataContainer localDataContainer"><div><button class="btn greenElement showButton">Global Deaths/Global Recovered</button></div><div><button class="btn greenElement hideButton">Per 100K</button></div> <ul id="localList"></u></div>`;
 
     if (nesElement.TotalDeaths === '') {
       date[0].Countries.forEach((item) => {
@@ -48,6 +51,7 @@ const findCountry = () => {
           nesElement.TotalConfirmed = item.TotalConfirmed;
           nesElement.TotalDeaths = item.TotalDeaths;
           nesElement.TotalRecovered = item.TotalRecovered;
+          nesElement.Country = nesElement.name;
           nesElement.NewConfirmedNaStoK = Math.round(
             100000 / (nesElement.population / item.NewConfirmed)
           );
@@ -79,17 +83,30 @@ const findCountry = () => {
       });
     }
     const showButton = document.querySelector('.showButton');
+    const hideButton = document.querySelector('.hideButton');
     const deadListWrapperListiner = document.querySelector('.deadListWrapper');
     const recoveredListWrapperListiner = document.querySelector('.recoveredListWrapper');
 
     const nesElementArray = Object.entries(nesElement);
 
-    nesElementArray.forEach((item) => {
-      const liForDead = document.createElement('li');
+    nesElementArray.forEach((item, i) => {
+      if (i >= 8) {
+        const liForDead = document.createElement('li');
 
-      liForDead.innerHTML = `<li class="country-data">${item[0]} ${item[1]} </li> `;
+        liForDead.className = 'item-data hideElement';
 
-      document.getElementById('localList').appendChild(liForDead);
+        liForDead.innerHTML = `${item[0]} ${item[1]}`;
+
+        document.getElementById('localList').appendChild(liForDead);
+      }
+      if (i <= 7) {
+        const liForDead = document.createElement('li');
+        liForDead.className = 'item-data';
+
+        liForDead.innerHTML = `${item[0]} ${item[1]}`;
+
+        document.getElementById('localList').appendChild(liForDead);
+      }
     });
 
     const show = (event) => {
@@ -106,6 +123,13 @@ const findCountry = () => {
       document.querySelector('.recoveredListWrapper').classList.toggle('hideElement');
       document.querySelector('.deadListWrapper').classList.toggle('hideElement');
       document.querySelector('.redElement').classList.toggle('hideElement');
+    };
+
+    hideButton.onclick = () => {
+      const items = document.getElementsByClassName('item-data');
+      for (let i = 0; i < items.length; i += 1) {
+        items[i].classList.toggle('hideElement');
+      }
     };
   }
   async function getDataForOneCountry(url) {
