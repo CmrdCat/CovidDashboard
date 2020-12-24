@@ -7,7 +7,7 @@ const wrapper = document.getElementById('custom-data');
 function renderList(fields, configuration) {
   wrapper.innerHTML = `
     <div class="globalDataContainer localDataContainer">
-      <p>Country: ${fields.Country}</p>
+      <p>Country: <span class="list-span-1"> ${fields.Country}</span></p>
       <p>Population: ${fields.Population}</p>
 
       <div class="selection-wrapper pt-1 pb-2">

@@ -456,6 +456,12 @@ body {
     #custom-data {
       height: calc(60% - 15px);
     }
+    .list-span-1 {
+      color: red;
+    }
+    .globalDataContainer {
+      font-size: 1.5rem;
+    }
     #graph {
       height: calc(40%);
       .chart-title {
@@ -758,6 +764,9 @@ body {
 #custom-data {
   .selection-wrapper {
     display: flex;
+    .list-span-1 {
+      color: red;
+    }
     .selector-wrapper {
       width: 100%;
       padding: 0.375rem 0.75rem;
