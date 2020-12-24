@@ -462,12 +462,18 @@ body {
     }
     #custom-data {
       height: calc(60% - 15px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &.fullScreen {
+        font-size: 2rem;
+      }
+      .globalDataContainer {
+        font-size: 1.5em;
+      }
     }
     .list-span-1 {
       color: red;
-    }
-    .globalDataContainer {
-      font-size: 1.5rem;
     }
     #graph {
       height: calc(40%);
