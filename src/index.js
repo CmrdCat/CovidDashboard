@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable import/no-cycle */
 import 'bootstrap';
 import $ from 'jquery';
@@ -11,15 +12,21 @@ import getSelectorChange from './modules/graphs/getSelectorChange';
 import fullScreen from './modules/fullScreenButton/fullScreen';
 import createMap from './modules/map/createMap';
 import inputFindCountry from './modules/findCountry/inputFindCountry';
-import findCountry from './modules/createCountryProperty/createCountryProperty';
+// import findCountry from './modules/createCountryProperty/createCountryProperty';
 // eslint-disable-next-line
 import Keyboard from './modules/keyboard/keyboard';
+import createTable from './modules/createTable/createTable';
+import slug from './modules/createTable/slug.json';
 // const configuration = {
 //   country: 'all' || 'Belarus',
 //   type: 'recovered' || 'confirmed' || 'deaths',
 //   duration: 'all' || 'lastDay',
 //   count: 'absolute' || 'on100',
 // };
+const slugged = {};
+for (const item of slug) {
+  slugged[item.Country] = item.Slug;
+}
 
 const configuration = {
   country: 'all',
@@ -64,19 +71,25 @@ export default async function init() {
           dateInfo(data);
           inputFindCountry();
           createMap(data, configuration, population);
-          Keyboard.initKeyboard();
           getDataForGraphs(
             configuration.country === 'all'
               ? `https://corona-api.com/timeline`
-              : `https://api.covid19api.com/dayone/country/${configuration.country}`
-          ).then((data1) => {
-            createGraph(data1, configuration, population);
-            getSelectorChange(data1, configuration, population);
-          });
+              : `https://api.covid19api.com/dayone/country/${slugged[configuration.country]}`
+          )
+            .catch(() => {
+              $('#myModal').modal('show');
+            })
+            .then((data1) => {
+              createTable(data1, configuration, population, data);
+              createGraph(data1, configuration, population);
+              getSelectorChange(data1, configuration, population);
+              Keyboard.elements.textarea = document.querySelector('#input');
+              Keyboard.init();
+            });
         });
       }
       // eslint-disable-next-line no-unused-vars
     });
-  findCountry(configuration);
+  // findCountry(configuration);
 }
 init();
