@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-restricted-syntax */
@@ -8,6 +9,7 @@ import places from './coordinates.json';
 // eslint-disable-next-line import/no-cycle
 import getMapListeners from './getMapListeners';
 import init from '../../index';
+import polygons from './polygons.json';
 
 export default async function createMap(data, configuration, population) {
   document.querySelector('#map').innerHTML = `
@@ -66,7 +68,7 @@ export default async function createMap(data, configuration, population) {
         };
 
   const map = new L.map('map-layer', mapOptions);
-  map.options.minZoom = 3;
+  map.options.minZoom = 2;
   map.options.maxZoom = 14;
   const accessToken =
     'pk.eyJ1IjoiZG1pdHJpeWhvbXphIiwiYSI6ImNraXgwdTltYTF0Z2UyeHNjemI5am0ydXMifQ.bXwZCvH4rqRs124UCmmcdw';
@@ -182,7 +184,7 @@ export default async function createMap(data, configuration, population) {
       to100 = 1;
       let mainString;
       let populationName;
-      const { Country } = properties;
+      const { Country, CountryCode } = properties;
       switch (Country) {
         case 'Bolivia':
           populationName = 'Bolivia (Plurinational State of)';
@@ -257,11 +259,11 @@ export default async function createMap(data, configuration, population) {
         properties[configuration.duration === 'all' ? `Total${type}` : `New${type}`] / to100;
       mainString = '';
       const html = `
-        <span class="icon-marker ${type.toLowerCase()} ${
+        <span id="point-${CountryCode}" class="icon-marker ${type.toLowerCase()} ${
         configuration.country === Country ? 'active' : ''
       }" style="width: ${(size / midleValue) * 2}rem; height: ${(size / midleValue) * 2}rem;">
-          <span class="icon-marker-tooltip">
-            <h2>${Country}</h2>
+          <span class="icon-marker-tooltip"">
+            <h2 id="${Country}">${Country}</h2>
             <ul>
               <li><strong>${configuration.duration === 'all' ? `Total ${type}` : `New ${type}`}${
         configuration.count === 'on100' ? ` on 100th.` : ''
@@ -282,6 +284,40 @@ export default async function createMap(data, configuration, population) {
       });
     },
   });
+  const countryPolygons = L.geoJson(polygons, {
+    onEachFeature(feature, layerCountry) {
+      layerCountry.setStyle({
+        fillColor: '#00000000',
+        weight: 1,
+        color: '#7b7e84',
+      });
+      layerCountry.on('mouseover', function (e) {
+        this.setStyle({
+          fillColor: '#7b7e84',
+          strokeColor: '#0000ff',
+        });
+        document
+          .querySelector(`#point-${e.target.feature.properties.ISO2}`)
+          .classList.add('active');
+      });
+      layerCountry.on('mouseout', function (e) {
+        document
+          .querySelector(`#point-${e.target.feature.properties.ISO2}`)
+          .classList.remove('active');
+        this.setStyle({
+          fillColor: '#00000000',
+        });
+      });
+      layerCountry.on('click', function (e) {
+        const name = document
+          .querySelector(`#point-${e.target.feature.properties.ISO2} h2`)
+          .getAttribute('id');
+        configuration.country = name;
+        init();
+      });
+    },
+  });
+  countryPolygons.addTo(map);
   geoJsonLayers.addTo(map);
   function floorZeros(value) {
     let count = 0;
