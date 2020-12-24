@@ -33,7 +33,7 @@ const CONFIGURATION = {
   country: 'all',
   type: 'confirmed',
   duration: 'all',
-  count: 'on100',
+  count: 'absolute',
 };
 
 const SUMMARY_URL = `https://api.covid19api.com/summary`;

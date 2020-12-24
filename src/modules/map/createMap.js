@@ -296,24 +296,30 @@ export default async function createMap(data, configuration, population) {
           fillColor: '#7b7e84',
           strokeColor: '#0000ff',
         });
-        document
-          .querySelector(`#point-${e.target.feature.properties.ISO2}`)
-          .classList.add('active');
+        if (document.querySelector(`#point-${e.target.feature.properties.ISO2}`)) {
+          document
+            .querySelector(`#point-${e.target.feature.properties.ISO2}`)
+            .classList.add('active');
+        }
       });
       layerCountry.on('mouseout', function (e) {
-        document
-          .querySelector(`#point-${e.target.feature.properties.ISO2}`)
-          .classList.remove('active');
         this.setStyle({
           fillColor: '#00000000',
         });
+        if (document.querySelector(`#point-${e.target.feature.properties.ISO2}`)) {
+          document
+            .querySelector(`#point-${e.target.feature.properties.ISO2}`)
+            .classList.remove('active');
+        }
       });
       layerCountry.on('click', function (e) {
-        const name = document
-          .querySelector(`#point-${e.target.feature.properties.ISO2} h2`)
-          .getAttribute('id');
-        configuration.country = name;
-        init();
+        if (document.querySelector(`#point-${e.target.feature.properties.ISO2}`)) {
+          const name = document
+            .querySelector(`#point-${e.target.feature.properties.ISO2} h2`)
+            .getAttribute('id');
+          configuration.country = name;
+          init();
+        }
       });
     },
   });
