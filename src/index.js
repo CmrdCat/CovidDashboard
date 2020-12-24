@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable import/no-cycle */
 import 'bootstrap';
 import $ from 'jquery';
@@ -11,15 +12,22 @@ import getSelectorChange from './modules/graphs/getSelectorChange';
 import fullScreen from './modules/fullScreenButton/fullScreen';
 import createMap from './modules/map/createMap';
 import inputFindCountry from './modules/findCountry/inputFindCountry';
-import createCountryProperty from './modules/createCountryProperty/createCountryProperty';
+// import findCountry from './modules/createCountryProperty/createCountryProperty';
 // eslint-disable-next-line
+import createCountryProperty from './modules/createCountryProperty/createCountryProperty';
 import Keyboard from './modules/keyboard/keyboard';
-// const CONFIGURATION = {
+// import createTable from './modules/createTable/createTable';
+import slug from './modules/createTable/slug.json';
+// const configuration = {
 //   country: 'all' || 'Belarus',
 //   type: 'recovered' || 'confirmed' || 'deaths',
 //   duration: 'all' || 'lastDay',
 //   count: 'absolute' || 'on100',
 // };
+const slugged = {};
+for (const item of slug) {
+  slugged[item.Country] = item.Slug;
+}
 
 const CONFIGURATION = {
   country: 'all',
@@ -63,7 +71,7 @@ async function init() {
       const GRAPH_URL =
         CONFIGURATION.country === 'all'
           ? `https://corona-api.com/timeline`
-          : `https://api.covid19api.com/dayone/country/${CONFIGURATION.country}`;
+          : `https://api.covid19api.com/dayone/country/${slugged[CONFIGURATION.country]}`;
       const graphData = await getData(GRAPH_URL);
 
       createGraph(graphData, CONFIGURATION, populationData);
