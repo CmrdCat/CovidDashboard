@@ -115,8 +115,6 @@ const createCountryProperty = (summaryData, configuration) => {
       };
     }
 
-    console.log('Country Fields', countryFields);
-
     renderList(countryFields, configuration);
   } else {
     const worldData = summaryData.Global;
