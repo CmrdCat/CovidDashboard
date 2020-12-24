@@ -789,7 +789,6 @@ export default Keyboard = {
     Keyboard.eventHandlers.onclose = onclose;
     Keyboard.elements.main.classList.remove('keyboard--hidden');
     document.querySelector('main').addEventListener('click', (e) => {
-      console.log('открывается');
       if (e.target.getAttribute('id') !== 'input') Keyboard.close();
     });
   },
