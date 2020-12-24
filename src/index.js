@@ -71,7 +71,6 @@ export default async function init() {
           dateInfo(data);
           inputFindCountry();
           createMap(data, configuration, population);
-          Keyboard.initKeyboard();
           getDataForGraphs(
             configuration.country === 'all'
               ? `https://corona-api.com/timeline`
@@ -84,6 +83,8 @@ export default async function init() {
               createTable(data1, configuration, population, data);
               createGraph(data1, configuration, population);
               getSelectorChange(data1, configuration, population);
+              // Keyboard.elements.textarea = document.querySelector('#input');
+              // Keyboard.init();
             });
         });
       }

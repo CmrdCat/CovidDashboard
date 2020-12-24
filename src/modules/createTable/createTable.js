@@ -99,7 +99,6 @@ export default function createTable(globalData, configuration, population, summa
         name = element[0].Country;
         break;
     }
-    console.log(name);
     to100 = popul[name] / 100000;
     confirmed = element[0].Confirmed;
     deaths = element[0].Deaths;
