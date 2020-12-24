@@ -83,8 +83,8 @@ export default async function init() {
               createTable(data1, configuration, population, data);
               createGraph(data1, configuration, population);
               getSelectorChange(data1, configuration, population);
-              // Keyboard.elements.textarea = document.querySelector('#input');
-              // Keyboard.init();
+              Keyboard.elements.textarea = document.querySelector('#input');
+              Keyboard.init();
             });
         });
       }

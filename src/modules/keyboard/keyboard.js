@@ -2,6 +2,9 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
 /* eslint-disable camelcase */
+
+import getCountry from '../findCountry/functionBody';
+
 /* eslint-disable*/
 const audio_en = document.querySelector('#audio_en');
 const audio_ru = document.querySelector('#audio_ru');
@@ -334,7 +337,6 @@ export default Keyboard = {
 
     Keyboard.elements.main.appendChild(Keyboard.elements.keysContainer);
     document.body.appendChild(Keyboard.elements.main);
-    console.log(Keyboard.elements.textarea);
     Keyboard.elements.textarea.addEventListener('focus', (e) => {
       Keyboard.open(Keyboard.elements.textarea.value, (currentValue) => {
         Keyboard.elements.textarea.value = currentValue;
@@ -553,6 +555,7 @@ export default Keyboard = {
             Keyboard.properties.value = `${value.substring(0, start - 1)}${value.substring(end)}`;
             Keyboard._triggerEvent('oninput');
             Keyboard.setPositionCursor(start - 1);
+            getCountry();
           });
 
           break;
@@ -563,6 +566,7 @@ export default Keyboard = {
             Keyboard._toggleCapsLock();
             key.classList.toggle('keyboard__key--active');
             Keyboard.elements.textarea.focus();
+            getCountry();
           });
 
           break;
@@ -573,6 +577,7 @@ export default Keyboard = {
             Keyboard.properties.voiceButtons = !Keyboard.properties.voiceButtons;
             key.classList.toggle('keyboard__key--active');
             Keyboard.elements.textarea.focus();
+            getCountry();
           });
 
           break;
@@ -594,6 +599,7 @@ export default Keyboard = {
 
             key.classList.toggle('keyboard__key--active');
             Keyboard.elements.textarea.focus();
+            getCountry();
           });
 
           break;
@@ -604,6 +610,7 @@ export default Keyboard = {
             Keyboard._toggleShift();
             key.classList.toggle('keyboard__key--active');
             Keyboard.elements.textarea.focus();
+            getCountry();
           });
 
           break;
@@ -615,6 +622,7 @@ export default Keyboard = {
             Keyboard.properties.value = `${value.substring(0, start)}\n${value.substring(end)}`;
             Keyboard._triggerEvent('oninput');
             Keyboard.setPositionCursor(start + 1);
+            getCountry();
           });
 
           break;
@@ -653,6 +661,7 @@ export default Keyboard = {
             Keyboard.__pressKeys();
             Keyboard._triggerEvent('oninput');
             Keyboard.elements.textarea.focus();
+            getCountry();
           });
 
           break;
@@ -664,6 +673,7 @@ export default Keyboard = {
             Keyboard.properties.value = `${value.substring(0, start)} ${value.substring(end)}`;
             Keyboard._triggerEvent('oninput');
             Keyboard.setPositionCursor(start + 1);
+            getCountry();
           });
 
           break;
@@ -674,6 +684,7 @@ export default Keyboard = {
             Keyboard.getButtonVoice('default', Keyboard.properties.language);
             Keyboard.close();
             Keyboard._triggerEvent('onclose');
+            getCountry();
           });
 
           break;
@@ -684,6 +695,7 @@ export default Keyboard = {
             Keyboard.getButtonVoice('default', Keyboard.properties.language);
             const { selectionStart: start } = Keyboard.elements.textarea;
             Keyboard.setPositionCursor(start + 1);
+            getCountry();
           });
 
           break;
@@ -694,6 +706,7 @@ export default Keyboard = {
             Keyboard.getButtonVoice('default', Keyboard.properties.language);
             const { selectionStart: start } = Keyboard.elements.textarea;
             Keyboard.setPositionCursor(start - 1);
+            getCountry();
           });
 
           break;
@@ -715,6 +728,7 @@ export default Keyboard = {
 
             Keyboard._triggerEvent('oninput');
             Keyboard.setPositionCursor(start + 1);
+            getCountry();
           });
 
           break;
