@@ -57,7 +57,9 @@ async function init() {
       dateInfo(summaryData);
       inputFindCountry();
       createMap(summaryData, CONFIGURATION, populationData);
-      Keyboard.initKeyboard();
+      Keyboard.elements.textarea = document.querySelector('#input');
+
+      Keyboard.init();
       const GRAPH_URL =
         CONFIGURATION.country === 'all'
           ? `https://corona-api.com/timeline`
@@ -68,7 +70,6 @@ async function init() {
       getSelectorChange(graphData, CONFIGURATION, populationData);
     }
   } catch (e) {
-    console.log('Error: ', e);
     $('#myModal').modal('show');
   }
 }
