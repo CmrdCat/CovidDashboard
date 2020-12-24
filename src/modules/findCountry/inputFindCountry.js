@@ -1,5 +1,5 @@
 export default async function inputFindCountry() {
-  document.getElementById('input').oninput = function name() {
+  function getCountry() {
     const val = this.value.trim();
     const items = document.getElementsByClassName('country-name');
     const liItem = document.getElementsByTagName('li');
@@ -18,5 +18,6 @@ export default async function inputFindCountry() {
         items[i].innerHTML = items[i].innerText;
       }
     }
-  };
+  }
+  document.getElementById('input').oninput = getCountry;
 }

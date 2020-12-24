@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable import/no-cycle */
 import 'bootstrap';
 import $ from 'jquery';
@@ -11,6 +12,7 @@ import getSelectorChange from './modules/graphs/getSelectorChange';
 import fullScreen from './modules/fullScreenButton/fullScreen';
 import createMap from './modules/map/createMap';
 import inputFindCountry from './modules/findCountry/inputFindCountry';
+
 import createCountryProperty from './modules/createCountryProperty/createCountryProperty';
 // eslint-disable-next-line
 import Keyboard from './modules/keyboard/keyboard';
@@ -20,6 +22,10 @@ import Keyboard from './modules/keyboard/keyboard';
 //   duration: 'all' || 'lastDay',
 //   count: 'absolute' || 'on100',
 // };
+const slugged = {};
+for (const item of slug) {
+  slugged[item.Country] = item.Slug;
+}
 
 const CONFIGURATION = {
   country: 'all',
@@ -48,6 +54,7 @@ async function init() {
 
     if (summaryData.Message) {
       $('#myModal').modal('show');
+
     } else {
       const populationData = await getData(POPULATION_URL);
 
@@ -78,3 +85,6 @@ async function init() {
 })();
 
 export default init;
+
+  
+
