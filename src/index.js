@@ -1,4 +1,6 @@
+/* eslint-disable import/no-cycle */
 import 'bootstrap';
+import $ from 'jquery';
 import globalCasesTotal from './modules/globalCasesTotal/globalCasesTotal';
 // eslint-disable-next-line import/no-cycle
 import casesByCountry from './modules/casesByCountry/casesByCountry';
@@ -9,22 +11,25 @@ import getSelectorChange from './modules/graphs/getSelectorChange';
 import fullScreen from './modules/fullScreenButton/fullScreen';
 import createMap from './modules/map/createMap';
 import inputFindCountry from './modules/findCountry/inputFindCountry';
-import findCountry from './modules/createCountryProperty/createCountryProperty';
+import createCountryProperty from './modules/createCountryProperty/createCountryProperty';
 // eslint-disable-next-line
-import btnCooseCountry from './modules/btnCooseCountry/btnCooseCountry';
-// const configuration = {
+import Keyboard from './modules/keyboard/keyboard';
+// const CONFIGURATION = {
 //   country: 'all' || 'Belarus',
 //   type: 'recovered' || 'confirmed' || 'deaths',
 //   duration: 'all' || 'lastDay',
 //   count: 'absolute' || 'on100',
 // };
 
-const configuration = {
+const CONFIGURATION = {
   country: 'all',
   type: 'confirmed',
   duration: 'all',
-  count: 'absolute',
+  count: 'on100',
 };
+
+const SUMMARY_URL = `https://api.covid19api.com/summary`;
+const POPULATION_URL = `https://restcountries.eu/rest/v2/all?fields=name;population`;
 
 async function getData(url) {
   const response = await fetch(url);
@@ -34,72 +39,42 @@ async function getData(url) {
   }
   return response.json();
 }
-async function getDataForGraphs(url) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Ошибка о адресу ${url}, 
-		статус ошибки ${response.status}!`);
-  }
-  return response.json();
-}
 
-async function getDataForMap(url) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Ошибка о адресу ${url}, 
-		статус ошибки ${response.status}!`);
-  }
-  return response.json();
-}
-
-// eslint-disable-next-line no-unused-vars
-async function getDataForMap2() {
-  // eslint-disable-next-line no-unused-vars
-  const request = await fetch(`https://api.covid19api.com/premium/summary`, {
-    headers: {
-      'X-Access-Token': '5cf9dfd5-3449-485e-b5ae-70a60e997864',
-    },
-  })
-    .then((response) => response.text())
-    .then((result) => JSON.parse(result))
-    .catch((error) => console.log('error', error));
-}
 fullScreen();
-btnCooseCountry(configuration);
 
-export default async function init() {
-  const covidSummary = `https://api.covid19api.com/summary`;
-  // const res = await fetch(url);
-  // const globalData = await res.json();
+async function init() {
+  try {
+    const summaryData = await getData(SUMMARY_URL);
 
-  getData(covidSummary).then((data) => {
-    if (data.Message) {
-      // eslint-disable-next-line
-      alert(data.Message);
+    if (summaryData.Message) {
+      $('#myModal').modal('show');
     } else {
-      const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
-      getData(populationData).then((population) => {
-        globalCasesTotal(data);
-        casesByCountry(data, population, configuration);
-        dateInfo(data);
-        getDataForMap2();
-        inputFindCountry();
-      });
+      const populationData = await getData(POPULATION_URL);
+
+      globalCasesTotal(summaryData);
+      casesByCountry(summaryData, populationData, CONFIGURATION);
+      createCountryProperty(summaryData, CONFIGURATION);
+      dateInfo(summaryData);
+      inputFindCountry();
+      createMap(summaryData, CONFIGURATION, populationData);
+      Keyboard.initKeyboard();
+      const GRAPH_URL =
+        CONFIGURATION.country === 'all'
+          ? `https://corona-api.com/timeline`
+          : `https://api.covid19api.com/dayone/country/${CONFIGURATION.country}`;
+      const graphData = await getData(GRAPH_URL);
+
+      createGraph(graphData, CONFIGURATION, populationData);
+      getSelectorChange(graphData, CONFIGURATION, populationData);
     }
-    // eslint-disable-next-line no-unused-vars
-    getDataForGraphs(
-      configuration.country === 'all'
-        ? `https://corona-api.com/timeline`
-        : `https://api.covid19api.com/dayone/country/${configuration.country}`
-    ).then((data1) => {
-      createGraph(data1, configuration);
-      getSelectorChange(data1, configuration);
-    });
-    getDataForMap('https://corona.lmao.ninja/v2/countries').then((data2) => {
-      createMap(data2, configuration);
-    });
-  });
-  findCountry();
+  } catch (e) {
+    console.log('Error: ', e);
+    $('#myModal').modal('show');
+  }
 }
 
-init();
+(async () => {
+  await init();
+})();
+
+export default init;
