@@ -214,6 +214,7 @@ body {
     }
     #cases-by-country {
       padding: 5px 5px;
+      padding-top: 25px;
       height: calc(85%);
       display: flex;
       flex-direction: column;
@@ -234,6 +235,9 @@ body {
           list-style: none;
           padding: 0 3px;
           cursor: pointer;
+          &:hover {
+            background-color: rgba(23, 23, 80, 0.473);
+          }
           .country-name {
             overflow-wrap: break-word;
             margin: 0 5px;
@@ -280,6 +284,9 @@ body {
           border: 1px solid #5d5d5d;
           border-radius: 0.25rem;
           transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        input {
+          width: 100%;
         }
         @media (max-width: 1445px) and (min-width: 1023px) {
           flex-direction: column;
@@ -518,6 +525,7 @@ body {
         z-index: 100;
         margin: 0;
         border: none;
+        font-size: 1.5rem !important;
         button {
           top: 0.5rem;
           right: 0.5rem;
@@ -525,18 +533,16 @@ body {
             left: unset;
           }
         }
-        #date-header {
-          font-size: 3rem !important ;
-        }
-        #date-last-update {
-          font-size: 3rem !important ;
-        }
-        #global {
-          font-size: 5rem !important ;
-        }
-        #globalSpan {
-          font-size: 5rem !important ;
-        }
+
+        // h3 {
+        //   font-size: 5rem !important;
+        // }
+        // h2 {
+        //   font-size: 3rem !important;
+        // }
+        // span {
+        //   font-size: 3rem !important;
+        // }
       }
       button {
         position: absolute;
@@ -564,31 +570,27 @@ body {
     .wrapper {
       height: 100%;
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       background: $section-background;
       align-items: center;
       padding: 5px 12px;
-
-      div {
-        width: 30%;
+      .href {
         display: flex;
-        justify-content: space-between;
-
-        a {
-          text-decoration: none;
-        }
-        h2 {
-          font-size: 1rem;
-          color: $text;
-          &:hover {
-            text-shadow: 1px 1px 2px black, 0 0 1em red;
-            color: rgb(19, 245, 94);
-          }
+      }
+      a {
+        text-decoration: none;
+        margin: 0 15px;
+      }
+      h2 {
+        font-size: 16px;
+        color: $text;
+        transition: 0.3s all;
+        &:hover {
+          color: #f06e6e;
         }
       }
       p {
-        position: absolute;
-        left: 50%;
         color: $text;
         margin-bottom: 0px;
       }
@@ -632,7 +634,7 @@ body {
         flex: unset;
       }
       #graph {
-        width: calc(33.3333333333% - 0.5rem);
+        // width: calc(33.3333333333% - 0.5rem);
         flex: unset;
         .chart-container {
           margin-top: 0.5rem;
@@ -769,66 +771,61 @@ body {
     }
   }
 }
+
 #custom-data {
   display: flex;
-  .hideElement {
-    display: none !important;
+  flex-direction: column;
+  padding: 5px 12px;
+  font-weight: 600;
+  .country {
+    color: white;
+    span {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: red;
+    }
   }
-  .greenElement {
-    display: block;
-    color: green;
-    border-color: green;
-  }
-  .redElement {
-    display: block;
-    color: red;
-    border-color: red;
-  }
-  .globalDataContainer {
-    padding: 5px 0;
-    height: calc(100%);
+  .values {
     display: flex;
     flex-direction: column;
-    width: calc(53%);
-  }
-  .deadListWrapper,
-  .recoveredListWrapper,
-  .localDataContainer {
-    padding: 5px 0;
-    height: calc(100%);
-    display: flex;
-    flex-direction: column;
-    ul {
-      height: 100%;
-      overflow-y: scroll;
-      padding-left: 0px;
-      li {
-        border-bottom: 1px solid darkgray;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        list-style: none;
-        padding: 0 3px;
-        .country-name {
-          overflow-wrap: break-word;
-          margin: 0 5px;
-          max-width: 100px;
-          color: #ffffffd0;
-          font-weight: 700;
-        }
-        .country-data {
-          font-weight: 700;
-          color: #ffffffd0;
-        }
+    flex-wrap: wrap;
+
+    & > div > div {
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid $border;
+      padding: 3px 7px;
+      font-size: 0.8rem;
+      span {
+        font-weight: 600;
       }
     }
-    .showButton,
-    .hideButton {
-      width: 100%;
-      height: 100%;
-      position: relative;
+    .green {
+      color: rgb(21, 156, 21);
+    }
+    .yellow {
+      color: rgb(255, 238, 0);
+    }
+    .red {
+      color: rgb(255, 0, 0);
     }
   }
+}
+
+.shift {
+  text-transform: uppercase;
+}
+
+.caps i::after {
+  content: 'CAPS';
+  font-size: 14px;
+  position: relative;
+  bottom: 6px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.caps i {
+  position: relative;
 }
 
 .use-keyboard-input:focus {
@@ -836,16 +833,18 @@ body {
 }
 
 .keyboard {
-  z-index: 1000;
+  z-index: 10000;
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   padding: 5px 0;
-  background-color: #004134;
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+  background: #e8e8e8;
+  box-shadow: 0 0px 20px 0px rgb(0 0 0 / 26%);
   user-select: none;
   transition: bottom 0.4s;
+  justify-content: center;
+  display: flex;
 }
 
 .keyboard--hidden {
@@ -854,19 +853,40 @@ body {
 
 .keyboard__keys {
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 800px;
 }
 
-.keyboard__key {
-  height: 45px;
-  width: 6%;
-  max-width: 90px;
-  min-width: 24px;
-  margin: 4px 3px;
+/* .keyboard__key::after {
+  content: "";
+  position: absolute;
   border-radius: 4px;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0px -1px 1px rgba(255, 255, 255, 0.5), 0px 10px 8px rgba(0, 0, 0, 0.3);
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    from(rgba(255, 255, 255, 0)),
+    to(rgba(255, 255, 255, 0.4))
+  );
+} */
+
+.keyboard__key {
+  font-family: 'Montserrat', sans-serif;
+  height: 45px;
+  width: 5%;
+  max-width: 90px;
+  margin: 3px;
+  border-radius: 3px;
   border: none;
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 4px black;
-  color: #ffffff;
+  background: rgb(255 255 255);
+  color: #0e2733;
   font-size: 1.05rem;
   outline: none;
   cursor: pointer;
@@ -878,67 +898,90 @@ body {
   -webkit-tap-highlight-color: transparent;
   position: relative;
   transition: 0.3s;
-}
-
-.keyboard__key:hover {
-  background: rgba(255, 255, 255, 0.5);
+  flex: 1 1 5%;
+  box-shadow: 0px 2px 0px 0px rgb(64 64 64 / 50%);
 }
 
 .keyboard__key--wide {
-  width: 12%;
-  min-width: 60px;
-}
-.keyboard__key--extra-wide {
-  width: 36%;
-  max-width: 500px;
-  min-width: 180px;
+  flex: 2 2 10%;
 }
 
-.keyboard__key:active {
-  background: rgba(255, 255, 255, 0.09);
-  box-shadow: 0px 1px black;
+.keyboard__key--extra-wide {
+  flex: 3 3 10%;
+  max-width: 500px;
+}
+
+.keyboard__key--activatable {
+  padding-bottom: 4px;
 }
 
 .keyboard__key--activatable::after {
   content: '';
-  top: 10px;
-  right: 10px;
+  bottom: 0px;
+  right: 0px;
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 100%;
+  height: 0px;
   background: rgba(0, 0, 0, 0.4);
-  border-radius: 50%;
+  border-radius: 15%;
+  transition: 0.3s;
 }
 
 .keyboard__key--active::after {
-  background: #08ff00;
+  transition: 0.3s;
+  height: 5px;
+  background: #01007566;
 }
+
 .keyboard__key--dark {
-  background: rgba(0, 0, 0, 0.25);
+  background: #cecfd3;
 }
 
-@keyframes press {
-  0% {
-    border-radius: 4px;
-  }
-  100% {
-    border-radius: 15px;
-  }
+.keyboard__key:active,
+.key-pressed {
+  background: #3c4771;
+  font-weight: 600;
+  color: #ffffff;
+  position: relative;
+  top: 2px;
+  box-shadow: unset;
 }
 
-@media screen and (max-width: 944px) {
-  .keyboard__key {
-    width: 5%;
-  }
-  .keyboard__key--wide {
-    width: 8%;
-  }
+.language-en,
+.language-ru {
+  position: relative;
 }
-@media screen and (max-width: 525px) {
-  .keyboard__key {
-    width: 4%;
+
+.language-en::after,
+.language-ru::after {
+  top: 24px;
+  right: -17px;
+  position: absolute;
+  width: 100%;
+  height: 0px;
+  font-size: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 15%;
+  transition: 0.3s;
+}
+
+.language-en::after {
+  content: 'en';
+}
+
+.language-ru::after {
+  content: 'ru';
+}
+
+.break {
+  flex-basis: 100%;
+}
+
+@media (max-width: 700px) {
+  .caps i {
+    display: grid;
   }
-  .keyboard__key--wide {
-    width: 6%;
+  .caps i::after {
+    bottom: 2px;
   }
 }

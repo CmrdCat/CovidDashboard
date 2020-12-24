@@ -9,9 +9,9 @@ export default async function fullScreen() {
       button.id = 'sweep';
       const img = document.createElement('img');
       if (!element.classList.value.includes('fullScreen')) {
-        img.src = '../../img/arrows-fullscreen.svg';
+        img.src = './img/arrows-fullscreen.svg';
       } else {
-        img.src = '../../img/arrows-angle-contract.svg';
+        img.src = './img/arrows-angle-contract.svg';
       }
       img.id = 'img';
       element.append(button);
@@ -21,7 +21,7 @@ export default async function fullScreen() {
         if (!element.classList.value.includes('fullScreen')) {
           element.classList.add('fullScreen');
           document.querySelector('body').classList.add('overflow-hidden');
-          img.src = '../../img/arrows-angle-contract.svg';
+          img.src = './img/arrows-angle-contract.svg';
           document.querySelectorAll('section').forEach((key) => {
             if (!key.classList.value.includes('fullScreen')) {
               const obj = key;
