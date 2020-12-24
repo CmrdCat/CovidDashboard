@@ -1,172 +1,166 @@
-const findCountry = (configuration) => {
-  let countryName = configuration.country;
-  const countryWrapperListiner = document.querySelector('#cases-by-country');
-  const allData = [];
+/* eslint-disable no-param-reassign */
+// eslint-disable-next-line import/no-cycle
+import init from '../../index';
 
-  function showsm(date) {
-    const nesElement = {
-      name: '',
-      population: '',
-      NewConfirmed: '',
-      NewDeaths: '',
-      NewRecovered: '',
-      TotalConfirmed: '',
-      TotalDeaths: '',
-      TotalRecovered: '',
-    };
+const wrapper = document.getElementById('custom-data');
 
-    date[1].forEach((item) => {
-      if (item.name === countryName) {
-        nesElement.name = item.name;
-        nesElement.population = item.population;
-      }
-    });
+function renderList(fields, configuration) {
+  wrapper.innerHTML = `
+    <div class="globalDataContainer localDataContainer">
+      <p>Country: ${fields.Country}</p>
+      <p>Population: ${fields.Population}</p>
 
-    const wrapper = document.getElementById('custom-data');
+      <div class="selection-wrapper pt-1 pb-2">
+        <div class="selector-wrapper">
+          <h3>Select reporting period:</h3>
+          <select class="form-control form-control-sm ml-2 mr-2" id="list-select-duration">
+            <option>Summary</option>
+            <option>Сhanges per day</option>
+          </select>
+        </div>
+        
+        <div class="selector-wrapper">
+          <h3>Choose calculation method:</h3>
+          <select class="form-control form-control-sm ml-2 mr-2" id="list-select-count">
+            <option>Absolute</option>
+            <option>Per 100 thousand population</option>
+          </select>
+        </div>
+      </div>
 
-    wrapper.innerHTML = `<div class="globalDataContainer">
-    <div>
+      <ul id="localList">
+        <li>Confirmed: ${fields.Confirmed}</li>
+        <li>Death: ${fields.Deaths}</li>
+        <li>Recovered: ${fields.Recovered}</li>
+      </u>
 
-       <h2 class="redElement">Global Deaths : ${date[0].Global.TotalDeaths}</h2>
-       <h2 class="greenElement hideElement">Global Recovered : ${date[0].Global.TotalRecovered}</h2>
     </div>
-    <div class="deadListWrapper">
+  `;
 
-       <ul id="deadList"></ul>
-    </div>
-    <div class="recoveredListWrapper hideElement">
-  
-
-       <ul id="recoveredList"></ul>
-    </div>
-   </div>
-   <div class="globalDataContainer localDataContainer"><div><button class="btn greenElement showButton">Global Deaths/Global Recovered</button></div><div><button class="btn greenElement hideButton">Per 100K</button></div> <ul id="localList"></u></div>`;
-
-    if (nesElement.TotalDeaths === '') {
-      date[0].Countries.forEach((item) => {
-        if (item.Country === nesElement.name) {
-          nesElement.NewConfirmed = item.NewConfirmed;
-          nesElement.NewDeaths = item.NewDeaths;
-          nesElement.NewRecovered = item.NewRecovered;
-          nesElement.TotalConfirmed = item.TotalConfirmed;
-          nesElement.TotalDeaths = item.TotalDeaths;
-          nesElement.TotalRecovered = item.TotalRecovered;
-          nesElement.Country = nesElement.name;
-          nesElement.NewConfirmedNaStoK = Math.round(
-            100000 / (nesElement.population / item.NewConfirmed)
-          );
-          nesElement.NewdeathsNaStoK = Math.round(
-            100000 / (nesElement.population / item.NewDeaths)
-          );
-          nesElement.NewRecovNaStoK = Math.round(
-            100000 / (nesElement.population / item.NewRecovered)
-          );
-          nesElement.totalConfirmedNaStoK = Math.round(
-            100000 / (nesElement.population / item.TotalConfirmed)
-          );
-          nesElement.totalDeathNaStoK = Math.round(
-            100000 / (nesElement.population / item.TotalDeaths)
-          );
-          nesElement.totalRecovNaStoK = Math.round(
-            100000 / (nesElement.population / item.TotalRecovered)
-          );
-        }
-
-        const liForRecovered = document.createElement('li');
-        const liForDead = document.createElement('li');
-
-        liForDead.innerHTML = `<div class="country-data"> <span class="redElement">${item.TotalRecovered} deadths</span><span>${item.Country}</span></div> `;
-        liForRecovered.innerHTML = `<div class="country-data"> <span class="greenElement">${item.TotalDeaths} recovered</span><span>${item.Country}</span></div> `;
-
-        document.getElementById('deadList').appendChild(liForDead);
-        document.getElementById('recoveredList').appendChild(liForRecovered);
-      });
+  const selectorDuration = document.querySelector('#list-select-duration');
+  selectorDuration.value = configuration.duration === 'all' ? 'Summary' : 'Сhanges per day';
+  selectorDuration.addEventListener('change', () => {
+    switch (selectorDuration.value) {
+      case 'Summary':
+        configuration.duration = 'all';
+        break;
+      case 'Сhanges per day':
+        configuration.duration = 'lastDay';
+        break;
+      default:
+        break;
     }
-    const showButton = document.querySelector('.showButton');
-    const hideButton = document.querySelector('.hideButton');
-    const deadListWrapperListiner = document.querySelector('.deadListWrapper');
-    const recoveredListWrapperListiner = document.querySelector('.recoveredListWrapper');
+    init();
+  });
 
-    const nesElementArray = Object.entries(nesElement);
+  const selectorCount = document.querySelector('#list-select-count');
+  selectorCount.value =
+    configuration.count === 'absolute' ? 'Absolute' : 'Per 100 thousand population';
 
-    nesElementArray.forEach((item, i) => {
-      if (i >= 8) {
-        const liForDead = document.createElement('li');
-
-        liForDead.className = 'item-data hideElement';
-
-        liForDead.innerHTML = `${item[0]} ${item[1]}`;
-
-        document.getElementById('localList').appendChild(liForDead);
-      }
-      if (i <= 7) {
-        const liForDead = document.createElement('li');
-        liForDead.className = 'item-data';
-
-        liForDead.innerHTML = `${item[0]} ${item[1]}`;
-
-        document.getElementById('localList').appendChild(liForDead);
-      }
-    });
-
-    const show = (event) => {
-      countryName = event.path[1].lastElementChild.innerHTML;
-      showsm(allData);
-    };
-    recoveredListWrapperListiner.addEventListener('click', show, true);
-    deadListWrapperListiner.addEventListener('click', show, true);
-
-    showButton.onclick = () => {
-      document.querySelector('.showButton').classList.toggle('greenElement');
-      document.querySelector('.showButton').classList.toggle('redElement');
-      document.querySelector('.greenElement').classList.toggle('hideElement');
-      document.querySelector('.recoveredListWrapper').classList.toggle('hideElement');
-      document.querySelector('.deadListWrapper').classList.toggle('hideElement');
-      document.querySelector('.redElement').classList.toggle('hideElement');
-    };
-
-    hideButton.onclick = () => {
-      const items = document.getElementsByClassName('item-data');
-      for (let i = 0; i < items.length; i += 1) {
-        items[i].classList.toggle('hideElement');
-      }
-    };
-  }
-  async function getDataForOneCountry(url) {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Ошибка о адресу ${url}, 
-          статус ошибки ${response.status}!`);
+  selectorCount.addEventListener('change', () => {
+    switch (selectorCount.value) {
+      case 'Absolute':
+        configuration.count = 'absolute';
+        break;
+      case 'Per 100 thousand population':
+        configuration.count = 'on100';
+        break;
+      default:
+        break;
     }
-    return response.json();
-  }
-  async function getDataForName(url) {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Ошибка о адресу ${url}, 
-          статус ошибки ${response.status}!`);
+    init();
+  });
+}
+
+const createCountryProperty = (summaryData, configuration) => {
+  const selectedCountry = configuration.country;
+
+  if (selectedCountry !== 'all') {
+    const countryData = summaryData.Countries.find((item) => item.Country === selectedCountry);
+    const to100 = countryData.Population / 100000;
+
+    let countryFields = {};
+
+    if (configuration.duration === 'all' && configuration.count === 'absolute') {
+      countryFields = {
+        Country: countryData.Country,
+        Population: countryData.Population,
+        Confirmed: countryData.TotalConfirmed,
+        Deaths: countryData.TotalDeaths,
+        Recovered: countryData.TotalRecovered,
+      };
+    } else if (configuration.duration === 'lastDay' && configuration.count === 'absolute') {
+      countryFields = {
+        Country: countryData.Country,
+        Population: countryData.Population,
+        Confirmed: countryData.NewConfirmed,
+        Deaths: countryData.NewDeaths,
+        Recovered: countryData.NewRecovered,
+      };
+    } else if (configuration.duration === 'all' && configuration.count === 'on100') {
+      countryFields = {
+        Country: countryData.Country,
+        Population: countryData.Population,
+        Confirmed: Math.round(countryData.NewConfirmed / to100),
+        Deaths: Math.round(countryData.NewDeaths / to100),
+        Recovered: Math.round(countryData.NewRecovered / to100),
+      };
+    } else if (configuration.duration === 'lastDay' && configuration.count === 'on100') {
+      countryFields = {
+        Country: countryData.Country,
+        Population: countryData.Population,
+        Confirmed: Math.round(countryData.NewConfirmed / to100),
+        Deaths: Math.round(countryData.NewDeaths / to100),
+        Recovered: Math.round(countryData.NewRecovered / to100),
+      };
     }
-    return response.json();
-  }
-  async function getdate() {
-    if (allData.length === 0) {
-      await getDataForOneCountry(`https://api.covid19api.com/summary`).then((data) => {
-        allData.push(data);
-      });
-      await getDataForName(`https://restcountries.eu/rest/v2/all?fields=name;population;flag`).then(
-        (value) => {
-          allData.push(value);
-        }
-      );
+
+    console.log('Country Fields', countryFields);
+
+    renderList(countryFields, configuration);
+  } else {
+    const worldData = summaryData.Global;
+    const worldPopulation = 7827000000;
+    const to100 = worldPopulation / 100000;
+
+    let worldFields = {};
+
+    if (configuration.duration === 'all' && configuration.count === 'absolute') {
+      worldFields = {
+        Country: 'world',
+        Population: worldPopulation,
+        Confirmed: worldData.TotalConfirmed,
+        Deaths: worldData.TotalDeaths,
+        Recovered: worldData.TotalRecovered,
+      };
+    } else if (configuration.duration === 'lastDay' && configuration.count === 'absolute') {
+      worldFields = {
+        Country: 'world',
+        Population: worldPopulation,
+        Confirmed: worldData.NewConfirmed,
+        Deaths: worldData.NewDeaths,
+        Recovered: worldData.NewRecovered,
+      };
+    } else if (configuration.duration === 'all' && configuration.count === 'on100') {
+      worldFields = {
+        Country: 'world',
+        Population: worldPopulation,
+        Confirmed: Math.round(worldData.TotalConfirmed / to100),
+        Deaths: Math.round(worldData.TotalDeaths / to100),
+        Recovered: Math.round(worldData.TotalRecovered / to100),
+      };
+    } else if (configuration.duration === 'lastDay' && configuration.count === 'on100') {
+      worldFields = {
+        Country: 'world',
+        Population: worldPopulation,
+        Confirmed: Math.round(worldData.NewConfirmed / to100),
+        Deaths: Math.round(worldData.NewDeaths / to100),
+        Recovered: Math.round(worldData.NewRecovered / to100),
+      };
     }
-    showsm(allData);
+
+    renderList(worldFields, configuration);
   }
-  getdate();
-  const show = (event) => {
-    countryName = event.path[1].lastElementChild.innerHTML;
-    getdate();
-  };
-  countryWrapperListiner.addEventListener('click', show, true);
 };
 
-export default findCountry;
+export default createCountryProperty;

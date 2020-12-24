@@ -11,32 +11,27 @@ import getSelectorChange from './modules/graphs/getSelectorChange';
 import fullScreen from './modules/fullScreenButton/fullScreen';
 import createMap from './modules/map/createMap';
 import inputFindCountry from './modules/findCountry/inputFindCountry';
-import findCountry from './modules/createCountryProperty/createCountryProperty';
+import createCountryProperty from './modules/createCountryProperty/createCountryProperty';
 // eslint-disable-next-line
 import Keyboard from './modules/keyboard/keyboard';
-// const configuration = {
+// const CONFIGURATION = {
 //   country: 'all' || 'Belarus',
 //   type: 'recovered' || 'confirmed' || 'deaths',
 //   duration: 'all' || 'lastDay',
 //   count: 'absolute' || 'on100',
 // };
 
-const configuration = {
+const CONFIGURATION = {
   country: 'all',
   type: 'confirmed',
   duration: 'all',
   count: 'on100',
 };
 
+const SUMMARY_URL = `https://api.covid19api.com/summary`;
+const POPULATION_URL = `https://restcountries.eu/rest/v2/all?fields=name;population`;
+
 async function getData(url) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Ошибка о адресу ${url}, 
-		статус ошибки ${response.status}!`);
-  }
-  return response.json();
-}
-async function getDataForGraphs(url) {
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Ошибка о адресу ${url}, 
@@ -47,37 +42,39 @@ async function getDataForGraphs(url) {
 
 fullScreen();
 
-export default async function init() {
-  const covidSummary = `https://api.covid19api.com/summary`;
-  getData(covidSummary)
-    .catch(() => {
+async function init() {
+  try {
+    const summaryData = await getData(SUMMARY_URL);
+
+    if (summaryData.Message) {
       $('#myModal').modal('show');
-    })
-    .then((data) => {
-      if (data.Message) {
-        $('#myModal').modal('show');
-      } else {
-        const populationData = `https://restcountries.eu/rest/v2/all?fields=name;population`;
-        getData(populationData).then((population) => {
-          globalCasesTotal(data);
-          casesByCountry(data, population, configuration);
-          dateInfo(data);
-          inputFindCountry();
-          createMap(data, configuration, population);
-          Keyboard.initKeyboard();
-          getDataForGraphs(
-            configuration.country === 'all'
-              ? `https://corona-api.com/timeline`
-              : `https://api.covid19api.com/dayone/country/${configuration.country}`
-          ).then((data1) => {
-            createGraph(data1, configuration, population);
-            getSelectorChange(data1, configuration, population);
-          });
-        });
-      }
-      // eslint-disable-next-line no-unused-vars
-    });
-  findCountry(configuration);
+    } else {
+      const populationData = await getData(POPULATION_URL);
+
+      globalCasesTotal(summaryData);
+      casesByCountry(summaryData, populationData, CONFIGURATION);
+      createCountryProperty(summaryData, CONFIGURATION);
+      dateInfo(summaryData);
+      inputFindCountry();
+      createMap(summaryData, CONFIGURATION, populationData);
+      Keyboard.initKeyboard();
+      const GRAPH_URL =
+        CONFIGURATION.country === 'all'
+          ? `https://corona-api.com/timeline`
+          : `https://api.covid19api.com/dayone/country/${CONFIGURATION.country}`;
+      const graphData = await getData(GRAPH_URL);
+
+      createGraph(graphData, CONFIGURATION, populationData);
+      getSelectorChange(graphData, CONFIGURATION, populationData);
+    }
+  } catch (e) {
+    console.log('Error: ', e);
+    $('#myModal').modal('show');
+  }
 }
 
-init();
+(async () => {
+  await init();
+})();
+
+export default init;
